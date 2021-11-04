@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<title>Three Good Things</title>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+	<header>
+		<div class="wrapper flex-items">
+			<div class="title">
+				<p>Three good things</p>
+			</div>
+			<div class="hamburger-menu">
+
+				<input type="checkbox" id="menu-btn-check"> <label
+					for="menu-btn-check" class="menu-btn"><span></span></label>
+				<!-- ここからメニュー -->
+				<div class="menu-content">
+					<ul>
+						<li><a href="index.html">TODAY</a></li>
+						<li><a href="#">カレンダー</a></li>
+						<li><a href="postList.html">History</a></li>
+						<li><a href="#">ユーザー</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="header-list">
+				<ul>
+					<li><a href="index.html">TODAY</a></li>
+					<li><a href="#">カレンダー</a></li>
+					<li><a href="postList.html">History</a></li>
+					<li><a href="#">ユーザー</a></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<form name="myForm" method="post" th:action="@{/register}"
+		th:object="${mainForm}">
+		<div class="container">
+			<div class="wrapper wrapper-in">
+				<div class="move">
+					<a class="yesterday" onclick="yesterday()" href="javascript:void(0)">昨日</a> <a
+						class="tomorrow" onclick="tomorrow()" href="javascript:void(0)">明日</a>
+				</div>
+				<div class="date">
+					<p th:text="*{#dates.format(date, 'yyyy.MM.dd')}">2021.10.30.sat</p>
+				</div>
+
+				<div class="input-area">
+					<div class="input">
+						<textarea th:field="*{good1}" placeholder="今日うまく行ったことは？"></textarea>
+					</div>
+					<div class="input">
+						<textarea th:field="*{good2}" placeholder="今日うまく行ったことは？"></textarea>
+					</div>
+					<div class="input">
+						<textarea th:field="*{good3}" placeholder="今日うまく行ったことは？"></textarea>
+					</div>
+					<input type="hidden" th:field="*{date}">
+				</div>
+
+			</div>
+		</div>
+	</form>
+	<footer>
+		<p>©︎ Three good things</p>
+	</footer>
+	<script type="text/javascript" th:inline="javascript">
+		/*<![CDATA[*/
+		function yesterday(){
+			document.myForm.setAttribute("action", "/yesterday");
+			document.myForm.setAttribute("method", "get");
+			document.myForm.submit();
+		}
+
+		function tomorrow(){
+			document.myForm.setAttribute("action", "/tomorrow");
+			document.myForm.setAttribute("method", "get");
+			document.myForm.submit();
+		}
+
+		/*]]>*/
+	</script>
+</body>
+</html>
