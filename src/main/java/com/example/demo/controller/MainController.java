@@ -24,6 +24,7 @@ public class MainController {
 		// 本日の日付で表示する
 		Date today = new Date();
 		form.setDate(today);
+		findPost(form, model);
 		return "index";
 	}
 
@@ -44,6 +45,7 @@ public class MainController {
 		cal.setTime(today);
 		cal.add(Calendar.DAY_OF_MONTH, -1);
 		form.setDate(cal.getTime());
+		findPost(form, model);
 		return "index";
 	}
 
@@ -54,6 +56,15 @@ public class MainController {
 		cal.setTime(today);
 		cal.add(Calendar.DAY_OF_MONTH, 1);
 		form.setDate(cal.getTime());
+		findPost(form, model);
 		return "index";
+	}
+
+	private void findPost(MainForm form, Model model) {
+		Good good = goodDao.selectOne(new java.sql.Date(form.getDate()
+			.getTime()));
+		if (good == null)
+			return;
+		BeanUtils.copyProperties(good, form);
 	}
 }

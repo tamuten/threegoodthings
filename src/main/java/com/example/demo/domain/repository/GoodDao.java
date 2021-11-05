@@ -1,5 +1,7 @@
 package com.example.demo.domain.repository;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +15,9 @@ public class GoodDao {
 
 	public void insert(Good good) {
 		goodMapper.insertOne(good);
+	}
+
+	public Good selectOne(Date date) {
+		return goodMapper.selectOne(date);
 	}
 }
