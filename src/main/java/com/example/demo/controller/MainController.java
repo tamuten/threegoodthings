@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,19 +15,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.domain.model.Good;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
+import com.example.demo.util.DateUtil;
 
 @Controller
 public class MainController {
 	@Autowired
 	private GoodDao goodDao;
 
-	@GetMapping("/index")
-	public String index(MainForm form, Model model) {
-		// 本日の日付で表示する
-		Date today = new Date();
-		form.setDate(today);
-		findPost(form, model);
+	private String index(Date searchDate, Model model) {
+		Good good = goodDao.selectOne(new java.sql.Date(searchDate
+			.getTime()));
+		MainForm form = new MainForm();
+		form.setDate(searchDate);
+		if (good != null) {
+			BeanUtils.copyProperties(good, form);
+		}
+		model.addAttribute("mainForm", form);
 		return "index";
+	}
+
+	@GetMapping("/index")
+	public String today(Model model) {
+		// 本日の日付で表示する
+		return index(new Date(), model);
 	}
 
 	@PostMapping("/register")
@@ -39,32 +51,22 @@ public class MainController {
 	}
 
 	@GetMapping("/yesterday")
-	public String yesterday(MainForm form, Model model) {
-		Date today = form.getDate();
+	public String yesterday(Model model, HttpServletRequest request) {
+		Date today = DateUtil.parseDate(request.getParameter("date"));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(today);
 		cal.add(Calendar.DAY_OF_MONTH, -1);
-		form.setDate(cal.getTime());
-		findPost(form, model);
-		return "index";
+
+		return index(cal.getTime(), model);
 	}
 
 	@GetMapping("/tomorrow")
-	public String tomorrow(MainForm form, Model model) {
-		Date today = form.getDate();
+	public String tomorrow(Model model, HttpServletRequest request) {
+		Date today = DateUtil.parseDate(request.getParameter("date"));
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(today);
 		cal.add(Calendar.DAY_OF_MONTH, 1);
-		form.setDate(cal.getTime());
-		findPost(form, model);
-		return "index";
-	}
 
-	private void findPost(MainForm form, Model model) {
-		Good good = goodDao.selectOne(new java.sql.Date(form.getDate()
-			.getTime()));
-		if (good == null)
-			return;
-		BeanUtils.copyProperties(good, form);
+		return index(cal.getTime(), model);
 	}
 }

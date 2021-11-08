@@ -208,6 +208,10 @@ header li a {
   color:black;
 }
 
+header li a:hover {
+	opacity:0.7;
+}
+
 .container {
   margin-top:100px;
 }

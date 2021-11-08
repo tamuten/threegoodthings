@@ -3,6 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="utf-8">
+
+<link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 <title>Three Good Things</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -41,8 +46,9 @@
 		<div class="container">
 			<div class="wrapper wrapper-in">
 				<div class="move">
-					<a class="yesterday" onclick="yesterday()" href="javascript:void(0)">昨日</a> <a
-						class="tomorrow" onclick="tomorrow()" href="javascript:void(0)">明日</a>
+					<a class="yesterday" onclick="yesterday()"
+						href="javascript:void(0)">昨日</a> <a class="tomorrow"
+						onclick="tomorrow()" href="javascript:void(0)">明日</a>
 				</div>
 				<div class="date">
 					<p th:text="*{#dates.format(date, 'yyyy.MM.dd')}">2021.10.30.sat</p>
@@ -69,17 +75,22 @@
 	</footer>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
-		function yesterday(){
+		function yesterday() {
 			document.myForm.setAttribute("action", "/yesterday");
 			document.myForm.setAttribute("method", "get");
 			document.myForm.submit();
 		}
 
-		function tomorrow(){
+		function tomorrow() {
 			document.myForm.setAttribute("action", "/tomorrow");
 			document.myForm.setAttribute("method", "get");
 			document.myForm.submit();
 		}
+
+		$(function(){
+			/* alert($("#date").val()); */
+
+		});
 
 		/*]]>*/
 	</script>
