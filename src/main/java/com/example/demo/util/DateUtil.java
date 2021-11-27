@@ -14,4 +14,9 @@ public class DateUtil {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static String parseStr(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+		return dateFormat.format(date);
+	}
 }

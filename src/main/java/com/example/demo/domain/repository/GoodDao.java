@@ -20,4 +20,12 @@ public class GoodDao {
 	public Good selectOne(Date date) {
 		return goodMapper.selectOne(date);
 	}
+
+	public int count(Date date) {
+		return goodMapper.count(date);
+	}
+
+	public void updateOne(Good good) {
+		goodMapper.updateOne(good);
+	}
 }

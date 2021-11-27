@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.domain.model.Good;
 import com.example.demo.domain.repository.GoodDao;
@@ -34,20 +36,39 @@ public class MainController {
 		return "index";
 	}
 
-	@GetMapping("/index")
+	@GetMapping({ "/", "/index" })
 	public String today(Model model) {
 		// 本日の日付で表示する
 		return index(new Date(), model);
 	}
 
+	//	@PostMapping("/register")
+	//	public String register(MainForm form, Model model) {
+	//		Good good = new Good();
+	//		BeanUtils.copyProperties(form, good);
+	//		good.setDate(new java.sql.Date(form.getDate()
+	//			.getTime()));
+	//		goodDao.insert(good);
+	//		return "index";
+	//	}
+
 	@PostMapping("/register")
-	public String register(MainForm form, Model model) {
+	@ResponseBody
+	public String register(@RequestParam("good1") String good1, @RequestParam String good2, @RequestParam String good3,
+			@RequestParam Date date) {
 		Good good = new Good();
-		BeanUtils.copyProperties(form, good);
-		good.setDate(new java.sql.Date(form.getDate()
-			.getTime()));
-		goodDao.insert(good);
-		return "index";
+		java.sql.Date registerDate = new java.sql.Date(date.getTime());
+		good.setDate(registerDate);
+		good.setGood1(good1);
+		good.setGood2(good2);
+		good.setGood3(good3);
+		if (goodDao.count(registerDate) <= 0) {
+			goodDao.insert(good);
+		} else {
+			goodDao.updateOne(good);
+		}
+
+		return DateUtil.parseStr(date) + good1 + good2 + good3;
 	}
 
 	@GetMapping("/yesterday")

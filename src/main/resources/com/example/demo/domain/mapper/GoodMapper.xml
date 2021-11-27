@@ -16,5 +16,23 @@
 			date = #{targetDate, jdbcType=DATE}
 		;
 	</select>
+	<select id="count" resultType="integer">
+		SELECT
+			COUNT(*)
+		FROM
+			good
+		WHERE
+			date = #{targetDate, jdbcType=DATE}
+	</select>
+	<update id="updateOne" parameterType="com.example.demo.domain.model.Good">
+		UPDATE
+			good
+		SET
+			good1 = #{good1},
+			good2 = #{good2},
+			good3 = #{good3}
+		WHERE
+			date = #{date}
+	</update>
 
 </mapper>

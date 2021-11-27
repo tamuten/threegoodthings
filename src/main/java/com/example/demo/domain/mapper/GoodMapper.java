@@ -10,4 +10,6 @@ import com.example.demo.domain.model.Good;
 public interface GoodMapper {
 	public void insertOne(Good good);
 	public Good selectOne(Date date);
+	public int count(Date date);
+	public void updateOne(Good good);
 }

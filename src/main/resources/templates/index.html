@@ -56,13 +56,16 @@
 
 				<div class="input-area">
 					<div class="input">
-						<textarea th:field="*{good1}" placeholder="今日うまく行ったことは？"></textarea>
+						<textarea class="good" th:field="*{good1}"
+							placeholder="今日うまく行ったことは？"></textarea>
 					</div>
 					<div class="input">
-						<textarea th:field="*{good2}" placeholder="今日うまく行ったことは？"></textarea>
+						<textarea class="good" th:field="*{good2}"
+							placeholder="今日うまく行ったことは？"></textarea>
 					</div>
 					<div class="input">
-						<textarea th:field="*{good3}" placeholder="今日うまく行ったことは？"></textarea>
+						<textarea class="good" th:field="*{good3}"
+							placeholder="今日うまく行ったことは？"></textarea>
 					</div>
 					<input type="hidden" th:field="*{date}">
 				</div>
@@ -87,12 +90,30 @@
 			document.myForm.submit();
 		}
 
-		$(function(){
-			/* alert($("#date").val()); */
-
+		$(function() {
+			$(".good").on("change", function(e) {
+				e.preventDefault();
+				$.ajax({
+					url : $("form").attr("action"),
+					type : "POST",
+					data : {
+						good1 : $("#good1").val(),
+						good2 : $("#good2").val(),
+						good3 : $("#good3").val(),
+						date : $("#date").val(),
+						_csrf : $("*[name=_csrf]").val()
+					}
+				}).done(function(data) {
+					alert("登録が完了しました");
+				}).fail(function() {
+					alert("error!");
+				});
+			});
 		});
 
 		/*]]>*/
 	</script>
 </body>
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 </html>
