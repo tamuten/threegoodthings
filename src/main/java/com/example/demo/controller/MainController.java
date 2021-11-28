@@ -18,6 +18,8 @@ import com.example.demo.domain.model.Good;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
 import com.example.demo.util.DateUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MainController {
@@ -68,7 +70,15 @@ public class MainController {
 			goodDao.updateOne(good);
 		}
 
-		return DateUtil.parseStr(date) + good1 + good2 + good3;
+		ObjectMapper mapper = new ObjectMapper();
+		String json;
+		try {
+			json = mapper.writeValueAsString(good);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+
+		return json;
 	}
 
 	@GetMapping("/yesterday")
