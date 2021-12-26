@@ -1,6 +1,7 @@
 body {
   margin:0;
   font-size:14px;
+  font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
 }
 
 h1,h2,h3,p,ul {
@@ -19,68 +20,43 @@ li {
 
 .title {
   font-family:cursive;
-  font-size:36px;
-  padding:20px 0;
+  font-size:20px;
+  padding:10px 0;
   margin-right:auto;
   white-space: nowrap;
 }
 
-.move {
+.date-move {
   display:flex;
+  justify-content: space-between;
+  align-items:center;
+  border-bottom:0.5px solid #c3c3c3;
+  height:50px;
 }
 
-.move .yesterday {
-  margin-right:auto;
-  padding-left:30px;
-}
+
 
 .tomorrow {
-  padding-right:30px;
+
 }
 
 .move {
-  padding-bottom:10px;
-  padding-top:20px;
-
 }
 
 .move a {
   color: #404040;
-  position:relative;
+  border:1px solid #c3c3c3;
+  border-radius: 10%;
+  padding:5px 18px;
+  font-size:20px;
 }
 
 .move a:hover {
   opacity:0.7;
 }
 
-.yesterday:after {
-  content:"";
-  width:15px;
-  height:15px;
-  border-bottom:solid 2px #404040;
-  border-left: solid 2px #404040;
-  transform:rotate(45deg);
-  position:absolute;
-  left:5%;
-  top:2px;
-}
-
-.tomorrow:after {
-  content:"";
-  width:15px;
-  height:15px;
-  border-top:solid 2px #404040;
-  border-right: solid 2px #404040;
-  transform:rotate(45deg);
-  position:absolute;
-  right:5%;
-  top:2px;
-}
-
 .date {
-  font-family:cursive;
-  font-size:24px;
-  margin:20px 0;
+  font-size:22px;
 }
 
 .flex-items {
@@ -93,18 +69,18 @@ header {
   top:0px;
   left:0px;
   z-index:100;
-  height:100px;
+  height:55px;
   width:100%;
   background-color: #f5f5f5;
 }
 
 .menu-btn {
   position:fixed;
-  top:20px;
+  top:10px;
   right:4%;
   display:flex;
-  height:60px;
-  width:60px;
+  height:32px;
+  width:48px;
   justify-content: center;
   align-items: center;
   z-index:90;
@@ -213,7 +189,7 @@ header li a:hover {
 }
 
 .container {
-  margin-top:100px;
+  margin-top:50px;
 }
 
 .wrapper {
@@ -222,6 +198,18 @@ header li a:hover {
 
 .input {
   margin:15px 0;
+}
+
+.input-area a {
+  display:block;
+  width:100%;
+  font-size:18px;
+  color:#c3c3c3;
+  text-align:center;
+  border:1px solid #c3c3c3;
+  background-color:white;
+  padding:24px 0;
+  margin:20px 0;
 }
 
 textarea {
