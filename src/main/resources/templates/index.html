@@ -47,38 +47,46 @@
 		<div class="container">
 			<div class="wrapper wrapper-in">
 				<div class="date-move">
-				<div class="date">
-					<p th:text="*{#dates.format(date, 'yyyy.MM.dd')}">10月30日</p>
-				</div>
-				<div class="move">
-					<a class="yesterday" onclick="yesterday()"
-						href="javascript:void(0)"><</a> <a class="tomorrow"
-						onclick="tomorrow()" href="javascript:void(0)">></a>
+					<div class="date">
+						<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">10月30日</p>
+					</div>
+					<div class="move">
+						<a class="yesterday" onclick="yesterday()"
+							href="javascript:void(0)"></a> <a class="tomorrow"
+							onclick="tomorrow()" href="javascript:void(0)"></a>
+					</div>
 				</div>
 			</div>
-
-
+			<div class="display wrapper wrapper-in">
 				<div class="input-area">
-					<a href="#">タップして編集する</a>
-					<a href="#">タップして編集する</a>
-					<a href="#">タップして編集する</a>
-					<!-- <div class="input">
-						<textarea class="good" th:field="*{good1}"
-							placeholder="今日うまく行ったことは？"></textarea>
-					</div>
-					<div class="input">
-						<textarea class="good" th:field="*{good2}"
-							placeholder="今日うまく行ったことは？"></textarea>
-					</div>
-					<div class="input">
-						<textarea class="good" th:field="*{good3}"
-							placeholder="今日うまく行ったことは？"></textarea>
-					</div> -->
-					<input type="hidden" th:field="*{date}">
+					<p>1</p>
+					<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
+					<a th:if="*{good1}" id="goodText1" class="goodText" href="#" th:text="*{good1}"></a>
+					<p>2</p>
+					<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
+					<a th:if="*{good2}" id="goodText2" class="goodText" href="#" th:text="*{good2}"></a>
+					<p>3</p>
+					<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
+					<a th:if="*{good3}" id="goodText3" class="goodText" href="#" th:text="*{good3}"></a>
 				</div>
-
+			</div>
+			<div class="edit wrapper wrapper-in">
+				<div class="input" id="input1" style="display: none;">
+					<p>1</p>
+					<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
+				</div>
+				<div class="input" id="input2" style="display: none;">
+					<p>2</p>
+					<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
+				</div>
+				<div class="input" id="input3" style="display: none;">
+					<p>3</p>
+					<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
+				</div>
+				<input type="hidden" th:field="*{date}">
 			</div>
 		</div>
+
 	</form>
 	<footer>
 		<p>©︎ Three good things</p>
@@ -98,6 +106,21 @@
 		}
 
 		$(function() {
+			function editMode(obj){
+				var num = obj.id.slice(-1);
+				$(".display").hide();
+				$(".move").hide();
+				$("#input" + num).show();
+			}
+
+			$(".editBtn").on("click", function(e) {
+				editMode(this);
+			});
+
+			$(".goodText").on("click", function(e){
+				editMode(this);
+			});
+
 			$(".good").on("change", function(e) {
 				e.preventDefault();
 				$.ajax({

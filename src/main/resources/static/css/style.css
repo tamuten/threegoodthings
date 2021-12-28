@@ -37,22 +37,42 @@ li {
 
 
 .tomorrow {
-
 }
 
 .move {
+  display:flex;
 }
 
 .move a {
-  color: #404040;
+  /* color: #404040;
   border:1px solid #c3c3c3;
   border-radius: 10%;
   padding:5px 18px;
-  font-size:20px;
+  font-size:20px; */
 }
 
 .move a:hover {
   opacity:0.7;
+}
+
+.yesterday:after {
+  content:"";
+  width:10px;
+  height:10px;
+  border-bottom:solid 2px #404040;
+  border-left:solid 2px #404040;
+  display:block;
+  transform:rotate(45deg)
+}
+
+.tomorrow:after {
+  content:"";
+  width:10px;
+  height:10px;
+  border-top:solid 2px #404040;
+  border-right:solid 2px #404040;
+  display:block;
+  transform:rotate(45deg);
 }
 
 .date {
@@ -188,6 +208,8 @@ header li a:hover {
 	opacity:0.7;
 }
 
+
+
 .container {
   margin-top:50px;
 }
@@ -200,7 +222,11 @@ header li a:hover {
   margin:15px 0;
 }
 
-.input-area a {
+.input-area p, .edit p {
+	margin:10px 0 3px;
+}
+
+.input-area .editBtn {
   display:block;
   width:100%;
   font-size:18px;
@@ -209,7 +235,19 @@ header li a:hover {
   border:1px solid #c3c3c3;
   background-color:white;
   padding:24px 0;
-  margin:20px 0;
+  text-decoration: none;
+}
+
+.input-area .goodText {
+  display:block;
+  width:100%;
+  font-size:18px;
+  color:black;
+  text-align:center;
+  border:1px solid #c3c3c3;
+  background-color:white;
+  padding:24px 0;
+  text-decoration: none;
 }
 
 textarea {
