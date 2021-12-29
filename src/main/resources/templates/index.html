@@ -10,7 +10,6 @@
 <script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 <title>Three Good Things</title>
 <link rel="stylesheet" th:href="@{/css/style.css}">
-<link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 	<header>
@@ -44,7 +43,7 @@
 	</header>
 	<form name="myForm" method="post" th:action="@{/register}"
 		th:object="${mainForm}">
-		<div class="container">
+		<div class="main">
 			<div class="wrapper wrapper-in">
 				<div class="date-move">
 					<div class="date">
@@ -55,38 +54,44 @@
 							href="javascript:void(0)"></a> <a class="tomorrow"
 							onclick="tomorrow()" href="javascript:void(0)"></a>
 					</div>
+					<div class="edit" style="display:none;">
+						<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
+						<button type="button" id="cancel" class="btn btn-sm btn-light ml-2">キャンセル</button>
+					</div>
 				</div>
-			</div>
-			<div class="display wrapper wrapper-in">
-				<div class="input-area">
-					<p>1</p>
-					<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
-					<a th:if="*{good1}" id="goodText1" class="goodText" href="#" th:text="*{good1}"></a>
-					<p>2</p>
-					<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
-					<a th:if="*{good2}" id="goodText2" class="goodText" href="#" th:text="*{good2}"></a>
-					<p>3</p>
-					<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
-					<a th:if="*{good3}" id="goodText3" class="goodText" href="#" th:text="*{good3}"></a>
-				</div>
-			</div>
-			<div class="edit wrapper wrapper-in">
-				<div class="input" id="input1" style="display: none;">
-					<p>1</p>
-					<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
-				</div>
-				<div class="input" id="input2" style="display: none;">
-					<p>2</p>
-					<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
-				</div>
-				<div class="input" id="input3" style="display: none;">
-					<p>3</p>
-					<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
-				</div>
-				<input type="hidden" th:field="*{date}">
 			</div>
 		</div>
-
+		<div class="display wrapper wrapper-in">
+			<div class="input-area">
+				<p>1</p>
+				<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
+				<a th:if="*{good1}" id="goodText1" class="goodText" href="#"
+					th:text="*{good1}"></a>
+				<p>2</p>
+				<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
+				<a th:if="*{good2}" id="goodText2" class="goodText" href="#"
+					th:text="*{good2}"></a>
+				<p>3</p>
+				<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
+				<a th:if="*{good3}" id="goodText3" class="goodText" href="#"
+					th:text="*{good3}"></a>
+			</div>
+		</div>
+		<div class="edit wrapper wrapper-in">
+			<div class="input" id="input1" style="display: none;">
+				<p>1</p>
+				<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
+			</div>
+			<div class="input" id="input2" style="display: none;">
+				<p>2</p>
+				<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
+			</div>
+			<div class="input" id="input3" style="display: none;">
+				<p>3</p>
+				<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
+			</div>
+			<input type="hidden" th:field="*{date}">
+		</div>
 	</form>
 	<footer>
 		<p>©︎ Three good things</p>
@@ -106,43 +111,54 @@
 		}
 
 		$(function() {
-			function editMode(obj){
+			function editMode(obj) {
 				var num = obj.id.slice(-1);
 				$(".display").hide();
 				$(".move").hide();
 				$("#input" + num).show();
+				var $textArea = $("#input" + num).find("textarea");
+				$textArea.focus();
+// 				$textArea.setSelectionRange(2, 5);
+				$(".edit").show();
 			}
 
 			$(".editBtn").on("click", function(e) {
 				editMode(this);
 			});
 
-			$(".goodText").on("click", function(e){
+			$(".goodText").on("click", function(e) {
 				editMode(this);
 			});
 
-			$(".good").on("change", function(e) {
-				e.preventDefault();
-				$.ajax({
-					url : $("form").attr("action"),
-					type : "POST",
-					dataType : "json",
-					data : {
-						good1 : $("#good1").val(),
-						good2 : $("#good2").val(),
-						good3 : $("#good3").val(),
-						date : $("#date").val(),
-						_csrf : $("*[name=_csrf]").val()
-					}
-				}).done(function(data) {
-					alert("登録が完了しました");
-					alert("good1 : " + data.good1);
-					alert("good2 : " + data.good2);
-					alert("good3 : " + data.good3);
-				}).fail(function() {
-					alert("error!");
-				});
+			$("#cancel").on("click", function(e){
+				$(".display").show();
+				$(".move").show();
+				$(".input").hide();
+				$(".edit").hide();
 			});
+
+// 			$(".good").on("change", function(e) {
+// 				e.preventDefault();
+// 				$.ajax({
+// 					url : $("form").attr("action"),
+// 					type : "POST",
+// 					dataType : "json",
+// 					data : {
+// 						good1 : $("#good1").val(),
+// 						good2 : $("#good2").val(),
+// 						good3 : $("#good3").val(),
+// 						date : $("#date").val(),
+// 						_csrf : $("*[name=_csrf]").val()
+// 					}
+// 				}).done(function(data) {
+// 					alert("登録が完了しました");
+// 					alert("good1 : " + data.good1);
+// 					alert("good2 : " + data.good2);
+// 					alert("good3 : " + data.good3);
+// 				}).fail(function() {
+// 					alert("error!");
+// 				});
+// 			});
 		});
 
 		/*]]>*/
