@@ -12,10 +12,14 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-	<header>
-		<div class="wrapper flex-items">
+	<header class="border-bottom">
+
+		<div class="outer flex-items header-in">
+
 			<div class="title">
-				<p>Three good things</p>
+				<p>
+					<a href="#">Three good things</a>
+				</p>
 			</div>
 			<div class="hamburger-menu">
 
@@ -24,77 +28,186 @@
 				<!-- ここからメニュー -->
 				<div class="menu-content">
 					<ul>
-						<li><a href="index.html">TODAY</a></li>
-						<li><a href="#">カレンダー</a></li>
-						<li><a href="postList.html">History</a></li>
+						<li><a href="#" class="diaryBtn">日記</a></li>
+						<li><a href="#">タイムライン</a></li>
+						<li><a href="#" class="searchBtn">検索</a></li>
 						<li><a href="#">ユーザー</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="header-list">
 				<ul>
-					<li><a href="index.html">TODAY</a></li>
-					<li><a href="#">カレンダー</a></li>
-					<li><a href="postList.html">History</a></li>
+					<li><a href="#" class="diaryBtn">日記</a></li>
+					<li><a href="#">タイムライン</a></li>
+					<li><a href="#" class="searchBtn">検索</a></li>
 					<li><a href="#">ユーザー</a></li>
 				</ul>
 			</div>
 		</div>
+
 	</header>
 	<form name="myForm" method="post" th:action="@{/register}"
 		th:object="${mainForm}">
-		<div class="main">
-			<div class="wrapper wrapper-in">
-				<div class="date-move">
-					<div class="date">
-						<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">10月30日</p>
+		<div class="outer row bkwhite">
+			<div class="main col-xs-12 col-md-7">
+				<div class="wrapper">
+					<div class="date-move">
+						<div class="date">
+							<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">10月30日</p>
+						</div>
+						<div class="move">
+							<a class="yesterday btn btn-sm btn border" onclick="yesterday()"
+								href="javascript:void(0)"><</a> <a
+								class="tomorrow btn btn-sm border" onclick="tomorrow()"
+								href="javascript:void(0)">></a>
+						</div>
+						<div class="edit" style="display:none;">
+							<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
+							<button type="button" id="cancel"
+								class="btn btn-sm btn-light border ml-2">キャンセル</button>
+						</div>
 					</div>
-					<div class="move">
-						<a class="yesterday" onclick="yesterday()"
-							href="javascript:void(0)"></a> <a class="tomorrow"
-							onclick="tomorrow()" href="javascript:void(0)"></a>
+					<div class="display">
+						<div class="input-area">
+							<p>1</p>
+							<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
+							<a th:if="*{good1}" id="goodText1" class="goodText" href="#"
+								th:text="*{good1}"></a>
+							<p>2</p>
+							<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
+							<a th:if="*{good2}" id="goodText2" class="goodText" href="#"
+								th:text="*{good2}"></a>
+							<p>3</p>
+							<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
+							<a th:if="*{good3}" id="goodText3" class="goodText" href="#"
+								th:text="*{good3}"></a>
+						</div>
 					</div>
-					<div class="edit" style="display:none;">
-						<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
-						<button type="button" id="cancel" class="btn btn-sm btn-light ml-2">キャンセル</button>
+					<div class="edit">
+						<div class="input" id="input1" style="display:none;">
+							<p>1</p>
+							<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
+						</div>
+						<div class="input" id="input2" style="display:none;">
+							<p>2</p>
+							<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
+						</div>
+						<div class="input" id="input3" style="display:none;">
+							<p>3</p>
+							<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
+						</div>
+						<input type="hidden" th:field="*{date}">
+					</div>
+					<div class="searchMode" style="display:none;">
+						<div class="input-group input-group-sm">
+							<input type="text" class="form-control"
+								placeholder="キーワードを入力してください">
+							<div class="input-group-append">
+								<button type="button" class="btn btn-outline-secondary">検索</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="right-widget col-xs-12 col-md-5">
+				<div class="calendar wrapper">
+					<div class="cal-head">
+						<div class="cal-title">
+							<p>2021年12月</p>
+						</div>
+						<div class="ym-move">
+							<a class="btn btn-sm border" href="#"><<</a> <a
+								class="btn btn-sm border" href="#"><</a> <a
+								class="btn btn-sm border" href="#">今日</a> <a
+								class="btn btn-sm border" href="#">></a> <a
+								class="btn btn-sm border" href="#">>></a>
+						</div>
+					</div>
+					<table class="table text-center">
+						<thead>
+							<tr>
+								<td>日</td>
+								<td>月</td>
+								<td>火</td>
+								<td>水</td>
+								<td>木</td>
+								<td>金</td>
+								<td>土</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="holiday"><a href="#">28</a></td>
+								<td><a href="#">29</a></td>
+								<td><a href="#">30</a></td>
+								<td><a href="#">31</a></td>
+								<td><a href="#">1</a></td>
+								<td><a href="#">2</a></td>
+								<td class="holiday"><a href="#">3</a></td>
+							</tr>
+							<tr>
+								<td class="holiday">28</td>
+								<td>29</td>
+								<td>30</td>
+								<td>31</td>
+								<td>1</td>
+								<td>2</td>
+								<td class="holiday">3</td>
+							</tr>
+							<tr>
+								<td class="holiday">28</td>
+								<td>29</td>
+								<td>30</td>
+								<td>31</td>
+								<td>1</td>
+								<td>2</td>
+								<td class="holiday">3</td>
+							</tr>
+							<tr>
+								<td class="holiday">28</td>
+								<td>29</td>
+								<td>30</td>
+								<td>31</td>
+								<td>1</td>
+								<td>2</td>
+								<td class="holiday">3</td>
+							</tr>
+							<tr>
+								<td class="holiday">28</td>
+								<td>29</td>
+								<td>30</td>
+								<td>31</td>
+								<td>1</td>
+								<td>2</td>
+								<td class="holiday">3</td>
+							</tr>
+							<tr>
+								<td class="holiday">28</td>
+								<td>29</td>
+								<td>30</td>
+								<td>31</td>
+								<td>1</td>
+								<td>2</td>
+								<td class="holiday">3</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="wrapper wrapper-in">
+					<div class="search input-group input-group-sm">
+						<input type="text" class="form-control">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-outline-secondary">検索</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="display wrapper wrapper-in">
-			<div class="input-area">
-				<p>1</p>
-				<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
-				<a th:if="*{good1}" id="goodText1" class="goodText" href="#"
-					th:text="*{good1}"></a>
-				<p>2</p>
-				<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
-				<a th:if="*{good2}" id="goodText2" class="goodText" href="#"
-					th:text="*{good2}"></a>
-				<p>3</p>
-				<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
-				<a th:if="*{good3}" id="goodText3" class="goodText" href="#"
-					th:text="*{good3}"></a>
-			</div>
-		</div>
-		<div class="edit wrapper wrapper-in">
-			<div class="input" id="input1" style="display: none;">
-				<p>1</p>
-				<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
-			</div>
-			<div class="input" id="input2" style="display: none;">
-				<p>2</p>
-				<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
-			</div>
-			<div class="input" id="input3" style="display: none;">
-				<p>3</p>
-				<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
-			</div>
-			<input type="hidden" th:field="*{date}">
-		</div>
 	</form>
 	<footer>
-		<p>©︎ Three good things</p>
+		<p>
+			©︎ Copyright 2021-2022 by Three good things. <a href="#">問い合わせ</a>
+		</p>
 	</footer>
 	<script type="text/javascript" th:inline="javascript">
 		/*<![CDATA[*/
@@ -118,9 +231,27 @@
 				$("#input" + num).show();
 				var $textArea = $("#input" + num).find("textarea");
 				$textArea.focus();
-// 				$textArea.setSelectionRange(2, 5);
+				// 				$textArea.setSelectionRange(2, 5);
 				$(".edit").show();
 			}
+
+			$(".diaryBtn").on("click", function(e){
+				$(".searchMode").hide();
+				$(".edit").hide();
+				$(".date-move").show();
+				$(".display").show();
+				$(".move").show();
+				$(".input").hide();
+			});
+
+			$(".searchBtn").on("click", function(e) {
+				$(".searchMode").show();
+				$(".date-move").hide();
+				$(".display").hide();
+				$(".move").hide();
+				$(".input").hide();
+				$(".edit").hide();
+			});
 
 			$(".editBtn").on("click", function(e) {
 				editMode(this);
@@ -130,35 +261,35 @@
 				editMode(this);
 			});
 
-			$("#cancel").on("click", function(e){
+			$("#cancel").on("click", function(e) {
 				$(".display").show();
 				$(".move").show();
 				$(".input").hide();
 				$(".edit").hide();
 			});
 
-// 			$(".good").on("change", function(e) {
-// 				e.preventDefault();
-// 				$.ajax({
-// 					url : $("form").attr("action"),
-// 					type : "POST",
-// 					dataType : "json",
-// 					data : {
-// 						good1 : $("#good1").val(),
-// 						good2 : $("#good2").val(),
-// 						good3 : $("#good3").val(),
-// 						date : $("#date").val(),
-// 						_csrf : $("*[name=_csrf]").val()
-// 					}
-// 				}).done(function(data) {
-// 					alert("登録が完了しました");
-// 					alert("good1 : " + data.good1);
-// 					alert("good2 : " + data.good2);
-// 					alert("good3 : " + data.good3);
-// 				}).fail(function() {
-// 					alert("error!");
-// 				});
-// 			});
+			// 			$(".good").on("change", function(e) {
+			// 				e.preventDefault();
+			// 				$.ajax({
+			// 					url : $("form").attr("action"),
+			// 					type : "POST",
+			// 					dataType : "json",
+			// 					data : {
+			// 						good1 : $("#good1").val(),
+			// 						good2 : $("#good2").val(),
+			// 						good3 : $("#good3").val(),
+			// 						date : $("#date").val(),
+			// 						_csrf : $("*[name=_csrf]").val()
+			// 					}
+			// 				}).done(function(data) {
+			// 					alert("登録が完了しました");
+			// 					alert("good1 : " + data.good1);
+			// 					alert("good2 : " + data.good2);
+			// 					alert("good3 : " + data.good3);
+			// 				}).fail(function() {
+			// 					alert("error!");
+			// 				});
+			// 			});
 		});
 
 		/*]]>*/

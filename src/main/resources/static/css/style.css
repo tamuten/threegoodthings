@@ -4,6 +4,7 @@ body {
 	font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans",
 		"Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo",
 		sans-serif;
+	background-color: #f5f5f5;
 }
 
 h1, h2, h3, p, ul {
@@ -19,12 +20,28 @@ li {
 	list-style: none;
 }
 
+textarea {
+	font-size: 24px;
+}
+
+.header-in {
+	height: 100%;
+	padding: 0 4%;
+}
+
 .title {
 	font-family: cursive;
 	font-size: 20px;
-	padding: 10px 0;
 	margin-right: auto;
 	white-space: nowrap;
+	display: flex;
+	height: 100%;
+	align-items: center;
+}
+
+.title a {
+	text-decoration: none;
+	color: #000;
 }
 
 .date-move {
@@ -35,41 +52,19 @@ li {
 	height: 50px;
 }
 
-.move {
-	display: flex;
+.move a {
+	color: black;
+	text-decoration: none;
+	font-size: 18px;
+	padding: 0.1rem 1.25rem;
 }
 
-.move a:hover {
+.date-move .move a:hover {
 	opacity: 0.7;
-}
-
-.yesterday:after {
-	content: "";
-	width: 10px;
-	height: 10px;
-	border-bottom: solid 2px #404040;
-	border-left: solid 2px #404040;
-	display: block;
-	transform: rotate(45deg)
-}
-
-.tomorrow:after {
-	content: "";
-	width: 10px;
-	height: 10px;
-	border-top: solid 2px #404040;
-	border-right: solid 2px #404040;
-	display: block;
-	transform: rotate(45deg);
 }
 
 .date {
 	font-size: 22px;
-}
-
-.flex-items {
-	display: flex;
-	align-items: center;
 }
 
 header {
@@ -123,6 +118,7 @@ header {
 	color: #ffffff;
 	padding: 9px 15px 10px 0;
 	position: relative;
+	text-decoration: none;
 }
 
 .menu-content ul li a::before {
@@ -195,19 +191,32 @@ header li a:hover {
 }
 
 .main {
-	margin-top: 50px;
+	margin-top: 55px;
 }
 
 .wrapper {
 	padding: 0 4%;
 }
 
+.bkwhite {
+	background-color: #fff;
+	padding-bottom: 20px;
+}
+
 .input {
 	margin: 15px 0;
 }
 
+.input-area {
+	margin-top: 15px;
+}
+
 .input-area p, .edit p {
-	margin: 10px 0 3px;
+	margin: 0px 0 3px;
+}
+
+.input-area a {
+	margin-bottom: 15px;
 }
 
 .input-area .editBtn {
@@ -241,7 +250,7 @@ textarea {
 	box-sizing: border-box;
 	line-height: 1.6;
 	padding: 5px;
-	font-weight:300;
+	font-weight: 300;
 }
 
 textarea:focus {
@@ -249,16 +258,72 @@ textarea:focus {
 	box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
 }
 
+.searchMode {
+	margin: 16px 0;
+}
+
+.cal-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 50px;
+	border-top: 0.5px solid #c3c3c3;
+}
+
+.cal-title {
+	font-size: 16px;
+}
+
+.ym-move a {
+	color: black;
+}
+
+.calendar table {
+	table-layout: fixed;
+	font-size: 16px;
+}
+
+.calendar thead td {
+	padding: 0.25rem 0;
+}
+
+.calendar tbody td {
+	padding: 0.25rem 0 1.75rem 0;
+}
+
+.calendar .holiday {
+	background-color: #f8f8f8;
+}
+
+.calendar table a {
+	text-decoration: none;
+	color: black;
+}
+
 footer {
 	text-align: center;
-	font-size: 10px;
-	margin: 20px 0;
+	font-size: 14px;
+	background-color: #fff;
+	padding: 20px 0;
 }
 
 @media screen and (min-width:768px) {
-	.wrapper {
+	.header-in {
+		padding: 15px;
+	}
+	.flex-items {
+		display: flex;
+		align-items: center;
+	}
+	.outer {
 		margin: 0 auto;
-		max-width: 960px;
+		max-width: 750px;
+	}
+	.wrapper {
+		padding: 0;
+	}
+	.right-widget {
+		margin-top: 55px;
 	}
 	.menu-btn {
 		display: none;
@@ -269,14 +334,16 @@ footer {
 	header ul {
 		display: flex;
 	}
-	.input-area {
-		display: flex;
-		justify-content: space-between;
-	}
-	.input {
-		width: 32%;
-	}
 	.input-area textarea {
 		height: 400px;
+	}
+	.cal-head {
+		border-top: none;
+	}
+}
+
+@media screen and (min-width:992px) {
+	.outer {
+		max-width: 970px;
 	}
 }
