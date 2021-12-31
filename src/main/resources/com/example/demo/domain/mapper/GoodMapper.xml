@@ -2,9 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.domain.mapper.GoodMapper">
 	<insert id="insertOne">
-		INSERT INTO good(date, good1, good2, good3) VALUES (#{date}, #{good1}, #{good2}, #{good3});
+		INSERT INTO
+		good(
+			date,
+			<choose>
+				<when test="num == 1">
+					good1
+				</when>
+				<when test="num == 2">
+					good2
+				</when>
+				<when test="num == 3">
+					good3
+				</when>
+			</choose>
+			,
+			registered_datetime
+		)
+		VALUES (
+			#{date},
+			#{good},
+			CURRENT_TIMESTAMP
+		);
 	</insert>
-	<select id="selectOne" resultType="com.example.demo.domain.model.Good">
+	<select id="selectOne"
+		resultType="com.example.demo.domain.model.Good">
 		SELECT
 			date,
 			good1,
@@ -24,13 +46,24 @@
 		WHERE
 			date = #{targetDate, jdbcType=DATE}
 	</select>
-	<update id="updateOne" parameterType="com.example.demo.domain.model.Good">
+	<update id="updateOne"
+		parameterType="com.example.demo.domain.model.Good">
 		UPDATE
 			good
 		SET
-			good1 = #{good1},
-			good2 = #{good2},
-			good3 = #{good3}
+			<choose>
+				<when test="num == 1">
+					good1
+				</when>
+				<when test="num == 2">
+					good2
+				</when>
+				<when test="num == 3">
+					good3
+				</when>
+			</choose>
+			= #{good},
+			update_datetime = CURRENT_TIMESTAMP
 		WHERE
 			date = #{date}
 	</update>

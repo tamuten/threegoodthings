@@ -8,8 +8,8 @@ import com.example.demo.domain.model.Good;
 
 @Mapper
 public interface GoodMapper {
-	public void insertOne(Good good);
+	public void insertOne(String good, int num, Date date);
 	public Good selectOne(Date date);
 	public int count(Date date);
-	public void updateOne(Good good);
+	public void updateOne(String good, int num, Date date);
 }

@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.domain.model.Good;
+import com.example.demo.domain.model.Week;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
 import com.example.demo.util.DateUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.util.StrUtil;
 
 @Controller
 public class MainController {
@@ -27,6 +30,60 @@ public class MainController {
 	private GoodDao goodDao;
 
 	private String index(Date searchDate, Model model) {
+		Calendar rightNow = Calendar.getInstance();
+		int day = rightNow.get(Calendar.DATE);
+		int year = rightNow.get(Calendar.YEAR);
+		int month = rightNow.get(Calendar.MONTH);
+
+		// 今月の始まり
+		rightNow.set(year, month, 1);
+		int startWeek = rightNow.get(Calendar.DAY_OF_WEEK);
+		// 今月末日
+		rightNow.set(year, month + 1, 0);
+		int thisMonthLastDay = rightNow.get(Calendar.DATE);
+		int lastWeek = rightNow.get(Calendar.DAY_OF_WEEK);
+
+		// 先月末日
+		rightNow.set(year, month, 0);
+		int beforeMonthLastDay = rightNow.get(Calendar.DATE);
+
+		List<Week> calendarDayW = new ArrayList<Week>();
+		int count = 0;
+
+		Week week = new Week();
+
+		// 日曜日始まりでなければ前月の日付を格納する
+		if (startWeek != 1) {
+			for (int i = startWeek - 2; i >= 0; i--) {
+				week.setWeekday(count, beforeMonthLastDay - i);
+				count++;
+			}
+		}
+
+		//当月分の日付を格納する
+		for (int i = 1; i <= thisMonthLastDay; i++) {
+			week.setWeekday(count, i);
+			if (count == 6) {
+				calendarDayW.add(week);
+				week = new Week();
+				count = 0;
+			} else {
+				count++;
+			}
+		}
+
+		// 日曜日終わりでなければ翌月分の日付を格納する。
+		if (lastWeek != 7) {
+			int j = 1;
+			for (int i = lastWeek; i < 7; i++) {
+				week.setWeekday(count, j++);
+				count++;
+			}
+		}
+
+		calendarDayW.add(week);
+		model.addAttribute("calendarDay", calendarDayW);
+
 		Good good = goodDao.selectOne(new java.sql.Date(searchDate
 			.getTime()));
 		MainForm form = new MainForm();
@@ -44,51 +101,41 @@ public class MainController {
 		return index(new Date(), model);
 	}
 
-	//	@PostMapping("/register")
-	//	public String register(MainForm form, Model model) {
-	//		Good good = new Good();
-	//		BeanUtils.copyProperties(form, good);
-	//		good.setDate(new java.sql.Date(form.getDate()
-	//			.getTime()));
-	//		goodDao.insert(good);
-	//		return "index";
-	//	}
-
 	@PostMapping("/register")
 	@ResponseBody
-	public String register(@RequestParam("good1") String good1, @RequestParam String good2, @RequestParam String good3,
-			@RequestParam Date date) {
-		Good good = new Good();
+	public String register(@RequestParam String good, @RequestParam Date date, @RequestParam int num) {
+		if (StringUtils.isEmpty(good)) {
+			return StrUtil.getJson(good);
+		}
+
 		java.sql.Date registerDate = new java.sql.Date(date.getTime());
-		good.setDate(registerDate);
-		good.setGood1(good1);
-		good.setGood2(good2);
-		good.setGood3(good3);
+
 		if (goodDao.count(registerDate) <= 0) {
-			goodDao.insert(good);
+			goodDao.insert(good, num, registerDate);
 		} else {
-			goodDao.updateOne(good);
+			goodDao.updateOne(good, num, registerDate);
 		}
 
-		ObjectMapper mapper = new ObjectMapper();
-		String json;
-		try {
-			json = mapper.writeValueAsString(good);
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException(e);
-		}
-
-		return json;
+		return StrUtil.getJson(good);
 	}
 
-	@GetMapping("/yesterday")
-	public String yesterday(Model model, HttpServletRequest request) {
-		Date today = DateUtil.parseDate(request.getParameter("date"));
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(today);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
+	//	@GetMapping("/yesterday")
+	//	public String yesterday(Model model, HttpServletRequest request) {
+	//		Date today = DateUtil.parseDate(request.getParameter("date"));
+	//		Calendar cal = Calendar.getInstance();
+	//		cal.setTime(today);
+	//		cal.add(Calendar.DAY_OF_MONTH, -1);
+	//
+	//		return index(cal.getTime(), model);
+	//	}
 
-		return index(cal.getTime(), model);
+	@GetMapping("/yesterday")
+	@ResponseBody
+	public String yesterday(@RequestParam Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, -1);
+		return loadDiary(cal.getTime());
 	}
 
 	@GetMapping("/tomorrow")
@@ -99,5 +146,12 @@ public class MainController {
 		cal.add(Calendar.DAY_OF_MONTH, 1);
 
 		return index(cal.getTime(), model);
+	}
+
+	@GetMapping("/load")
+	@ResponseBody
+	public String loadDiary(@RequestParam Date date) {
+		Good good = goodDao.selectOne(DateUtil.parseSqlDate(date));
+		return StrUtil.getJson(good);
 	}
 }

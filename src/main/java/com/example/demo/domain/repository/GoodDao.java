@@ -13,8 +13,8 @@ public class GoodDao {
 	@Autowired
 	private GoodMapper goodMapper;
 
-	public void insert(Good good) {
-		goodMapper.insertOne(good);
+	public void insert(String good, int num, Date date) {
+		goodMapper.insertOne(good, num, date);
 	}
 
 	public Good selectOne(Date date) {
@@ -25,7 +25,7 @@ public class GoodDao {
 		return goodMapper.count(date);
 	}
 
-	public void updateOne(Good good) {
-		goodMapper.updateOne(good);
+	public void updateOne(String good, int num, Date date) {
+		goodMapper.updateOne(good, num, date);
 	}
 }

@@ -53,15 +53,15 @@
 				<div class="wrapper">
 					<div class="date-move">
 						<div class="date">
-							<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">10月30日</p>
+							<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">2021年10月30日</p>
 						</div>
 						<div class="move">
-							<a class="yesterday btn btn-sm btn border" onclick="yesterday()"
+							<a class="yesterday btn btn-sm btn border" onclick=""
 								href="javascript:void(0)"><</a> <a
 								class="tomorrow btn btn-sm border" onclick="tomorrow()"
 								href="javascript:void(0)">></a>
 						</div>
-						<div class="edit" style="display:none;">
+						<div class="edit" style="display: none;">
 							<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
 							<button type="button" id="cancel"
 								class="btn btn-sm btn-light border ml-2">キャンセル</button>
@@ -70,35 +70,44 @@
 					<div class="display">
 						<div class="input-area">
 							<p>1</p>
-							<a th:unless="*{good1}" id="good1" class="editBtn" href="#">タップして編集する</a>
-							<a th:if="*{good1}" id="goodText1" class="goodText" href="#"
-								th:text="*{good1}"></a>
+							<a id="edit1" class="editBtn" href="#"
+								th:style="'display:' + *{(good1 == null ? 'inline-block' : 'none')}">タップして編集する</a>
+							<a id="goodText1" class="goodText" href="#" th:text="*{good1}"
+								th:style="'display:' + *{(good1 != null ? 'inline-block' : 'none')}"></a>
 							<p>2</p>
-							<a th:unless="*{good2}" id="good2" class="editBtn" href="#">タップして編集する</a>
-							<a th:if="*{good2}" id="goodText2" class="goodText" href="#"
-								th:text="*{good2}"></a>
+							<a id="edit2" class="editBtn" href="#"
+								th:style="'display:' + *{(good2 == null ? 'inline-block' : 'none')}">タップして編集する</a>
+							<a id="goodText2" class="goodText" href="#" th:text="*{good2}"
+								th:style="'display:' + *{(good2 != null ? 'inline-block' : 'none')}"></a>
 							<p>3</p>
-							<a th:unless="*{good3}" id="good3" class="editBtn" href="#">タップして編集する</a>
-							<a th:if="*{good3}" id="goodText3" class="goodText" href="#"
-								th:text="*{good3}"></a>
+							<a id="edit3" class="editBtn" href="#"
+								th:style="'display:' + *{(good3 == null ? 'inline-block' : 'none')}">タップして編集する</a>
+							<a id="goodText3" class="goodText" href="#" th:text="*{good3}"
+								th:style="'display:' + *{(good3 != null ? 'inline-block' : 'none')}"></a>
 						</div>
 					</div>
 					<div class="edit">
-						<div class="input" id="input1" style="display:none;">
+						<div class="input" id="input1" style="display: none;">
 							<p>1</p>
 							<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
+							<p id="count1" class="text-right"
+								th:text="*{good1 != null} ? *{#strings.length(good1)} : 0">0</p>
 						</div>
-						<div class="input" id="input2" style="display:none;">
+						<div class="input" id="input2" style="display: none;">
 							<p>2</p>
 							<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
+							<p id="count2" class="text-right"
+								th:text="*{good2 != null} ? *{#strings.length(good2)} : 0">0</p>
 						</div>
-						<div class="input" id="input3" style="display:none;">
+						<div class="input" id="input3" style="display: none;">
 							<p>3</p>
 							<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
+							<p id="count3" class="text-right"
+								th:text="*{good3 != null} ? *{#strings.length(good3)} : 0">0</p>
 						</div>
 						<input type="hidden" th:field="*{date}">
 					</div>
-					<div class="searchMode" style="display:none;">
+					<div class="searchMode" style="display: none;">
 						<div class="input-group input-group-sm">
 							<input type="text" class="form-control"
 								placeholder="キーワードを入力してください">
@@ -136,59 +145,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="holiday"><a href="#">28</a></td>
-								<td><a href="#">29</a></td>
-								<td><a href="#">30</a></td>
-								<td><a href="#">31</a></td>
-								<td><a href="#">1</a></td>
-								<td><a href="#">2</a></td>
-								<td class="holiday"><a href="#">3</a></td>
-							</tr>
-							<tr>
-								<td class="holiday">28</td>
-								<td>29</td>
-								<td>30</td>
-								<td>31</td>
-								<td>1</td>
-								<td>2</td>
-								<td class="holiday">3</td>
-							</tr>
-							<tr>
-								<td class="holiday">28</td>
-								<td>29</td>
-								<td>30</td>
-								<td>31</td>
-								<td>1</td>
-								<td>2</td>
-								<td class="holiday">3</td>
-							</tr>
-							<tr>
-								<td class="holiday">28</td>
-								<td>29</td>
-								<td>30</td>
-								<td>31</td>
-								<td>1</td>
-								<td>2</td>
-								<td class="holiday">3</td>
-							</tr>
-							<tr>
-								<td class="holiday">28</td>
-								<td>29</td>
-								<td>30</td>
-								<td>31</td>
-								<td>1</td>
-								<td>2</td>
-								<td class="holiday">3</td>
-							</tr>
-							<tr>
-								<td class="holiday">28</td>
-								<td>29</td>
-								<td>30</td>
-								<td>31</td>
-								<td>1</td>
-								<td>2</td>
-								<td class="holiday">3</td>
+							<tr th:each="week : ${calendarDay}">
+								<td class="holiday"><a href="#"
+									th:text="${week.weekday[0]}">28</a></td>
+								<td><a href="#" th:text="${week.weekday[1]}">29</a></td>
+								<td><a href="#" th:text="${week.weekday[2]}">30</a></td>
+								<td><a href="#" th:text="${week.weekday[3]}">31</a></td>
+								<td><a href="#" th:text="${week.weekday[4]}">1</a></td>
+								<td><a href="#" th:text="${week.weekday[5]}">2</a></td>
+								<td class="holiday"><a href="#"
+									th:text="${week.weekday[6]}">3</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -209,91 +175,7 @@
 			©︎ Copyright 2021-2022 by Three good things. <a href="#">問い合わせ</a>
 		</p>
 	</footer>
-	<script type="text/javascript" th:inline="javascript">
-		/*<![CDATA[*/
-		function yesterday() {
-			document.myForm.setAttribute("action", "/yesterday");
-			document.myForm.setAttribute("method", "get");
-			document.myForm.submit();
-		}
-
-		function tomorrow() {
-			document.myForm.setAttribute("action", "/tomorrow");
-			document.myForm.setAttribute("method", "get");
-			document.myForm.submit();
-		}
-
-		$(function() {
-			function editMode(obj) {
-				var num = obj.id.slice(-1);
-				$(".display").hide();
-				$(".move").hide();
-				$("#input" + num).show();
-				var $textArea = $("#input" + num).find("textarea");
-				$textArea.focus();
-				// 				$textArea.setSelectionRange(2, 5);
-				$(".edit").show();
-			}
-
-			$(".diaryBtn").on("click", function(e){
-				$(".searchMode").hide();
-				$(".edit").hide();
-				$(".date-move").show();
-				$(".display").show();
-				$(".move").show();
-				$(".input").hide();
-			});
-
-			$(".searchBtn").on("click", function(e) {
-				$(".searchMode").show();
-				$(".date-move").hide();
-				$(".display").hide();
-				$(".move").hide();
-				$(".input").hide();
-				$(".edit").hide();
-			});
-
-			$(".editBtn").on("click", function(e) {
-				editMode(this);
-			});
-
-			$(".goodText").on("click", function(e) {
-				editMode(this);
-			});
-
-			$("#cancel").on("click", function(e) {
-				$(".display").show();
-				$(".move").show();
-				$(".input").hide();
-				$(".edit").hide();
-			});
-
-			// 			$(".good").on("change", function(e) {
-			// 				e.preventDefault();
-			// 				$.ajax({
-			// 					url : $("form").attr("action"),
-			// 					type : "POST",
-			// 					dataType : "json",
-			// 					data : {
-			// 						good1 : $("#good1").val(),
-			// 						good2 : $("#good2").val(),
-			// 						good3 : $("#good3").val(),
-			// 						date : $("#date").val(),
-			// 						_csrf : $("*[name=_csrf]").val()
-			// 					}
-			// 				}).done(function(data) {
-			// 					alert("登録が完了しました");
-			// 					alert("good1 : " + data.good1);
-			// 					alert("good2 : " + data.good2);
-			// 					alert("good3 : " + data.good3);
-			// 				}).fail(function() {
-			// 					alert("error!");
-			// 				});
-			// 			});
-		});
-
-		/*]]>*/
-	</script>
+	<script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
 <meta th:name="_csrf" th:content="${_csrf.token}" />
 <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
