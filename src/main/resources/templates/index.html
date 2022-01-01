@@ -67,6 +67,7 @@
 						</div>
 					</div>
 					<div class="display">
+
 						<div class="input-area">
 							<p>1</p>
 							<a id="edit1" class="editBtn" href="#"
@@ -86,6 +87,9 @@
 						</div>
 					</div>
 					<div class="edit">
+						<div class="error alert alert-danger" style="display: none;">
+							<p>error message</p>
+						</div>
 						<div class="input" id="input1" style="display: none;">
 							<p>1</p>
 							<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
@@ -124,12 +128,12 @@
 							<p>2021年12月</p>
 						</div>
 						<div class="ym-move">
-							<a class="last-year btn btn-sm border" href="#"><<</a> <a
-								class="last-mon btn btn-sm border" href="#"><</a> <a
-								class="today btn btn-sm border" href="#">今日</a> <a
-								class="next-mon btn btn-sm border" href="#">></a> <a
-								class="next-year btn btn-sm border" href="#">>></a>
-							<input type="hidden" id="cal-date" th:value="*{date}">
+							<a class="btn btn-sm border" href="javascript:void(0)"
+								id="last-year"><<</a> <a class="last-mon btn btn-sm border"
+								href="#"><</a> <a class="today btn btn-sm border" href="#">今日</a>
+							<a class="next-mon btn btn-sm border" href="#">></a> <a
+								class="next-year btn btn-sm border" href="#">>></a> <input
+								type="hidden" id="cal-date" th:value="*{date}">
 						</div>
 					</div>
 					<table class="table text-center">
@@ -144,7 +148,7 @@
 								<td>土</td>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="calendarDays">
 							<tr th:each="week : ${calendarDay}">
 								<td class="holiday"><a href="#"
 									th:text="${week.weekday[0]}">28</a></td>

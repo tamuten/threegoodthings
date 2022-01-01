@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import com.example.demo.domain.model.Good;
 import com.example.demo.domain.model.Week;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
+import com.example.demo.util.CalendarUtil;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.StrUtil;
 
@@ -26,60 +27,15 @@ public class MainController {
 	@Autowired
 	private GoodDao goodDao;
 
+	//	@InitBinder
+	//	public void initBinder(WebDataBinder binder) {
+	//		// 未入力のStringをnullに設定する
+	//		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
+	//	}
+
 	private String index(Date searchDate, Model model) {
-		Calendar rightNow = Calendar.getInstance();
-		int day = rightNow.get(Calendar.DATE);
-		int year = rightNow.get(Calendar.YEAR);
-		int month = rightNow.get(Calendar.MONTH);
-
-		// 今月の始まり
-		rightNow.set(year, month, 1);
-		int startWeek = rightNow.get(Calendar.DAY_OF_WEEK);
-		// 今月末日
-		rightNow.set(year, month + 1, 0);
-		int thisMonthLastDay = rightNow.get(Calendar.DATE);
-		int lastWeek = rightNow.get(Calendar.DAY_OF_WEEK);
-
-		// 先月末日
-		rightNow.set(year, month, 0);
-		int beforeMonthLastDay = rightNow.get(Calendar.DATE);
-
-		List<Week> calendarDayW = new ArrayList<Week>();
-		int count = 0;
-
-		Week week = new Week();
-
-		// 日曜日始まりでなければ前月の日付を格納する
-		if (startWeek != 1) {
-			for (int i = startWeek - 2; i >= 0; i--) {
-				week.setWeekday(count, beforeMonthLastDay - i);
-				count++;
-			}
-		}
-
-		//当月分の日付を格納する
-		for (int i = 1; i <= thisMonthLastDay; i++) {
-			week.setWeekday(count, i);
-			if (count == 6) {
-				calendarDayW.add(week);
-				week = new Week();
-				count = 0;
-			} else {
-				count++;
-			}
-		}
-
-		// 日曜日終わりでなければ翌月分の日付を格納する。
-		if (lastWeek != 7) {
-			int j = 1;
-			for (int i = lastWeek; i < 7; i++) {
-				week.setWeekday(count, j++);
-				count++;
-			}
-		}
-
-		calendarDayW.add(week);
-		model.addAttribute("calendarDay", calendarDayW);
+		List<Week> calendarDay = CalendarUtil.generateCalendar(searchDate);
+		model.addAttribute("calendarDay", calendarDay);
 
 		Good good = goodDao.selectOne(new java.sql.Date(searchDate
 			.getTime()));
@@ -92,6 +48,12 @@ public class MainController {
 		return "index";
 	}
 
+	@GetMapping("/loadCalendar")
+	@ResponseBody
+	public String loadCalendar(@RequestParam Date targetDate) {
+		return StrUtil.getJson(CalendarUtil.generateCalendar(targetDate));
+	}
+
 	@GetMapping({ "/", "/index" })
 	public String today(Model model) {
 		// 本日の日付で表示する
@@ -101,6 +63,8 @@ public class MainController {
 	@PostMapping("/register")
 	@ResponseBody
 	public String register(@RequestParam String good, @RequestParam Date date, @RequestParam int num) {
+		if (StringUtils.isEmpty(good))
+			good = null;
 		java.sql.Date registerDate = new java.sql.Date(date.getTime());
 
 		if (goodDao.count(registerDate) <= 0) {
