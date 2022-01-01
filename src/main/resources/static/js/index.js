@@ -1,4 +1,5 @@
 $(function() {
+	// 以下、日記の操作関数
 	(function() {
 		var num = 0;
 		var val = null;
@@ -53,13 +54,17 @@ $(function() {
 		}
 
 		$("#save").on("click", function(e) {
+			var good = $('#good' + num).val();
+			if (good == '') {
+				good = null;
+			}
 			e.preventDefault();
 			$.ajax({
 				url: "/register",
 				type: "POST",
 				dataType: "json",
 				data: {
-					good: $('#good' + num).val(),
+					good: good,
 					date: $("#date").val(),
 					num: num,
 					_csrf: $("*[name=_csrf]").val()
@@ -85,7 +90,7 @@ $(function() {
 					_csrf: $("*[name=_csrf]").val()
 				}
 			}).done(function(data) {
-				if(data == null) return;
+				if (data == null) return;
 				if (data.good1 != null) {
 					$("#goodText1").text(data.good1);
 					$("#goodText1").show();
@@ -117,32 +122,87 @@ $(function() {
 					_csrf: $("*[name=_csrf]").val()
 				}
 			}).done(function(data) {
-				var displayDate = new Date(data.date);
-				var year = displayDate.getFullYear();
-				var month = displayDate.getMonth() + 1;
-				var day = displayDate.getDate();
-				$(".date").find('p').text(year + '年' + month + '月' + day + '日');
-				if (data.good1 != null) {
-					$("#goodText1").text(data.good1);
-					$("#goodText1").show();
-					$("#edit1").hide();
-				}
-				if (data.good2 != null) {
-					$("#goodText2").text(data.good2);
-					$("#goodText2").show();
-					$("#edit2").hide();
-				}
-				if (data.good3 != null) {
-					$("#goodText3").text(data.good3);
-					$("#goodText3").show();
-					$("#edit3").hide();
-				}
-				$("#date").val(year + '/' + month + '/' + day);
+				displayData(data);
 			}).fail(function() {
 				alert("error!");
 			});
 		})
+
+		$(".tomorrow").on("click", function(e) {
+			e.preventDefault();
+			$.ajax({
+				url: "/tomorrow",
+				type: "GET",
+				dataType: "json",
+				data: {
+					date: $("#date").val(),
+					_csrf: $("*[name=_csrf]").val()
+				}
+			}).done(function(data) {
+				displayData(data);
+			}).fail(function() {
+				alert("error!");
+			});
+		})
+
+		function displayData(data) {
+			var displayDate = new Date(data.date);
+			var year = displayDate.getFullYear();
+			var month = displayDate.getMonth() + 1;
+			var day = displayDate.getDate();
+			$(".date").find('p').text(year + '年' + month + '月' + day + '日');
+			if (data.good1 != null) {
+				$("#goodText1").text(data.good1);
+				$("#goodText1").show();
+				$("#edit1").hide();
+			} else {
+				$("#goodText1").hide();
+				$("#edit1").show();
+			}
+			if (data.good2 != null) {
+				$("#goodText2").text(data.good2);
+				$("#goodText2").show();
+				$("#edit2").hide();
+			} else {
+				$("#goodText2").hide();
+				$("#edit2").show();
+			}
+			if (data.good3 != null) {
+				$("#goodText3").text(data.good3);
+				$("#goodText3").show();
+				$("#edit3").hide();
+			} else {
+				$("#goodText3").hide();
+				$("#edit3").show();
+			}
+			$("#date").val(year + '/' + month + '/' + day);
+		}
 	})();
+
+	// 以下、カレンダーの操作関数
+	(function(){
+		$(".last-year").on("click", function(e){
+			var date = $("#cal-date").val();
+			loadCalendarData(date);
+		});
+
+		function loadCalendarData(date){
+			e.preventDefault();
+			$.ajax({
+				url: "/loadCalendar",
+				type: "GET",
+				dataType: "json",
+				data: {
+					date: date,
+					_csrf: $("*[name=_csrf]").val()
+				}
+			}).done(function(data) {
+				displayCalendar(data);
+			}).fail(function() {
+				alert("error!");
+			});
+		}
+	})
 
 	// 入力した文字数をカウントして表示する
 	$(".input").on("keyup", function(e) {
@@ -151,15 +211,3 @@ $(function() {
 		$("#count" + num).text(count);
 	});
 });
-
-function yesterday() {
-	document.myForm.setAttribute("action", "/yesterday");
-	document.myForm.setAttribute("method", "get");
-	document.myForm.submit();
-}
-
-function tomorrow() {
-	document.myForm.setAttribute("action", "/tomorrow");
-	document.myForm.setAttribute("method", "get");
-	document.myForm.submit();
-}

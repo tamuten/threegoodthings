@@ -5,9 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,10 +101,6 @@ public class MainController {
 	@PostMapping("/register")
 	@ResponseBody
 	public String register(@RequestParam String good, @RequestParam Date date, @RequestParam int num) {
-		if (StringUtils.isEmpty(good)) {
-			return StrUtil.getJson(good);
-		}
-
 		java.sql.Date registerDate = new java.sql.Date(date.getTime());
 
 		if (goodDao.count(registerDate) <= 0) {
@@ -119,16 +112,6 @@ public class MainController {
 		return StrUtil.getJson(good);
 	}
 
-	//	@GetMapping("/yesterday")
-	//	public String yesterday(Model model, HttpServletRequest request) {
-	//		Date today = DateUtil.parseDate(request.getParameter("date"));
-	//		Calendar cal = Calendar.getInstance();
-	//		cal.setTime(today);
-	//		cal.add(Calendar.DAY_OF_MONTH, -1);
-	//
-	//		return index(cal.getTime(), model);
-	//	}
-
 	@GetMapping("/yesterday")
 	@ResponseBody
 	public String yesterday(@RequestParam Date date) {
@@ -139,19 +122,22 @@ public class MainController {
 	}
 
 	@GetMapping("/tomorrow")
-	public String tomorrow(Model model, HttpServletRequest request) {
-		Date today = DateUtil.parseDate(request.getParameter("date"));
+	@ResponseBody
+	public String tomorrow(@RequestParam Date date) {
 		Calendar cal = Calendar.getInstance();
-		cal.setTime(today);
+		cal.setTime(date);
 		cal.add(Calendar.DAY_OF_MONTH, 1);
-
-		return index(cal.getTime(), model);
+		return loadDiary(cal.getTime());
 	}
 
 	@GetMapping("/load")
 	@ResponseBody
 	public String loadDiary(@RequestParam Date date) {
 		Good good = goodDao.selectOne(DateUtil.parseSqlDate(date));
+		if (good == null) {
+			good = new Good();
+			good.setDate(DateUtil.parseSqlDate(date));
+		}
 		return StrUtil.getJson(good);
 	}
 }

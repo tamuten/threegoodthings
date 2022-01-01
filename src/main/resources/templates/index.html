@@ -56,10 +56,9 @@
 							<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">2021年10月30日</p>
 						</div>
 						<div class="move">
-							<a class="yesterday btn btn-sm btn border" onclick=""
+							<a class="yesterday btn btn-sm btn border"
 								href="javascript:void(0)"><</a> <a
-								class="tomorrow btn btn-sm border" onclick="tomorrow()"
-								href="javascript:void(0)">></a>
+								class="tomorrow btn btn-sm border" href="javascript:void(0)">></a>
 						</div>
 						<div class="edit" style="display: none;">
 							<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
@@ -125,11 +124,12 @@
 							<p>2021年12月</p>
 						</div>
 						<div class="ym-move">
-							<a class="btn btn-sm border" href="#"><<</a> <a
-								class="btn btn-sm border" href="#"><</a> <a
-								class="btn btn-sm border" href="#">今日</a> <a
-								class="btn btn-sm border" href="#">></a> <a
-								class="btn btn-sm border" href="#">>></a>
+							<a class="last-year btn btn-sm border" href="#"><<</a> <a
+								class="last-mon btn btn-sm border" href="#"><</a> <a
+								class="today btn btn-sm border" href="#">今日</a> <a
+								class="next-mon btn btn-sm border" href="#">></a> <a
+								class="next-year btn btn-sm border" href="#">>></a>
+							<input type="hidden" id="cal-date" th:value="*{date}">
 						</div>
 					</div>
 					<table class="table text-center">
