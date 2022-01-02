@@ -190,13 +190,57 @@ $(function() {
 	})();
 
 	var dt = null;
-	$("#last-year").on("click", function(e) {
+	$(".last-year").on("click", function() {
 		dt = new Date($("#cal-date").val());
 		dt.setFullYear(dt.getFullYear() - 1);
 		var year = dt.getFullYear();
 		var month = dt.getMonth() + 1;
 		var day = dt.getDate();
 		$(".cal-title").find("p").text(year + '年' + month + '月');
+		$("#cal-date").val(year + '/' + month + '/' + day);
+		loadCalendarData(year + '/' + month + '/' + day);
+	});
+
+	$(".last-mon").on("click", function() {
+		dt = new Date($("#cal-date").val());
+		dt.setMonth(dt.getMonth() - 1);
+		var year = dt.getFullYear();
+		var month = dt.getMonth() + 1;
+		var day = dt.getDate();
+		$(".cal-title").find("p").text(year + '年' + month + '月');
+		$("#cal-date").val(year + '/' + month + '/' + day);
+		loadCalendarData(year + '/' + month + '/' + day);
+	});
+
+	$(".next-mon").on("click", function() {
+		dt = new Date($("#cal-date").val());
+		dt.setMonth(dt.getMonth() + 1);
+		var year = dt.getFullYear();
+		var month = dt.getMonth() + 1;
+		var day = dt.getDate();
+		$(".cal-title").find("p").text(year + '年' + month + '月');
+		$("#cal-date").val(year + '/' + month + '/' + day);
+		loadCalendarData(year + '/' + month + '/' + day);
+	});
+
+	$(".next-year").on("click", function() {
+		dt = new Date($("#cal-date").val());
+		dt.setFullYear(dt.getFullYear() + 1);
+		var year = dt.getFullYear();
+		var month = dt.getMonth() + 1;
+		var day = dt.getDate();
+		$(".cal-title").find("p").text(year + '年' + month + '月');
+		$("#cal-date").val(year + '/' + month + '/' + day);
+		loadCalendarData(year + '/' + month + '/' + day);
+	});
+
+	$(".today").on("click", function() {
+		dt = new Date();
+		var year = dt.getFullYear();
+		var month = dt.getMonth() + 1;
+		var day = dt.getDate();
+		$(".cal-title").find("p").text(year + '年' + month + '月');
+		$("#cal-date").val(year + '/' + month + '/' + day);
 		loadCalendarData(year + '/' + month + '/' + day);
 	});
 
@@ -210,20 +254,32 @@ $(function() {
 				_csrf: $("*[name=_csrf]").val()
 			}
 		}).done(function(data) {
-			displayCalendar(data);
+			setTimeout(displayCalendar(data), 5000);
 		}).fail(function() {
 			alert("error!");
 		});
 	}
 
-	function displayCalendar(data) {
-
+	function displayCalendar(datalist) {
 		// カレンダーのデータを除去
 		$("#calendarDays").find("tr").each(function() {
 			$(this).find("td").each(function() {
-				$(this).text("");
+				$(this).find("a").text("");
 			});
 		});
+
+		for(var i = 0; i < 5; i++){
+			for(var j = 0; j < 7; j++){
+				$("#calendarDays").find("tr")
+									.eq(i)
+									.find("td")
+									.eq(j)
+									.find("a")
+									.text(datalist[i].weekday[j]);
+			}
+
+		}
+
 	}
 
 	// 以下、カレンダーの操作関数

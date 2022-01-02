@@ -125,11 +125,11 @@
 				<div class="calendar wrapper">
 					<div class="cal-head">
 						<div class="cal-title">
-							<p>2021年12月</p>
+							<p th:text="*{#dates.format(date, 'yyyy年MM月')}">2021年12月</p>
 						</div>
 						<div class="ym-move">
-							<a class="btn btn-sm border" href="javascript:void(0)"
-								id="last-year"><<</a> <a class="last-mon btn btn-sm border"
+							<a class=" last-year btn btn-sm border" href="javascript:void(0)"
+								><<</a> <a class="last-mon btn btn-sm border"
 								href="#"><</a> <a class="today btn btn-sm border" href="#">今日</a>
 							<a class="next-mon btn btn-sm border" href="#">></a> <a
 								class="next-year btn btn-sm border" href="#">>></a> <input
