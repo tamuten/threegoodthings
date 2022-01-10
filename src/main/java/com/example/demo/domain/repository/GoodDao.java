@@ -1,6 +1,7 @@
 package com.example.demo.domain.repository;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,10 @@ public class GoodDao {
 
 	public void insert(String good, int num, Date date) {
 		goodMapper.insertOne(good, num, date);
+	}
+
+	public List<Good> findAll() {
+		return goodMapper.findAll();
 	}
 
 	public Good selectOne(Date date) {

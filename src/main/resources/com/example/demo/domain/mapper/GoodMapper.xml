@@ -25,6 +25,16 @@
 			CURRENT_TIMESTAMP
 		);
 	</insert>
+	<select id="findAll" resultType="java.util.List">
+		SELECT
+			date,
+			good1,
+			good2,
+			good3
+		FROM
+			good
+		;
+	</select>
 	<select id="selectOne"
 		resultType="com.example.demo.domain.model.Good">
 		SELECT

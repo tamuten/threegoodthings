@@ -63,8 +63,7 @@ public class MainController {
 	@PostMapping("/register")
 	@ResponseBody
 	public String register(@RequestParam String good, @RequestParam Date date, @RequestParam int num) {
-		if (StringUtils.isEmpty(good))
-			good = null;
+		if (StringUtils.isEmpty(good)) good = null;
 		java.sql.Date registerDate = new java.sql.Date(date.getTime());
 
 		if (goodDao.count(registerDate) <= 0) {
@@ -94,7 +93,7 @@ public class MainController {
 		return loadDiary(cal.getTime());
 	}
 
-	@GetMapping("/load")
+	@GetMapping("/loadDiary")
 	@ResponseBody
 	public String loadDiary(@RequestParam Date date) {
 		Good good = goodDao.selectOne(DateUtil.parseSqlDate(date));
@@ -103,5 +102,12 @@ public class MainController {
 			good.setDate(DateUtil.parseSqlDate(date));
 		}
 		return StrUtil.getJson(good);
+	}
+
+	@GetMapping("/loadTimeline")
+	@ResponseBody
+	public String loadTimeline() {
+		List<Good> timeline = goodDao.findAll();
+		return StrUtil.getJson(timeline);
 	}
 }
