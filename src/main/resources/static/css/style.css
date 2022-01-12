@@ -298,7 +298,24 @@ textarea:focus {
 .calendar table a {
 	text-decoration: none;
 	color: black;
-	display:block;
+	display: block;
+}
+
+/* 以下、タイムライン */
+.timeline .date {
+	height: 50px;
+	display: flex;
+	align-items: center;
+}
+
+.timeline a {
+	margin-bottom: 10px;
+	text-decoration: none;
+	color: #000000;
+}
+
+.one-day {
+	border-bottom: 1px solid #c3c3c3;
 }
 
 footer {

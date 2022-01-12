@@ -45,6 +45,21 @@ public class MainController {
 			BeanUtils.copyProperties(good, form);
 		}
 		model.addAttribute("mainForm", form);
+
+		//		List<Good> timeline = new ArrayList<>();
+		//		Good oneDay = new Good();
+		//		oneDay.setDate(new java.sql.Date(System.currentTimeMillis()));
+		//		oneDay.setGood1("カレンダーが操作できるようになった。嬉しい。\n"
+		//				+ "								また、Javascriptに詳しくなったと思う。ちなみに、文字数を増やしたらどのような表示になるのか、\n"
+		//				+ "								試してみる。どうかな。ちなみに、パワポの暦変更ツールも作成中だ。難しいけど、ワクワクすることがたくさんあって良い。");
+		//		oneDay.setGood2("タニタの温湿度計を買ったので、安心して、温度湿度を調節できる。メンタルが安定。");
+		//		oneDay.setGood3(
+		//				"スーパーの店員さんがあの可愛い女の子だった。テンションが上がった。年はいくつくらいだろう。下手したらJKだ。声がすごくいいんだよなぁ。"
+		//						+ "あとすごく接客が丁寧。目を見て話してくれるし。なかなかあんなスーパーの店員さんいない。");
+		//		timeline.add(oneDay);
+		List<Good> timeline = goodDao.findAll();
+		model.addAttribute("timeline", timeline);
+
 		return "index";
 	}
 

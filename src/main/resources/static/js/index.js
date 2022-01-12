@@ -76,15 +76,12 @@ $(function() {
 	}
 
 	$('.showTimeline').on('click', function() {
-		hideDiary();
-		hideSearchArea();
-		clearInputContent();
-		hideEditArea();
+		$(".diary").hide();
 		showTimeline();
 	});
 
 	var showTimeline = function() {
-		loadTimeline();
+		$(".timeline").show();
 	}
 
 	var loadTimeline = function() {

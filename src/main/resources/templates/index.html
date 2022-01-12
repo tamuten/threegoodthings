@@ -121,13 +121,22 @@
 					</div>
 				</div>
 				<div class="timeline wrapper" style="display: none;">
-					<div class="date">
-						<p>2021年10月30日</p>
-					</div>
+
 					<div class="diarylist">
-						<a id="text1"></a>
-						<a id="text2"></a>
-						<a id="text3"></a>
+						<div class="one-day" th:each="diary : ${timeline}">
+							<div class="date">
+								<p th:text="${#dates.format(diary.date, 'yyyy年MM月dd日')}">2022年01月02日</p>
+							</div>
+							<a id="text1" href="#" style="display: block;"
+								th:text="${diary.good1}">カレンダーが操作できるようになった。嬉しい。
+								また、Javascriptに詳しくなったと思う。ちなみに、文字数を増やしたらどのような表示になるのか、
+								試してみる。どうかな。ちなみに、パワポの暦変更ツールも作成中だ。難しいけど、ワクワクすることがたくさんあって良い。</a> <a
+								id="text2" href="#" style="display: block;"
+								th:text=${diary.good2}>タニタの温湿度計を買ったので、安心して、温度湿度を調節できる。メンタルが安定。
+							</a> <a id="text3" href="#" style="display: block;"
+								th:text="${diary.good3}">スーパーの店員さんがあの可愛い女の子だった。テンションが上がった。年はいくつくらいだろう。下手したらJKだ。声がすごくいいんだよなぁ。あとすごく接客が丁寧。目を見て話してくれるし。なかなかあんなスーパーの店員さんいない。
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>
