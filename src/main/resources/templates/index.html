@@ -50,76 +50,7 @@
 		th:object="${mainForm}">
 		<div class="outer row bkwhite">
 			<div class="main col-xs-12 col-md-7">
-				<div class="diary wrapper">
-					<div class="date-move">
-						<div class="date">
-							<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">2021年10月30日</p>
-						</div>
-						<div class="move">
-							<a class="yesterday btn btn-sm btn border"
-								href="javascript:void(0)">&lt;</a> <a
-								class="tomorrow btn btn-sm border" href="javascript:void(0)">&gt;</a>
-						</div>
-						<div class="edit" style="display: none;">
-							<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
-							<button type="button" id="cancel"
-								class="btn btn-sm btn-light border ml-2">キャンセル</button>
-						</div>
-					</div>
-					<div class="display">
-
-						<div class="input-area">
-							<!--<p>1</p>-->
-							<a id="edit1" class="editBtn" href="#"
-								th:style="'display:' + *{(good1 == null ? 'inline-block' : 'none')}">タップして編集する</a>
-							<a id="goodText1" class="goodText" href="#" th:text="*{good1}"
-								th:style="'display:' + *{(good1 != null ? 'inline-block' : 'none')}"></a>
-							<!--<p>2</p>-->
-							<a id="edit2" class="editBtn" href="#"
-								th:style="'display:' + *{(good2 == null ? 'inline-block' : 'none')}">タップして編集する</a>
-							<a id="goodText2" class="goodText" href="#" th:text="*{good2}"
-								th:style="'display:' + *{(good2 != null ? 'inline-block' : 'none')}"></a>
-							<!--<p>3</p>-->
-							<a id="edit3" class="editBtn" href="#"
-								th:style="'display:' + *{(good3 == null ? 'inline-block' : 'none')}">タップして編集する</a>
-							<a id="goodText3" class="goodText" href="#" th:text="*{good3}"
-								th:style="'display:' + *{(good3 != null ? 'inline-block' : 'none')}"></a>
-						</div>
-					</div>
-					<div class="edit">
-						<div class="error alert alert-danger" style="display: none;">
-							<p>error message</p>
-						</div>
-						<div class="input" id="input1" style="display: none;">
-							<!--<p>1</p>-->
-							<textarea class="good" th:field="*{good1}" placeholder=""></textarea>
-							<p id="count1" class="text-right"
-								th:text="*{good1 != null} ? *{#strings.length(good1)} : 0">0</p>
-						</div>
-						<div class="input" id="input2" style="display: none;">
-							<!--<p>2</p>-->
-							<textarea class="good" th:field="*{good2}" placeholder=""></textarea>
-							<p id="count2" class="text-right"
-								th:text="*{good2 != null} ? *{#strings.length(good2)} : 0">0</p>
-						</div>
-						<div class="input" id="input3" style="display: none;">
-							<!--<p>3</p>-->
-							<textarea class="good" th:field="*{good3}" placeholder=""></textarea>
-							<p id="count3" class="text-right"
-								th:text="*{good3 != null} ? *{#strings.length(good3)} : 0">0</p>
-						</div>
-						<input type="hidden" th:field="*{date}">
-					</div>
-					<div class="searchMode" style="display: none;">
-						<div class="input-group input-group-sm">
-							<input type="text" class="form-control"
-								placeholder="キーワードを入力してください">
-							<div class="input-group-append">
-								<button type="button" class="btn btn-outline-secondary">検索</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				<div th:replace="diary :: diary_contents"></div>
 				<div class="timeline wrapper" style="display: none;">
 
 					<div class="diarylist">
@@ -137,55 +68,10 @@
 				</div>
 			</div>
 			<div class="right-widget col-xs-12 col-md-5">
-				<div class="calendar wrapper">
-					<div class="cal-head">
-						<div class="cal-title">
-							<p th:text="*{#dates.format(date, 'yyyy年MM月')}">2021年12月</p>
-						</div>
-						<div class="ym-move">
-							<a id="last-year" class="btn btn-sm border"
-								href="javascript:void(0)">&lt;&lt;</a> <a id="last-mon"
-								class="btn btn-sm border" href="#">&lt;</a> <a id="today"
-								class="btn btn-sm border" href="#">今日</a> <a id="next-mon"
-								class="btn btn-sm border" href="#">&gt;</a> <a id="next-year"
-								class="btn btn-sm border" href="#">&gt;&gt;</a> <input
-								type="hidden" id="cal-date"
-								th:value="*{#dates.format(date, 'yyyy/MM/dd')}">
-						</div>
-					</div>
-					<table class="table text-center">
-						<thead>
-							<tr>
-								<td>日</td>
-								<td>月</td>
-								<td>火</td>
-								<td>水</td>
-								<td>木</td>
-								<td>金</td>
-								<td>土</td>
-							</tr>
-						</thead>
-						<tbody id="calendarDays">
-							<tr th:each="week : ${calendarDay}">
-								<td class="holiday"><a href="#" class="calendarDay"
-									th:text="${week.weekday[0]}">28</a></td>
-								<td><a href="#" class="calendarDay"
-									th:text="${week.weekday[1]}">29</a></td>
-								<td><a href="#" class="calendarDay"
-									th:text="${week.weekday[2]}">30</a></td>
-								<td><a href="#" class="calendarDay"
-									th:text="${week.weekday[3]}">31</a></td>
-								<td><a href="#" class="calendarDay"
-									th:text="${week.weekday[4]}">1</a></td>
-								<td><a href="#" class="calendarDay"
-									th:text="${week.weekday[5]}">2</a></td>
-								<td class="holiday"><a href="#" class="calendarDay"
-									th:text="${week.weekday[6]}">3</a></td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="out-cal">
+					<div th:replace="calendar :: calendar_contents"></div>
 				</div>
-				<div class="wrapper wrapper-in">
+				<div class="wrapper">
 					<div class="search input-group input-group-sm">
 						<input type="text" class="form-control">
 						<div class="input-group-append">

@@ -1,53 +1,56 @@
 $(function() {
 	var dt = null;
-	$("#last-year").on("click", function() {
+
+	$(document).on('click', '#last-year', function() {
 		dt = new Date($("#cal-date").val());
 		dt.setFullYear(dt.getFullYear() - 1);
 		displayCalendarData(dt);
 	});
 
-	$("#last-mon").on("click", function() {
+	$(document).on('click', '#last-mon', function() {
 		dt = new Date($("#cal-date").val());
 		dt.setMonth(dt.getMonth() - 1);
 		displayCalendarData(dt);
 	});
 
-	$("#next-mon").on("click", function() {
+	$(document).on('click', '#next-mon', function() {
 		dt = new Date($("#cal-date").val());
 		dt.setMonth(dt.getMonth() + 1);
 		displayCalendarData(dt);
 	});
 
-	$("#next-year").on("click", function() {
+	$(document).on('click', '#next-year', function() {
 		dt = new Date($("#cal-date").val());
 		dt.setFullYear(dt.getFullYear() + 1);
 		displayCalendarData(dt);
 	});
 
-	$("#today").on("click", function() {
+	$(document).on('click', '#today', function() {
 		var today = new Date();
 		displayCalendarData(today);
-		loadDiary(today)
+		loadDiary(today);
 	});
 
 	var displayCalendarData = function(date) {
-		$(".cal-title").find("p").text(formatMonthForDate(date));
-		$("#cal-date").val(formatDateSlash(date));
-		var calendarData = loadCalendarData(formatDateSlash(date));
-		displayCalendar(calendarData);
+		loadCalendarData(formatDateSlash(date));
 	}
 
 	var loadCalendarData = function(date) {
 		$.ajax({
 			url: "/loadCalendar",
 			type: "GET",
-			dataType: "json",
+			//dataType: "json",
+			dataType: "html",
 			data: {
 				targetDate: date,
 				_csrf: $("*[name=_csrf]").val()
 			}
 		}).done(function(data) {
-			displayCalendar(data);
+			$(".out-cal").html(data);
+			date = new Date(date);
+			$(".cal-title > p").text(formatMonthForDate(date));
+			$("#cal-date").val(formatDateSlash(date));
+			//displayCalendar(data);
 		}).fail(function() {
 			alert("error!");
 		});

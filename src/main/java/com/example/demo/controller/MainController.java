@@ -53,9 +53,10 @@ public class MainController {
 	}
 
 	@GetMapping("/loadCalendar")
-	@ResponseBody
-	public String loadCalendar(@RequestParam Date targetDate) {
-		return StrUtil.getJson(CalendarUtil.generateCalendar(targetDate));
+	public String loadCalendar(@RequestParam Date targetDate, Model model) {
+		List<Week> calendarDay = CalendarUtil.generateCalendar(targetDate);
+		model.addAttribute("calendarDay", calendarDay);
+		return "calendar :: calendar_contents";
 	}
 
 	@GetMapping({ "/", "/index" })

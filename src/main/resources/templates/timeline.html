@@ -11,10 +11,19 @@
 <title>タイムライン</title>
 </head>
 <body>
-	<div th:fragment="timeline_contents">
-		<th:block th:each="content : ${timeline}">
-
-		</th:block>
+	<div th:fragment="timeline_contents" class="timeline wrapper"
+		style="display: none;">
+		<div class="diarylist">
+			<div class="one-day" th:each="diary : ${timeline}">
+				<div class="date">
+					<p th:text="${#dates.format(diary.date, 'yyyy年MM月dd日')}">2022年01月02日</p>
+				</div>
+				<a id="text1" href="#" style="display: block;"
+					th:text="${diary.good1}"></a> <a id="text2" href="#"
+					style="display: block;" th:text=${diary.good2}> </a> <a id="text3"
+					href="#" style="display: block;" th:text="${diary.good3}"> </a>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

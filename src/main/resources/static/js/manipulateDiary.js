@@ -34,12 +34,12 @@ $("#cancel").on("click", function(e) {
 	$(".move").show();
 });
 
-function clearInputContent(){
+function clearInputContent() {
 	$("#input" + num).find("textarea").val(val);
 	$("#count" + num).text(val.length);
 }
 
-function hideEditArea(){
+function hideEditArea() {
 	$(".input").hide();
 	$(".error").hide();
 	$(".edit").hide();
@@ -57,11 +57,11 @@ function hideDiary() {
 	$(".move").hide();
 }
 
-function showSearchArea(){
+function showSearchArea() {
 	$(".searchMode").show();
 }
 
-function hideSearchArea(){
+function hideSearchArea() {
 	$(".searchMode").hide();
 }
 
@@ -168,8 +168,10 @@ function displayData(data) {
 	$("#date").val(formatDateSlash(displayDate));
 }
 
-$('.calendarDay').on('click', function() {
+
+$(document).on('click', '.calendarDay', function() {
 	var calDate = new Date($('#cal-date').val());
 	calDate.setDate($(this).text());
 	loadDiary(formatDateSlash(calDate));
 });
+
