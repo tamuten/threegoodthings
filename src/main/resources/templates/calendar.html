@@ -14,7 +14,7 @@
 	<div th:fragment="calendar_contents" class="calendar wrapper">
 		<div class="cal-head">
 			<div class="cal-title">
-				<p th:text="*{#dates.format(date, 'yyyy年MM月')}">2021年12月</p>
+				<p th:text="${#dates.format(calDate, 'yyyy年MM月')}">2021年12月</p>
 			</div>
 			<div class="ym-move">
 				<a id="last-year" class="btn btn-sm border"
@@ -24,7 +24,7 @@
 					class="btn btn-sm border" href="#">&gt;</a> <a id="next-year"
 					class="btn btn-sm border" href="#">&gt;&gt;</a> <input
 					type="hidden" id="cal-date"
-					th:value="*{#dates.format(date, 'yyyy/MM/dd')}">
+					th:value="${#dates.format(calDate, 'yyyy/MM/dd')}">
 			</div>
 		</div>
 		<table class="table text-center">

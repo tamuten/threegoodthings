@@ -14,7 +14,7 @@ public class GoodDao {
 	@Autowired
 	private GoodMapper goodMapper;
 
-	public void insert(String good, int num, Date date) {
+	public void insert(final String good, final int num, final Date date) {
 		goodMapper.insertOne(good, num, date);
 	}
 
@@ -22,15 +22,19 @@ public class GoodDao {
 		return goodMapper.findAll();
 	}
 
-	public Good selectOne(Date date) {
-		return goodMapper.selectOne(date);
+	public List<Good> likeSearch(final String keyword) {
+		return goodMapper.likeSearch(keyword);
 	}
 
-	public int count(Date date) {
-		return goodMapper.count(date);
+	public Good selectOne(final Date targetDate) {
+		return goodMapper.selectOne(targetDate);
 	}
 
-	public void updateOne(String good, int num, Date date) {
+	public int count(final Date targetDate) {
+		return goodMapper.count(targetDate);
+	}
+
+	public void updateOne(final String good, final int num, final Date date) {
 		goodMapper.updateOne(good, num, date);
 	}
 }

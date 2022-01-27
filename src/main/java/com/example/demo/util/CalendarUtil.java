@@ -14,23 +14,23 @@ public class CalendarUtil {
 	 * @param targetDate
 	 * @return
 	 */
-	public static List<Week> generateCalendar(Date targetDate) {
+	public static List<Week> generateCalendar(final Date targetDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(targetDate);
-		int year = cal.get(Calendar.YEAR);
-		int month = cal.get(Calendar.MONTH);
+		final int year = cal.get(Calendar.YEAR);
+		final int month = cal.get(Calendar.MONTH);
 
 		// 今月の始まり
 		cal.set(year, month, 1);
-		int startWeek = cal.get(Calendar.DAY_OF_WEEK);
+		final int startWeek = cal.get(Calendar.DAY_OF_WEEK);
 		// 今月末日
 		cal.set(year, month + 1, 0);
-		int thisMonthLastDay = cal.get(Calendar.DATE);
-		int lastWeek = cal.get(Calendar.DAY_OF_WEEK);
+		final int thisMonthLastDay = cal.get(Calendar.DATE);
+		final int lastWeek = cal.get(Calendar.DAY_OF_WEEK);
 
 		// 先月末日
 		cal.set(year, month, 0);
-		int beforeMonthLastDay = cal.get(Calendar.DATE);
+		final int beforeMonthLastDay = cal.get(Calendar.DATE);
 
 		List<Week> calendarDayW = new ArrayList<Week>();
 		int count = 0;

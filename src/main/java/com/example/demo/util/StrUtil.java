@@ -11,7 +11,7 @@ public class StrUtil {
 	 * @param obj
 	 * @return
 	 */
-	public static String getJson(Object obj) {
+	public static String getJson(final Object obj) {
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
 		try {

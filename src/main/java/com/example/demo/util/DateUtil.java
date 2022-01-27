@@ -11,7 +11,7 @@ public class DateUtil {
 	 * @param sDate
 	 * @return
 	 */
-	public static Date parseDate(String sDate) {
+	public static Date parseDate(final String sDate) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		try {
 			return dateFormat.parse(sDate);
@@ -27,12 +27,12 @@ public class DateUtil {
 	 * @param date
 	 * @return
 	 */
-	public static String parseStr(Date date) {
+	public static String parseStr(final Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		return dateFormat.format(date);
 	}
 
-	public static java.sql.Date parseSqlDate(Date date) {
+	public static java.sql.Date parseSqlDate(final Date date) {
 		return new java.sql.Date(date.getTime());
 	}
 }

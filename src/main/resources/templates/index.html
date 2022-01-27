@@ -3,6 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
 
 <link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
 	rel="stylesheet"></link>
@@ -44,44 +45,41 @@
 				</ul>
 			</div>
 		</div>
-
 	</header>
-	<form name="myForm" method="post" th:action="@{/register}"
-		th:object="${mainForm}">
-		<div class="outer row bkwhite">
-			<div class="main col-xs-12 col-md-7">
+	<div class="outer row bkwhite">
+		<div class="main col-xs-12 col-md-7">
+			<div class="diary-out">
 				<div th:replace="diary :: diary_contents"></div>
-				<div class="timeline wrapper" style="display: none;">
+			</div>
 
-					<div class="diarylist">
-						<div class="one-day" th:each="diary : ${timeline}">
-							<div class="date">
-								<p th:text="${#dates.format(diary.date, 'yyyy年MM月dd日')}">2022年01月02日</p>
-							</div>
-							<a id="text1" href="#" style="display: block;"
-								th:text="${diary.good1}"></a> <a id="text2" href="#"
-								style="display: block;" th:text=${diary.good2}> </a> <a
-								id="text3" href="#" style="display: block;"
-								th:text="${diary.good3}"> </a>
-						</div>
+			<div class="searchMode" style="display: none;">
+				<div class="input-group input-group-sm">
+					<input type="text" id="search2" class="form-control"
+						placeholder="キーワードを入力してください">
+					<div class="input-group-append">
+						<button type="button" id="searchBtn2" class="btn btn-outline-secondary">検索</button>
 					</div>
 				</div>
 			</div>
-			<div class="right-widget col-xs-12 col-md-5">
-				<div class="out-cal">
-					<div th:replace="calendar :: calendar_contents"></div>
-				</div>
-				<div class="wrapper">
-					<div class="search input-group input-group-sm">
-						<input type="text" class="form-control">
-						<div class="input-group-append">
-							<button type="button" class="btn btn-outline-secondary">検索</button>
-						</div>
+			<div class="timeline-out">
+				<div th:replace="timeline :: timeline_contents"></div>
+			</div>
+		</div>
+		<div class="right-widget col-xs-12 col-md-5">
+			<div class="out-cal">
+				<div th:replace="calendar :: calendar_contents"></div>
+			</div>
+			<div class="wrapper">
+				<div class="search input-group input-group-sm">
+					<input type="text" id="search1" class="form-control">
+					<div class="input-group-append">
+						<button type="button" id="searchBtn1" class="btn btn-outline-secondary">検索</button>
 					</div>
 				</div>
 			</div>
 		</div>
-	</form>
+	</div>
+
 	<footer>
 		<p>
 			©︎ Copyright 2021-2022 by Three good things. <a href="#">問い合わせ</a>

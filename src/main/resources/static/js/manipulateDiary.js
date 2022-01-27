@@ -1,43 +1,81 @@
-var num = 0;
-var val = null;
-$(".diaryBtn").on("click", function(e) {
+let inum = 0;
+$(".diaryBtn").on("click", function() {
 	hideSearchArea();
-	showDiary();
-	clearInputContent();
-	hideEditArea();
+	loadDiary(new Date());
+	hideTimeline();
 });
 
-$(".searchBtn").on("click", function(e) {
+$(".searchBtn").on("click", function() {
 	showSearchArea();
 	hideDiary();
-	clearInputContent();
 	hideEditArea();
+	hideTimeline();
 });
 
-// 編集モードに変更
-$(".editBtn, .goodText").on("click", function(e) {
-	num = this.id.slice(-1);
+$(document).on("click", ".editBtn, .goodText", function() {
+	inum = this.id.slice(-1);
 	$(".display").hide();
 	$(".move").hide();
-	$("#input" + num).show();
-	var $textArea = $("#input" + num).find("textarea");
-	$textArea.focus();
-	val = $textArea.val();
+	$("#input" + inum).show();
+	//var $textArea = $("#input" + num).find("textarea");
+	//$textArea.focus();
+	//val = $textArea.val();
 	// 				$textArea.setSelectionRange(2, 5);
 	$(".edit").show();
 });
 
-$("#cancel").on("click", function(e) {
-	clearInputContent();
-	hideEditArea();
-	$(".display").show();
-	$(".move").show();
+$(document).on("click", '#cancel', function() {
+	const date = $('#date').val();
+	loadDiary(date);
 });
 
-function clearInputContent() {
-	$("#input" + num).find("textarea").val(val);
-	$("#count" + num).text(val.length);
-}
+$(document).on("click", '#save', function(e) {
+	e.preventDefault();
+	const good = $('#good' + inum).val();
+
+	if (good.length > 400) {
+		$(".error").find("p").text('400文字以下で入力してください。');
+		$(".error").show();
+		return;
+	}
+
+	$.ajax({
+		url: "/register",
+		type: "POST",
+		dataType: "json",
+		data: {
+			good: good,
+			date: $("#date").val(),
+			num: inum,
+			_csrf: $("*[name=_csrf]").val()
+		}
+	}).done(function(data) {
+		alert("登録が完了しました");
+		hideEditArea();
+		loadDiary($("#date").val());
+		showDiary();
+	}).fail(function() {
+		alert("save error!");
+	});
+});
+
+$(document).on("click", '.yesterday', function() {
+	var date = new Date($('#date').val());
+	var targetDate = setDateYesterday(date);
+	loadDiary(formatDateSlash(targetDate));
+});
+
+$(document).on("click", '.tomorrow', function() {
+	var date = new Date($('#date').val());
+	var targetDate = setDateTomorrow(date);
+	loadDiary(formatDateSlash(targetDate));
+});
+
+$(document).on('click', '.calendarDay', function() {
+	var calDate = new Date($('#cal-date').val());
+	calDate.setDate($(this).text());
+	loadDiary(formatDateSlash(calDate));
+});
 
 function hideEditArea() {
 	$(".input").hide();
@@ -65,63 +103,27 @@ function hideSearchArea() {
 	$(".searchMode").hide();
 }
 
-$("#save").on("click", function(e) {
-	var good = $('#good' + num).val();
-
-	if (good.length > 400) {
-		$(".error").find("p").text('400文字以下で入力してください。');
-		$(".error").show();
-		return;
-	}
-	e.preventDefault();
-	$.ajax({
-		url: "/register",
-		type: "POST",
-		dataType: "json",
-		data: {
-			good: good,
-			date: $("#date").val(),
-			num: num,
-			_csrf: $("*[name=_csrf]").val()
-		}
-	}).done(function(data) {
-		alert("登録が完了しました");
-		hideEditArea();
-		loadDiary($("#date").val());
-		showDiary();
-	}).fail(function() {
-		alert("error!");
-	});
-});
-
-$(".yesterday").on("click", function(e) {
-	e.preventDefault();
-	var date = new Date($('#date').val());
-	var targetDate = setDateYesterday(date);
-	loadDiary(formatDateSlash(targetDate));
-})
-
-$(".tomorrow").on("click", function(e) {
-	e.preventDefault();
-	var date = new Date($('#date').val());
-	var targetDate = setDateTomorrow(date);
-	loadDiary(formatDateSlash(targetDate));
-})
-
 function loadDiary(targetDate) {
 	$.ajax({
 		url: "/loadDiary",
 		type: "GET",
-		dataType: "json",
+		//dataType: "json",
+		dataType: "html",
 		data: {
 			date: targetDate,
 			_csrf: $("*[name=_csrf]").val()
 		}
 	}).done(function(data) {
-		displayData(data);
+		//displayData(data);
+		displayDiary(data);
+		displayCalendarData(new Date(targetDate));
 	}).fail(function() {
-		alert("error!");
+		alert(" loadDiary error!");
 	});
+}
+
+function displayDiary(data) {
+	$(".diary-out").html(data);
 }
 
 function displayData(data) {
@@ -167,11 +169,3 @@ function displayData(data) {
 	}
 	$("#date").val(formatDateSlash(displayDate));
 }
-
-
-$(document).on('click', '.calendarDay', function() {
-	var calDate = new Date($('#cal-date').val());
-	calDate.setDate($(this).text());
-	loadDiary(formatDateSlash(calDate));
-});
-

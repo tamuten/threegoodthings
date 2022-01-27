@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +18,6 @@ import com.example.demo.domain.model.Week;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
 import com.example.demo.util.CalendarUtil;
-import com.example.demo.util.DateUtil;
 import com.example.demo.util.StrUtil;
 
 @Controller
@@ -33,8 +31,15 @@ public class MainController {
 	//		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	//	}
 
-	private String index(Date searchDate, Model model) {
+	@GetMapping({ "/", "/index" })
+	public String today(Model model) {
+		// 本日の日付で表示する
+		return index(new Date(), model);
+	}
+
+	private String index(final Date searchDate, Model model) {
 		List<Week> calendarDay = CalendarUtil.generateCalendar(searchDate);
+		model.addAttribute("calDate", searchDate);
 		model.addAttribute("calendarDay", calendarDay);
 
 		Good good = goodDao.selectOne(new java.sql.Date(searchDate
@@ -45,31 +50,53 @@ public class MainController {
 			BeanUtils.copyProperties(good, form);
 		}
 		model.addAttribute("mainForm", form);
-
-		List<Good> timeline = goodDao.findAll();
-		model.addAttribute("timeline", timeline);
+		model.addAttribute("timeline", null);
 
 		return "index";
 	}
 
 	@GetMapping("/loadCalendar")
-	public String loadCalendar(@RequestParam Date targetDate, Model model) {
+	public String loadCalendar(@RequestParam final Date targetDate, Model model) {
 		List<Week> calendarDay = CalendarUtil.generateCalendar(targetDate);
+		model.addAttribute("calDate", targetDate);
 		model.addAttribute("calendarDay", calendarDay);
 		return "calendar :: calendar_contents";
 	}
 
-	@GetMapping({ "/", "/index" })
-	public String today(Model model) {
-		// 本日の日付で表示する
-		return index(new Date(), model);
+	@GetMapping("/loadDiary")
+	public String loadDiary(@RequestParam final Date date, Model model) {
+		Good good = goodDao.selectOne(new java.sql.Date(date
+			.getTime()));
+		MainForm form = new MainForm();
+		form.setDate(date);
+		if (good != null) {
+			BeanUtils.copyProperties(good, form);
+		}
+		model.addAttribute("mainForm", form);
+		return "diary :: diary_contents";
+	}
+
+	@GetMapping("/loadTimeline")
+	public String loadTimeline(Model model) {
+		List<Good> timeline = goodDao.findAll();
+		model.addAttribute("timeline", timeline);
+		model.addAttribute("diary", null);
+		return "timeline :: timeline_contents";
+	}
+
+	@GetMapping("/searchDiary")
+	public String searchDiary(@RequestParam final String keyword, Model model) {
+		List<Good> timeline = goodDao.likeSearch(keyword);
+		model.addAttribute("timeline", timeline);
+		model.addAttribute("diary", null);
+		return "timeline :: timeline_contents";
 	}
 
 	@PostMapping("/register")
 	@ResponseBody
-	public String register(@RequestParam String good, @RequestParam Date date, @RequestParam int num) {
+	public String register(@RequestParam String good, @RequestParam final Date date, @RequestParam final int num) {
 		if (StringUtils.isEmpty(good)) good = null;
-		java.sql.Date registerDate = new java.sql.Date(date.getTime());
+		final java.sql.Date registerDate = new java.sql.Date(date.getTime());
 
 		if (goodDao.count(registerDate) <= 0) {
 			goodDao.insert(good, num, registerDate);
@@ -78,41 +105,5 @@ public class MainController {
 		}
 
 		return StrUtil.getJson(good);
-	}
-
-	@GetMapping("/yesterday")
-	@ResponseBody
-	public String yesterday(@RequestParam Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DAY_OF_MONTH, -1);
-		return loadDiary(cal.getTime());
-	}
-
-	@GetMapping("/tomorrow")
-	@ResponseBody
-	public String tomorrow(@RequestParam Date date) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.DAY_OF_MONTH, 1);
-		return loadDiary(cal.getTime());
-	}
-
-	@GetMapping("/loadDiary")
-	@ResponseBody
-	public String loadDiary(@RequestParam Date date) {
-		Good good = goodDao.selectOne(DateUtil.parseSqlDate(date));
-		if (good == null) {
-			good = new Good();
-			good.setDate(DateUtil.parseSqlDate(date));
-		}
-		return StrUtil.getJson(good);
-	}
-
-	@GetMapping("/loadTimeline")
-	@ResponseBody
-	public String loadTimeline() {
-		List<Good> timeline = goodDao.findAll();
-		return StrUtil.getJson(timeline);
 	}
 }

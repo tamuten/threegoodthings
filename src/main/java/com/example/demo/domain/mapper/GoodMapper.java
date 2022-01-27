@@ -9,9 +9,10 @@ import com.example.demo.domain.model.Good;
 
 @Mapper
 public interface GoodMapper {
-	public void insertOne(String good, int num, Date date);
+	public void insertOne(final String good, final int num, final Date date);
 	public List<Good> findAll();
-	public Good selectOne(Date date);
-	public int count(Date date);
-	public void updateOne(String good, int num, Date date);
+	public List<Good> likeSearch(final String keyword);
+	public Good selectOne(final Date date);
+	public int count(final Date date);
+	public void updateOne(final String good, final int num, final Date date);
 }

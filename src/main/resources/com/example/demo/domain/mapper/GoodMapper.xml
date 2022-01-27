@@ -39,6 +39,31 @@ WHERE
     AND good2 IS NULL
     AND good3 IS NULL
     )
+ORDER BY
+	date DESC
+;
+	</select>
+	<select id="likeSearch" resultType="com.example.demo.domain.model.Good">
+SELECT
+    date,
+    good1,
+    good2,
+    good3
+FROM
+    good
+WHERE
+	(
+		good1 LIKE '%' || #{keyword} || '%'
+		OR good2 LIKE '%' || #{keyword} || '%'
+		OR good3 LIKE '%' || #{keyword} || '%'
+	)
+	AND NOT(
+        good1 IS NULL
+    AND good2 IS NULL
+    AND good3 IS NULL
+    )
+ORDER BY
+	date DESC
 ;
 	</select>
 	<select id="selectOne"
