@@ -1,3 +1,7 @@
+html , body {
+	width:100%;
+}
+
 body {
 	margin: 0;
 	font-size: 14px;
@@ -5,6 +9,7 @@ body {
 		"Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo",
 		sans-serif;
 	background-color: #f5f5f5;
+	overflow-y: scroll;
 }
 
 h1, h2, h3, p, ul {
@@ -22,6 +27,11 @@ li {
 
 textarea {
 	font-size: 24px;
+}
+
+.row {
+	margin-right:0;
+	margin-left:0;
 }
 
 .header-in {
@@ -49,14 +59,12 @@ textarea {
 	justify-content: space-between;
 	align-items: center;
 	border-bottom: 0.5px solid #c3c3c3;
-	height: 50px;
+	height: 60px;
 }
 
 .move a {
 	color: black;
 	text-decoration: none;
-	font-size: 18px;
-	padding: 0.1rem 1.25rem;
 }
 
 .date-move .move a:hover {

@@ -11,7 +11,7 @@
 <title>Calendar</title>
 </head>
 <body>
-	<div th:fragment="calendar_contents" class="calendar wrapper">
+	<div th:fragment="calendar_contents" class="calendar">
 		<div class="cal-head">
 			<div class="cal-title">
 				<p th:text="${#dates.format(calDate, 'yyyy年MM月')}">2021年12月</p>

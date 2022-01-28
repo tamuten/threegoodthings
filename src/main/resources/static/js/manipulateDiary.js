@@ -22,6 +22,7 @@ $(document).on("click", ".editBtn, .goodText", function() {
 	//val = $textArea.val();
 	// 				$textArea.setSelectionRange(2, 5);
 	$(".edit").show();
+	$(".save").css('display', 'flex');
 });
 
 $(document).on("click", '#cancel', function() {

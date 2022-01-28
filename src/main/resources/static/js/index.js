@@ -1,5 +1,8 @@
 let dt = null;
 // イベントを登録
+$(document).on('dblclick', (e) => {
+	e.preventDefault();
+});
 $(document).on('click', '#last-year', () => {
 	dt = new Date($("#cal-date").val());
 	dt.setFullYear(dt.getFullYear() - 1);

@@ -11,7 +11,7 @@
 <title>タイムライン</title>
 </head>
 <body>
-	<div th:fragment="timeline_contents" th:if="${timeline}" class="timeline wrapper"
+	<div th:fragment="timeline_contents" th:if="${timeline}" class="timeline"
 		>
 		<div class="diarylist">
 			<div class="one-day" th:each="diary : ${timeline}">

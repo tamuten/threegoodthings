@@ -14,20 +14,18 @@
 	<div th:fragment="diary_contents">
 		<form name="myForm" method="post" th:action="@{/register}"
 			th:object="${mainForm}">
-			<div class="diary wrapper">
+			<div class="diary">
 				<div class="date-move">
 					<div class="date">
 						<p th:text="*{#dates.format(date, 'yyyy年MM月dd日')}">2021年10月30日</p>
 					</div>
 					<div class="move">
-						<a class="yesterday btn btn-sm btn border">&lt;</a> <a
-							class="tomorrow btn btn-sm border">&gt;</a>
+						<a
+							class="yesterday btn btn-lg btn-outline-secondary pr-4 pl-4 pt-1 pb-1">&lt;</a>
+						<a
+							class="tomorrow btn btn-lg btn-outline-secondary pr-4 pl-4 pt-1 pb-1">&gt;</a>
 					</div>
-					<div class="edit" style="display: none;">
-						<button type="button" id="save" class="btn btn-sm btn-success">保存</button>
-						<button type="button" id="cancel"
-							class="btn btn-sm btn-light border ml-2">キャンセル</button>
-					</div>
+
 				</div>
 				<div class="display">
 					<div class="input-area">
@@ -65,6 +63,12 @@
 							th:text="*{good3 != null} ? *{#strings.length(good3)} : 0">0</p>
 					</div>
 					<input type="hidden" th:field="*{date}">
+					<div class="save justify-content-end" style="display: none;">
+						<button type="button" id="cancel"
+							class="btn btn-light border ml-2">キャンセル</button>
+						<button type="button" id="save" class="btn btn-success">保存</button>
+
+					</div>
 				</div>
 			</div>
 		</form>
