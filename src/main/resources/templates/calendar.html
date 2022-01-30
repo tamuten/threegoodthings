@@ -17,12 +17,12 @@
 				<p th:text="${#dates.format(calDate, 'yyyy年MM月')}">2021年12月</p>
 			</div>
 			<div class="ym-move">
-				<a id="last-year" class="btn btn-sm border"
+				<a id="last-year" class="btn btn-outline-secondary"
 					href="javascript:void(0)">&lt;&lt;</a> <a id="last-mon"
-					class="btn btn-sm border" href="#">&lt;</a> <a id="today"
-					class="btn btn-sm border" href="#">今日</a> <a id="next-mon"
-					class="btn btn-sm border" href="#">&gt;</a> <a id="next-year"
-					class="btn btn-sm border" href="#">&gt;&gt;</a> <input
+					class="btn btn-outline-secondary" href="#">&lt;</a> <a id="today"
+					class="btn btn-outline-secondary" href="#">今日</a> <a id="next-mon"
+					class="btn btn-outline-secondary" href="#">&gt;</a> <a id="next-year"
+					class="btn btn-outline-secondary" href="#">&gt;&gt;</a> <input
 					type="hidden" id="cal-date"
 					th:value="${#dates.format(calDate, 'yyyy/MM/dd')}">
 			</div>

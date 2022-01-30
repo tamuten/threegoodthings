@@ -1,32 +1,61 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>Three Good Things</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="login.css">
-  </head>
-  <body>
-    <div class="container">
-      <div class="wrapper login-wrapper">
-        <div class="login-form">
-          <div class="login">
-            <div class="title">
-              <h1>Three good things</h1>
-            </div>
-            <input type="text" placeholder="ユーザーネーム、メールアドレス">
-            <input type="password" placeholder="パスワード">
-            <p><a href="#">パスワードを忘れた場合</a></p>
-            <input class="login-btn" type="submit" value="ログイン">
-          </div>
-          <div class="signup">
-            <p>アカウントをお持ちでないですか？<a href="#">登録する</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <footer>
-      <p>©︎ Three good things</p>
-    </footer>
-  </body>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+<link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+<title>Three Good Things</title>
+<link rel="stylesheet" th:href="@{css/login.css}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="border-bottom">
+		<div class="title">
+			<div class="title-in h-100 d-flex align-items-center">
+				<div class="title-char">
+					<p>
+						<a href="#">Three good things</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</header>
+	<form method="post" th:action="@{/login}" class="form-signin">
+		<div class="container">
+			<div class="wrapper login-wrapper">
+				<div class="login">
+					<div class="login-form">
+						<div class="signin text-left">
+							<h1>Sign In</h1>
+						</div>
+						<input type="text" name="mailaddress" placeholder="メールアドレス">
+						<input type="password" name="password" placeholder="パスワード">
+						<p>
+							<a href="#">パスワードを忘れた場合</a>
+						</p>
+						<input class="login-btn" type="submit" value="ログイン">
+						<div class="signup">
+							<p>
+								アカウントをお持ちでないですか？<a href="#">登録する</a>
+							</p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<footer class="text-center">
+			<p>©︎ Copyright 2021-2022 by Three good things.</p>
+		</footer>
+	</form>
+</body>
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
 </html>

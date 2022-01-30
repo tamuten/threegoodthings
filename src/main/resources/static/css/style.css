@@ -1,5 +1,5 @@
-html , body {
-	width:100%;
+html, body {
+	width: 100%;
 }
 
 body {
@@ -30,8 +30,8 @@ textarea {
 }
 
 .row {
-	margin-right:0;
-	margin-left:0;
+	margin-right: 0;
+	margin-left: 0;
 }
 
 .header-in {
@@ -40,7 +40,7 @@ textarea {
 }
 
 .title {
-	font-family: cursive;
+	font-family: 'Sacramento', cursive;
 	font-size: 20px;
 	margin-right: auto;
 	white-space: nowrap;
@@ -271,19 +271,23 @@ textarea:focus {
 }
 
 .cal-head {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 50px;
 	border-top: 0.5px solid #c3c3c3;
 }
 
 .cal-title {
 	font-size: 16px;
+	padding:10px 0;
+}
+
+.ym-move {
+	display:flex;
+	justify-content:space-between;
+	padding-bottom:10px;
 }
 
 .ym-move a {
 	color: black;
+	width:18%;
 }
 
 .calendar table {
@@ -365,6 +369,10 @@ footer {
 	}
 	.cal-head {
 		border-top: none;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 50px;
 	}
 }
 
