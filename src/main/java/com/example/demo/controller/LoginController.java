@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.form.LoginForm;
+
 @Controller
 public class LoginController {
 
@@ -12,7 +14,7 @@ public class LoginController {
 	 * ログイン画面のGETメソッド用処理.
 	 */
 	@GetMapping("/login")
-	public String getLogin(Model model) {
+	public String getLogin(LoginForm form, Model model) {
 		return "login";
 	}
 
