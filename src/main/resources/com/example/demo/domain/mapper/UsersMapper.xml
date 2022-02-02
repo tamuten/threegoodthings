@@ -2,22 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.domain.mapper.UsersMapper">
 	<insert id="insertOne" parameterType="com.example.demo.domain.model.User">
-insert into users(
+		<selectKey keyProperty="userId" order="BEFORE" resultType="string">
+			SELECT
+    			LPAD(CAST(NEXTVAL('users_id_seq') AS CHARACTER VARYING), 8, '0')
+		</selectKey>
+INSERT INTO users(
     id,
     mail_address,
     password,
     delete_flg,
     registered_datetime
 )
-values(
-    '00000002',
+VALUES(
+    #{userId},
     #{mailAddress},
     #{password},
     false,
     CURRENT_TIMESTAMP
 )
-;
-
 	</insert>
 
 </mapper>

@@ -39,10 +39,11 @@
 						<div class="signup text-left">
 							<h1>Sign Up</h1>
 						</div>
-						<input type="text" th:field="*{mailAddress}" name="mailaddress"
-							placeholder="メールアドレス"> <input type="password"
-							th:field="*{password}" name="password" placeholder="パスワード">
-						<input class="signup-btn" type="submit" value="登録">
+						<input type="text" th:field="*{mailAddress}" placeholder="メールアドレス">
+						<input type="password" th:field="*{password}" placeholder="パスワード">
+						<input type="password" th:field="*{passwordConfirm}"
+							placeholder="パスワード（確認）"> <input class="signup-btn"
+							type="submit" value="登録">
 					</div>
 				</form>
 			</div>

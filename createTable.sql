@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS good;\
+DROP TABLE IF EXISTS good;
 CREATE TABLE good (
 	id serial primary key,
 	user_id varchar(8),
@@ -19,3 +19,10 @@ CREATE TABLE users (
 	update_datetime timestamp,
 	delete_datetime timestamp
 );
+DROP SEQUENCE IF EXISTS users_id_seq CASCADE;
+CREATE SEQUENCE users_id_seq
+	INCREMENT BY 1
+	MAXVALUE 99999999
+	START WITH 1
+	NO CYCLE
+;
