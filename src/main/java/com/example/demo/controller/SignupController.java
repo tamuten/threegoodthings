@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,8 @@ import com.example.demo.form.SignupForm;
 public class SignupController {
 	@Autowired
 	private UsersDao usersDao;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	@GetMapping("/signup")
 	public String getSignup(SignupForm form, Model model) {
