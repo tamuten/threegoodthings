@@ -21,5 +21,14 @@ VALUES(
     CURRENT_TIMESTAMP
 )
 	</insert>
+	<select id="selectOne" parameterType="string" resultType="com.example.demo.domain.model.User">
+		SELECT
+			*
+		FROM
+			users
+		WHERE
+			delete_flg IS NOT NULL
+			AND mail_address = #{mailAddress}
+	</select>
 
 </mapper>
