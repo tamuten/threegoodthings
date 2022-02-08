@@ -72,11 +72,7 @@ $(document).on("click", '.tomorrow', function() {
 	loadDiary(formatDateSlash(targetDate));
 });
 
-$(document).on('click', '.calendarDay', function() {
-	var calDate = new Date($('#cal-date').val());
-	calDate.setDate($(this).text());
-	loadDiary(formatDateSlash(calDate));
-});
+
 
 function hideEditArea() {
 	$(".input").hide();

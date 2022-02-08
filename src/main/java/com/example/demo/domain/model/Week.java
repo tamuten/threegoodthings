@@ -1,17 +1,19 @@
 package com.example.demo.domain.model;
 
-public class Week {
-	private int[] weekday = new int[7];
+import java.util.Date;
 
-	public int getWeekday(int index) {
+public class Week {
+	private Date[] weekday = new Date[7];
+
+	public Date getWeekday(int index) {
 		return weekday[index];
 	}
 
-	public int[] getWeekday() {
+	public Date[] getWeekday() {
 		return weekday;
 	}
 
-	public void setWeekday(int index, int weekday) {
+	public void setWeekday(int index, Date weekday) {
 		this.weekday[index] = weekday;
 	}
 

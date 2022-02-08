@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.mapper.UsersMapper;
 import com.example.demo.domain.model.User;
+import com.example.demo.domain.model.UserDetailsImpl;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -17,7 +18,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = mapper.selectOne(username);
-		return user;
+		UserDetailsImpl userDetails = new UserDetailsImpl(user);
+		return userDetails;
 	}
 
 }

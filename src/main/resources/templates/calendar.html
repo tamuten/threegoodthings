@@ -19,11 +19,12 @@
 			<div class="ym-move">
 				<a id="last-year" class="btn btn-outline-secondary"
 					href="javascript:void(0)">&lt;&lt;</a> <a id="last-mon"
-					class="btn btn-outline-secondary" href="#">&lt;</a> <a id="today"
-					class="btn btn-outline-secondary" href="#">今日</a> <a id="next-mon"
-					class="btn btn-outline-secondary" href="#">&gt;</a> <a id="next-year"
-					class="btn btn-outline-secondary" href="#">&gt;&gt;</a> <input
-					type="hidden" id="cal-date"
+					class="btn btn-outline-secondary" href="javascript:void(0)">&lt;</a>
+				<a id="today" class="btn btn-outline-secondary" href="#">今日</a> <a
+					id="next-mon" class="btn btn-outline-secondary"
+					href="javascript:void(0)">&gt;</a> <a id="next-year"
+					class="btn btn-outline-secondary" href="javascript:void(0)">&gt;&gt;</a>
+				<input type="hidden" id="cal-date"
 					th:value="${#dates.format(calDate, 'yyyy/MM/dd')}">
 			</div>
 		</div>
@@ -42,19 +43,26 @@
 			<tbody id="calendarDays">
 				<tr th:each="week : ${calendarDay}">
 					<td class="holiday"><a href="#" class="calendarDay"
-						th:text="${week.weekday[0]}">28</a></td>
+						th:text="${#dates.format(week.weekday[0], 'd')}"
+						th:value="${#dates.format(week.weekday[0], 'yyyy/MM/dd')}">28</a></td>
 					<td><a href="#" class="calendarDay"
-						th:text="${week.weekday[1]}">29</a></td>
+						th:text="${#dates.format(week.weekday[1], 'd')}"
+						th:value="${#dates.format(week.weekday[1], 'yyyy/MM/dd')}">29</a></td>
 					<td><a href="#" class="calendarDay"
-						th:text="${week.weekday[2]}">30</a></td>
+						th:text="${#dates.format(week.weekday[2], 'd')}"
+						th:value="${#dates.format(week.weekday[2], 'yyyy/MM/dd')}">30</a></td>
 					<td><a href="#" class="calendarDay"
-						th:text="${week.weekday[3]}">31</a></td>
+						th:text="${#dates.format(week.weekday[3], 'd')}"
+						th:value="${#dates.format(week.weekday[3], 'yyyy/MM/dd')}">31</a></td>
 					<td><a href="#" class="calendarDay"
-						th:text="${week.weekday[4]}">1</a></td>
+						th:text="${#dates.format(week.weekday[4], 'd')}"
+						th:value="${#dates.format(week.weekday[4], 'yyyy/MM/dd')}">1</a></td>
 					<td><a href="#" class="calendarDay"
-						th:text="${week.weekday[5]}">2</a></td>
+						th:text="${#dates.format(week.weekday[5], 'd')}"
+						th:value="${#dates.format(week.weekday[5], 'yyyy/MM/dd')}">2</a></td>
 					<td class="holiday"><a href="#" class="calendarDay"
-						th:text="${week.weekday[6]}">3</a></td>
+						th:text="${#dates.format(week.weekday[6], 'd')}"
+						th:value="${#dates.format(week.weekday[6], 'yyyy/MM/dd')}">3</a></td>
 				</tr>
 			</tbody>
 		</table>

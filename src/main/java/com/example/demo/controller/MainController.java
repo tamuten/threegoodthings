@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.domain.model.Good;
+import com.example.demo.domain.model.UserDetailsImpl;
 import com.example.demo.domain.model.Week;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
@@ -32,7 +34,10 @@ public class MainController {
 	//	}
 
 	@GetMapping({ "/", "/index" })
-	public String today(Model model) {
+	public String today(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
+		System.out.println(user.getUserId());
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
 		// 本日の日付で表示する
 		return index(new Date(), model);
 	}

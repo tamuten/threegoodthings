@@ -26,7 +26,14 @@ $(document).on('click', '#next-year', () => {
 $(document).on('click', '#today', () => {
 	const today = new Date();
 	displayCalendarData(today);
+	hideSearchArea();
+	hideTimeline();
 	loadDiary(today);
+});
+$(document).on('click', '.calendarDay', function() {
+	hideSearchArea();
+	hideTimeline();
+	loadDiary($(this).attr('value'));
 });
 $(document).on('click', '#searchBtn1', () => {
 	const keyword = $('#search1').val();
