@@ -30,11 +30,6 @@ $(document).on('click', '#today', () => {
 	hideTimeline();
 	loadDiary(today);
 });
-$(document).on('click', '.calendarDay', function() {
-	hideSearchArea();
-	hideTimeline();
-	loadDiary($(this).attr('value'));
-});
 $(document).on('click', '#searchBtn1', () => {
 	const keyword = $('#search1').val();
 	$('#search1').val("");
@@ -62,6 +57,11 @@ $('.showTimeline').on('click', () => {
 // 関数を宣言
 const displayCalendarData = (date) => {
 	loadCalendarData(formatDateSlash(date));
+}
+const clickCalendarDay = date => {
+	hideSearchArea();
+	hideTimeline();
+	loadDiary(date);
 }
 
 const loadCalendarData = (date) => {

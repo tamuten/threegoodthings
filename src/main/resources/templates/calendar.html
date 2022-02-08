@@ -44,25 +44,32 @@
 				<tr th:each="week : ${calendarDay}">
 					<td class="holiday"><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[0], 'd')}"
-						th:value="${#dates.format(week.weekday[0], 'yyyy/MM/dd')}">28</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[0], 'yyyy/MM/dd')}__')|">28</a>
+					</td>
 					<td><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[1], 'd')}"
-						th:value="${#dates.format(week.weekday[1], 'yyyy/MM/dd')}">29</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[1], 'yyyy/MM/dd')}__')|">29</a>
+					</td>
 					<td><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[2], 'd')}"
-						th:value="${#dates.format(week.weekday[2], 'yyyy/MM/dd')}">30</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[2], 'yyyy/MM/dd')}__')|">30</a>
+					</td>
 					<td><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[3], 'd')}"
-						th:value="${#dates.format(week.weekday[3], 'yyyy/MM/dd')}">31</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[3], 'yyyy/MM/dd')}__')|">31</a>
+					</td>
 					<td><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[4], 'd')}"
-						th:value="${#dates.format(week.weekday[4], 'yyyy/MM/dd')}">1</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[4], 'yyyy/MM/dd')}__')|">1</a>
+					</td>
 					<td><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[5], 'd')}"
-						th:value="${#dates.format(week.weekday[5], 'yyyy/MM/dd')}">2</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[5], 'yyyy/MM/dd')}__')|">2</a>
+					</td>
 					<td class="holiday"><a href="#" class="calendarDay"
 						th:text="${#dates.format(week.weekday[6], 'd')}"
-						th:value="${#dates.format(week.weekday[6], 'yyyy/MM/dd')}">3</a></td>
+						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[6], 'yyyy/MM/dd')}__')|">3</a>
+					</td>
 				</tr>
 			</tbody>
 		</table>
