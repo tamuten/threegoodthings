@@ -68,16 +68,25 @@ ORDER BY
 	</select>
 	<select id="selectOne"
 		resultType="com.example.demo.domain.model.Good">
-		SELECT
-			date,
-			good1,
-			good2,
-			good3
-		FROM
-			good
-		WHERE
-			date = #{targetDate, jdbcType=DATE}
-		;
+SELECT
+    date,
+    good1,
+    good2,
+    good3
+FROM
+    good
+WHERE
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+AND date = #{targetDate,
+    jdbcType = DATE}
+;
 	</select>
 	<select id="count" resultType="integer">
 		SELECT

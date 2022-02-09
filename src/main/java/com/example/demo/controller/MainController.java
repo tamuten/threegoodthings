@@ -27,30 +27,19 @@ public class MainController {
 	@Autowired
 	private GoodDao goodDao;
 
-	//	@InitBinder
-	//	public void initBinder(WebDataBinder binder) {
-	//		// 未入力のStringをnullに設定する
-	//		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
-	//	}
-
 	@GetMapping({ "/", "/index" })
 	public String today(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
-		System.out.println(user.getUserId());
-		System.out.println(user.getUsername());
-		System.out.println(user.getPassword());
 		// 本日の日付で表示する
-		return index(new Date(), model);
-	}
+		final Date TODAY = new Date();
 
-	private String index(final Date searchDate, Model model) {
-		List<Week> calendarDay = CalendarUtil.generateCalendar(searchDate);
-		model.addAttribute("calDate", searchDate);
+		List<Week> calendarDay = CalendarUtil.generateCalendar(TODAY);
+		model.addAttribute("calDate", TODAY);
 		model.addAttribute("calendarDay", calendarDay);
 
-		Good good = goodDao.selectOne(new java.sql.Date(searchDate
+		Good good = goodDao.selectOne(user.getUsername(), new java.sql.Date(TODAY
 			.getTime()));
 		MainForm form = new MainForm();
-		form.setDate(searchDate);
+		form.setDate(TODAY);
 		if (good != null) {
 			BeanUtils.copyProperties(good, form);
 		}
@@ -69,8 +58,8 @@ public class MainController {
 	}
 
 	@GetMapping("/loadDiary")
-	public String loadDiary(@RequestParam final Date date, Model model) {
-		Good good = goodDao.selectOne(new java.sql.Date(date
+	public String loadDiary(@RequestParam final Date date, Model model, @AuthenticationPrincipal UserDetailsImpl user) {
+		Good good = goodDao.selectOne(user.getUsername(), new java.sql.Date(date
 			.getTime()));
 		MainForm form = new MainForm();
 		form.setDate(date);
