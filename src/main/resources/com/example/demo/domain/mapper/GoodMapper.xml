@@ -4,6 +4,7 @@
 	<insert id="insertOne">
 		INSERT INTO
 		good(
+			user_id,
 			date,
 			<choose>
 				<when test="num == 1">
@@ -19,11 +20,16 @@
 			,
 			registered_datetime
 		)
-		VALUES (
+		SELECT
+			id,
 			#{date},
 			#{good},
 			CURRENT_TIMESTAMP
-		);
+		FROM
+			users
+		WHERE
+			mail_address = #{mailAddress}
+		;
 	</insert>
 	<select id="findAll" resultType="com.example.demo.domain.model.Good">
 SELECT
@@ -34,13 +40,21 @@ SELECT
 FROM
     good
 WHERE
-    NOT(
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+AND NOT(
         good1 IS NULL
     AND good2 IS NULL
     AND good3 IS NULL
     )
 ORDER BY
-	date DESC
+    date DESC
 ;
 	</select>
 	<select id="likeSearch" resultType="com.example.demo.domain.model.Good">
@@ -52,18 +66,26 @@ SELECT
 FROM
     good
 WHERE
-	(
-		good1 LIKE '%' || #{keyword} || '%'
-		OR good2 LIKE '%' || #{keyword} || '%'
-		OR good3 LIKE '%' || #{keyword} || '%'
-	)
-	AND NOT(
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+AND (
+        good1 LIKE '%' || #{keyword} || '%'
+    OR  good2 LIKE '%' || #{keyword} || '%'
+    OR  good3 LIKE '%' || #{keyword} || '%'
+    )
+AND NOT(
         good1 IS NULL
     AND good2 IS NULL
     AND good3 IS NULL
     )
 ORDER BY
-	date DESC
+    date DESC
 ;
 	</select>
 	<select id="selectOne"
@@ -89,12 +111,21 @@ AND date = #{targetDate,
 ;
 	</select>
 	<select id="count" resultType="integer">
-		SELECT
-			COUNT(*)
-		FROM
-			good
-		WHERE
-			date = #{targetDate, jdbcType=DATE}
+SELECT
+    COUNT(*)
+FROM
+    good
+WHERE
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+AND date = #{targetDate,
+    jdbcType = DATE}
 	</select>
 	<update id="updateOne"
 		parameterType="com.example.demo.domain.model.Good">
@@ -115,6 +146,15 @@ AND date = #{targetDate,
 			= #{good},
 			update_datetime = CURRENT_TIMESTAMP
 		WHERE
+		    user_id = (
+        		SELECT
+            		id
+        		FROM
+            		users
+        		WHERE
+            		mail_address = #{mailAddress}
+    		)
+			AND
 			date = #{date}
 	</update>
 

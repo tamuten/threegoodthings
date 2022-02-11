@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,13 @@ public class LoginController {
 	 * ログイン画面のGETメソッド用処理.
 	 */
 	@GetMapping("/login")
-	public String getLogin(LoginForm form, Model model) {
+	public String getLogin(LoginForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
+
+		// ajaxのXMLHttpRequestからのリダイレクトの場合の処理
+		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			// HTTP的に正しいかはともかく、なんとなく近そうなステータス(401)を返す
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
 		return "login";
 	}
 

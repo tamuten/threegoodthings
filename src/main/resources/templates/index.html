@@ -34,7 +34,8 @@
 						<li><a href="#" class="diaryBtn">日記</a></li>
 						<li><a href="#" class="showTimeline">タイムライン</a></li>
 						<li><a href="#" class="searchBtn">検索</a></li>
-						<li><a th:object="${#authentication.principal.user}" th:text="*{mailAddress}" th:href="@{/logout}">ユーザー</a></li>
+						<li><a th:object="${#authentication.principal.user}"
+							th:text="*{mailAddress}">ユーザー</a></li>
 					</ul>
 				</div>
 			</div>
@@ -43,7 +44,17 @@
 					<li><a href="#" class="diaryBtn">日記</a></li>
 					<li><a href="#" class="showTimeline">タイムライン</a></li>
 					<li><a href="#" class="searchBtn">検索</a></li>
-					<li><a th:object="${#authentication.principal.user}" th:text="*{mailAddress}" th:href="@{/logout}">ユーザー</a></li>
+					<li><div class="dropdown">
+							<a class="dropdown-toggle" id="user-dropdown"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false"
+								th:object="${#authentication.principal.user}"
+								th:text="*{mailAddress}" href="javascript:void(0)">ユーザー</a>
+							<div class="dropdown-menu" aria-labelledby="user-dropdown">
+								<a class="dropdown-item" href="#">Menu #1</a>
+								<a class="dropdown-item" href="#">Menu #2</a>
+							</div>
+						</div></li>
 				</ul>
 			</div>
 		</div>

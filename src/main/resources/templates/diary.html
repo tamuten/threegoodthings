@@ -25,6 +25,11 @@
 						<a
 							class="tomorrow btn btn-lg btn-outline-secondary pr-4 pl-4 pt-1 pb-1">&gt;</a>
 					</div>
+					<div class="save" style="display: none;">
+						<button type="button" id="cancel"
+							class="btn btn-light border ml-2">キャンセル</button>
+						<button type="button" id="save" class="btn btn-success">保存</button>
+					</div>
 				</div>
 				<div class="display">
 					<div class="input-area">
@@ -62,11 +67,7 @@
 							th:text="*{good3 != null} ? *{#strings.length(good3)} : 0">0</p>
 					</div>
 					<input type="hidden" th:field="*{date}">
-					<div class="save justify-content-end" style="display: none;">
-						<button type="button" id="cancel"
-							class="btn btn-light border ml-2">キャンセル</button>
-						<button type="button" id="save" class="btn btn-success">保存</button>
-					</div>
+
 				</div>
 			</div>
 		</form>

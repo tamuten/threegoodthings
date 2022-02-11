@@ -14,27 +14,27 @@ public class GoodDao {
 	@Autowired
 	private GoodMapper goodMapper;
 
-	public void insert(final String good, final int num, final Date date) {
-		goodMapper.insertOne(good, num, date);
+	public void insert(final String mailAddress, final String good, final int num, final Date date) {
+		goodMapper.insertOne(mailAddress, good, num, date);
 	}
 
-	public List<Good> findAll() {
-		return goodMapper.findAll();
+	public List<Good> findAll(final String mailAddress) {
+		return goodMapper.findAll(mailAddress);
 	}
 
-	public List<Good> likeSearch(final String keyword) {
-		return goodMapper.likeSearch(keyword);
+	public List<Good> likeSearch(final String mailAddress, final String keyword) {
+		return goodMapper.likeSearch(mailAddress, keyword);
 	}
 
 	public Good selectOne(final String mailAddress, final Date targetDate) {
 		return goodMapper.selectOne(mailAddress, targetDate);
 	}
 
-	public int count(final Date targetDate) {
-		return goodMapper.count(targetDate);
+	public int count(final String mailAddress, final Date targetDate) {
+		return goodMapper.count(mailAddress, targetDate);
 	}
 
-	public void updateOne(final String good, final int num, final Date date) {
-		goodMapper.updateOne(good, num, date);
+	public void updateOne(final String mailAddress, final String good, final int num, final Date date) {
+		goodMapper.updateOne(mailAddress, good, num, date);
 	}
 }

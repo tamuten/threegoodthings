@@ -22,7 +22,7 @@ $(document).on("click", ".editBtn, .goodText", function() {
 	//val = $textArea.val();
 	// 				$textArea.setSelectionRange(2, 5);
 	$(".edit").show();
-	$(".save").css('display', 'flex');
+	$(".save").show();
 });
 
 $(document).on("click", '#cancel', function() {
@@ -104,18 +104,19 @@ function loadDiary(targetDate) {
 	$.ajax({
 		url: "/loadDiary",
 		type: "GET",
-		//dataType: "json",
 		dataType: "html",
 		data: {
 			date: targetDate,
 			_csrf: $("*[name=_csrf]").val()
 		}
-	}).done(function(data) {
-		//displayData(data);
+	}).done(function(data, textStatus, jqXHR) {
 		displayDiary(data);
 		displayCalendarData(new Date(targetDate));
-	}).fail(function() {
-		alert(" loadDiary error!");
+	}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+		if (XMLHttpRequest.status === 401) {
+			location.href = '/login';
+		}
+		console.log(" loadDiary error!");
 	});
 }
 

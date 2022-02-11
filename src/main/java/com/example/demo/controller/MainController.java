@@ -71,16 +71,17 @@ public class MainController {
 	}
 
 	@GetMapping("/loadTimeline")
-	public String loadTimeline(Model model) {
-		List<Good> timeline = goodDao.findAll();
+	public String loadTimeline(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
+		List<Good> timeline = goodDao.findAll(user.getUsername());
 		model.addAttribute("timeline", timeline);
 		model.addAttribute("diary", null);
 		return "timeline :: timeline_contents";
 	}
 
 	@GetMapping("/searchDiary")
-	public String searchDiary(@RequestParam final String keyword, Model model) {
-		List<Good> timeline = goodDao.likeSearch(keyword);
+	public String searchDiary(@RequestParam final String keyword, Model model,
+			@AuthenticationPrincipal UserDetailsImpl user) {
+		List<Good> timeline = goodDao.likeSearch(user.getUsername(), keyword);
 		model.addAttribute("timeline", timeline);
 		model.addAttribute("diary", null);
 		return "timeline :: timeline_contents";
@@ -88,14 +89,16 @@ public class MainController {
 
 	@PostMapping("/register")
 	@ResponseBody
-	public String register(@RequestParam String good, @RequestParam final Date date, @RequestParam final int num) {
-		if (StringUtils.isEmpty(good)) good = null;
+	public String register(@RequestParam String good, @RequestParam final Date date, @RequestParam final int num,
+			@AuthenticationPrincipal UserDetailsImpl user) {
 		final java.sql.Date registerDate = new java.sql.Date(date.getTime());
+		final String mailAddress = user.getUsername();
+		if (StringUtils.isEmpty(good)) good = null;
 
-		if (goodDao.count(registerDate) <= 0) {
-			goodDao.insert(good, num, registerDate);
+		if (goodDao.count(mailAddress, registerDate) <= 0) {
+			goodDao.insert(mailAddress, good, num, registerDate);
 		} else {
-			goodDao.updateOne(good, num, registerDate);
+			goodDao.updateOne(mailAddress, good, num, registerDate);
 		}
 
 		return StrUtil.getJson(good);

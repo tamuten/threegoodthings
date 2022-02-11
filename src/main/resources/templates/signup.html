@@ -39,11 +39,20 @@
 						<div class="signup text-left">
 							<h1>Sign Up</h1>
 						</div>
-						<input type="text" th:field="*{mailAddress}" placeholder="メールアドレス">
+						<input
+							th:classappend="${#fields.hasErrors('mailAddress')} ? 'is-invalid'"
+							type="text" th:field="*{mailAddress}" placeholder="メールアドレス">
+						<span class="text-danger text-left d-block"
+							th:if="${#fields.hasErrors('mailAddress')}">メールアドレスを入力してください</span>
 						<input type="password" th:field="*{password}" placeholder="パスワード">
 						<input type="password" th:field="*{passwordConfirm}"
 							placeholder="パスワード（確認）"> <input class="signup-btn"
 							type="submit" value="登録">
+						<div class="to-login text-right">
+							<p>
+								すでにアカウントをお持ちですか？<a th:href="@{/login}">ログイン</a>
+							</p>
+						</div>
 					</div>
 				</form>
 			</div>
