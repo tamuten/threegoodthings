@@ -38,6 +38,6 @@ public class SignupController {
 		user.setMailAddress(mailAddress);
 
 		usersDao.insertOne(user);
-		return "redirect:/index";
+		return "signupComplete";
 	}
 }

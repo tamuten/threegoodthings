@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>登録完了｜Three good Things</title>
+<meta name="viewport" content="width=device-width">
+
+<link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{css/login.css}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap"
+	rel="stylesheet">
+</head>
+<body>
+	<header class="border-bottom">
+		<div class="title">
+			<div class="title-in h-100 d-flex align-items-center">
+				<div class="title-char">
+					<p>
+						<a href="#">Three good things</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="wrapper login-wrapper">
+			<div class="signupArea">
+				<form method="post" th:action="@{/signup}" class="form-signup"
+					th:object="${signupForm}">
+					<div class="login-form">
+						<div class="signupComplete">
+							<h4>登録完了</h4>
+						</div>
+						<p>ご登録ありがとうございました。</p>
+						<div class="to-login text-right">
+							<p>
+								<a th:href="@{/login}">ログイン画面に戻る</a>
+							</p>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer class="text-center">
+		<p>©︎ Copyright 2021-2022 by Three good things.</p>
+	</footer>
+</body>
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+</html>

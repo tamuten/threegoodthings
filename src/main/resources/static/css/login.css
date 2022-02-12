@@ -39,6 +39,10 @@ header {
 	padding: 20px 0;
 }
 
+.signupComplete {
+	font-size:2rem;
+}
+
 .login-form {
 	width: 100%;
 	text-align: center;
