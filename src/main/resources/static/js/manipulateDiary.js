@@ -51,7 +51,6 @@ $(document).on("click", '#save', function(e) {
 			_csrf: $("*[name=_csrf]").val()
 		}
 	}).done(function(data) {
-		alert("登録が完了しました");
 		hideEditArea();
 		loadDiary($("#date").val());
 		showDiary();

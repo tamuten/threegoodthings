@@ -34,6 +34,7 @@ public class SignupController {
 		User user = new User();
 		final String mailAddress = form.getMailAddress();
 		final String password = passwordEncoder.encode(form.getPassword());
+		System.out.println(password);
 		user.setPassword(password);
 		user.setMailAddress(mailAddress);
 

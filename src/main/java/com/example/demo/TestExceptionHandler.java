@@ -1,0 +1,14 @@
+package com.example.demo;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+@ControllerAdvice
+public class TestExceptionHandler {
+	@ExceptionHandler(Exception.class)
+	public String testExceptionHandle(Exception e, Model model) {
+		model.addAttribute("error", e);
+		return "testError";
+	}
+}

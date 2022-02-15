@@ -26,7 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
-			.antMatchers("/webjars/**", "/css/**", "/js/**");
+			.antMatchers("/webjars/**", "/css/**", "/js/**", "/error");
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.usernameParameter("mailaddress")
 			.passwordParameter("password")
 			.defaultSuccessUrl("/index")
+			.failureUrl("/login")
 			.permitAll()
 			.and()
 			.logout()

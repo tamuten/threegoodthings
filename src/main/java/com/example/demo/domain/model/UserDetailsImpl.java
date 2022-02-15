@@ -47,7 +47,7 @@ public class UserDetailsImpl implements UserDetails {
 		return this.user.getMailAddress();
 	}
 
-	public String getUserId() {
+	public Integer getUserId() {
 		return this.user.getUserId();
 	}
 
