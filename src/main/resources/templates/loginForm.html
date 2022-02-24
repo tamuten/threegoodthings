@@ -15,8 +15,12 @@
 					<div class="signin text-left">
 						<h1>Sign In</h1>
 					</div>
-					<div th:if="${param.error}">Invalid username and password.</div>
-					<div th:if="${param.logout}">You have been logged out.</div>
+					<div th:if="${param.error}" class="alert alert-danger">
+						<p class="text-left">メールアドレスまたはパスワードが間違っています。</p>
+					</div>
+					<div th:if="${param.logout}" class="alert alert-primary">
+						<p class="text-left">ログアウトしました。</p>
+					</div>
 					<input type="text" name="mailaddress" placeholder="メールアドレス">
 					<input type="password" name="password" placeholder="パスワード">
 					<p>
@@ -25,7 +29,7 @@
 					<input class="login-btn" type="submit" value="ログイン">
 					<div class="signup">
 						<p>
-							アカウントをお持ちでないですか？<a th:href="@{signup}" id="">登録する</a>
+							アカウントをお持ちでないですか？<a th:href="@{signup}">登録する</a>
 						</p>
 					</div>
 				</div>

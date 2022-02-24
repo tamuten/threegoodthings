@@ -79,6 +79,13 @@
 			<artifactId>bootstrap</artifactId>
 			<version>4.1.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/popper.js -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>popper.js</artifactId>
+			<version>1.14.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
@@ -110,6 +117,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<executable>true</executable>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
