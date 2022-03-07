@@ -40,7 +40,7 @@ header {
 }
 
 .signupComplete {
-	font-size:2rem;
+	margin-bottom: 250px;
 }
 
 .login-form {
@@ -61,7 +61,7 @@ header {
 	margin: 30px 0;
 }
 
-.login input[type="text"], .signupArea input[type="text"] {
+.login input[type="text"] {
 	width: 100%;
 	font-size: 16px;
 	box-sizing: border-box;
@@ -70,13 +70,29 @@ header {
 	margin-bottom: 10px;
 }
 
-.login input[type="password"], .signupArea input[type="password"] {
+.login input[type="password"] {
 	width: 100%;
 	font-size: 16px;
 	box-sizing: border-box;
 	border: 1px solid lightgrey;
 	padding: 10px 10px;
 	margin-bottom: 10px;
+}
+
+.signupArea input[type="text"] {
+	width: 100%;
+	font-size: 16px;
+	box-sizing: border-box;
+	border: 1px solid lightgrey;
+	padding: 10px 10px;
+}
+
+.signupArea input[type="password"] {
+	width: 100%;
+	font-size: 16px;
+	box-sizing: border-box;
+	border: 1px solid lightgrey;
+	padding: 10px 10px;
 }
 
 .signupArea .login-form .is-invalid {
@@ -113,6 +129,10 @@ header {
 	background-color: #25b57d;
 	cursor: pointer;
 	color: #ffffff;
+}
+
+.signup-form-input {
+	margin-bottom: 10px;
 }
 
 .login a, .signup a {

@@ -9,8 +9,8 @@
 <body>
 	<div th:fragment="loginForm_contents" class="login">
 		<div th:if="${loginForm}">
-			<form method="post" th:action="@{/login}" class="form-signin"
-				th:object="${loginForm}">
+			<form method="post" th:action="@{/login}" id="loginForm"
+				class="form-signin" th:object="${loginForm}">
 				<div class="login-form">
 					<div class="signin text-left">
 						<h1>Sign In</h1>
@@ -21,8 +21,9 @@
 					<div th:if="${param.logout}" class="alert alert-primary">
 						<p class="text-left">ログアウトしました。</p>
 					</div>
-					<input type="text" name="mailaddress" placeholder="メールアドレス">
-					<input type="password" name="password" placeholder="パスワード">
+					<input type="text" name="mailaddress" id="mailAddress"
+						placeholder="メールアドレス"> <input type="password"
+						name="password" id="password" placeholder="パスワード">
 					<p>
 						<a href="#">パスワードを忘れた場合</a>
 					</p>
@@ -35,6 +36,12 @@
 				</div>
 			</form>
 		</div>
+		<script type="text/javascript" th:inline="javascript">
+			/*<![CDATA[*/
+
+			/*]]>*/
+		</script>
 	</div>
+
 </body>
 </html>

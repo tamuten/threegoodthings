@@ -10,9 +10,4 @@ public class ThreegoodthingsApplication {
 		SpringApplication.run(ThreegoodthingsApplication.class, args);
 	}
 
-	//	@Bean
-	//	public PasswordEncoder passwordEncoder() {
-	//		return new BCryptPasswordEncoder();
-	//	}
-
 }

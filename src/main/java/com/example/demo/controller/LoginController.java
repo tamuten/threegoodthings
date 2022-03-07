@@ -19,7 +19,7 @@ public class LoginController {
 	@GetMapping("/login")
 	public String getLogin(LoginForm form, Model model, HttpServletRequest request, HttpServletResponse response) {
 
-		// ajaxのXMLHttpRequestからのリダイレクトの場合の処理
+		// セッションタイムアウト時の処理
 		if ("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			// HTTP的に正しいかはともかく、なんとなく近そうなステータス(401)を返す
 			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -34,4 +34,12 @@ public class LoginController {
 	public String postLogin(Model model) {
 		return "redirect:/index";
 	}
+
+	@PostMapping("/guest_login")
+	public String guest_login(LoginForm form) {
+		System.out.println("guest");
+		form.setMailAddress("guest");
+		return "redirect:/index";
+	}
+
 }

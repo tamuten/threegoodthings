@@ -98,7 +98,7 @@ header {
 	left: 100%;
 	z-index: 80;
 	background-color: #404040;
-	transition: all 0.5s;
+	transition: all 0.3s;
 }
 
 .menu-content ul {

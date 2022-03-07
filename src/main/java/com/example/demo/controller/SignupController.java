@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.domain.model.User;
 import com.example.demo.domain.repository.UsersDao;
 import com.example.demo.form.SignupForm;
+import com.example.demo.form.validator.SignupFormValidator;
 
 @Controller
 public class SignupController {
@@ -19,6 +22,13 @@ public class SignupController {
 	private UsersDao usersDao;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private SignupFormValidator validator;
+
+	@InitBinder("signupForm")
+	public void validatorBinder(WebDataBinder binder) {
+		binder.addValidators(validator);
+	}
 
 	@GetMapping("/signup")
 	public String getSignup(SignupForm form, Model model) {

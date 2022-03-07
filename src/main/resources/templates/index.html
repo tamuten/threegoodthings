@@ -35,8 +35,7 @@
 						<li><a href="#" class="diaryBtn">日記</a></li>
 						<li><a href="#" class="showTimeline">タイムライン</a></li>
 						<li><a href="#" class="searchBtn">検索</a></li>
-						<li><a th:object="${#authentication.principal.user}"
-							th:text="*{mailAddress}">ユーザー</a></li>
+						<li><a href="#" id="aLogout" >ログアウト</a></li>
 					</ul>
 				</div>
 			</div>
@@ -52,7 +51,7 @@
 								th:object="${#authentication.principal.user}"
 								th:text="*{mailAddress}" href="javascript:void(0)">ユーザー</a>
 							<div class="dropdown-menu" aria-labelledby="user-dropdown">
-								<form th:action="@{/logout}" method="post">
+								<form th:action="@{/logout}" id="logoutForm" method="post">
 									<button type="submit" class="dropdown-item">ログアウト</button>
 								</form>
 

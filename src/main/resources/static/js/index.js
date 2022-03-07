@@ -3,6 +3,9 @@ let dt = null;
 $(document).on('dblclick', (e) => {
 	e.preventDefault();
 });
+$(document).on('click', '#aLogout',() => {
+	$('#logoutForm').submit();
+});
 $(document).on('click', '#last-year', () => {
 	dt = new Date($("#cal-date").val());
 	dt.setFullYear(dt.getFullYear() - 1);
@@ -50,6 +53,7 @@ $(document).on('keyup', '.input', () => {
 	$("#count3").text($('#good3').val().length);
 });
 $('.showTimeline').on('click', () => {
+	hideSlideInMenu();
 	$(".diary").hide();
 	showTimeline();
 });

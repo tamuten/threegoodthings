@@ -14,4 +14,8 @@ public class UsersDao {
 	public void insertOne(User user) {
 		mapper.insertOne(user);
 	}
+
+	public User selectOne(String mailAddress) {
+		return mapper.selectOne(mailAddress);
+	}
 }

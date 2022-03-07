@@ -1,11 +1,13 @@
 let inum = 0;
 $(".diaryBtn").on("click", function() {
+	hideSlideInMenu();
 	hideSearchArea();
 	loadDiary(new Date());
 	hideTimeline();
 });
 
 $(".searchBtn").on("click", function() {
+	hideSlideInMenu();
 	showSearchArea();
 	hideDiary();
 	hideEditArea();
@@ -71,7 +73,9 @@ $(document).on("click", '.tomorrow', function() {
 	loadDiary(formatDateSlash(targetDate));
 });
 
-
+function hideSlideInMenu(){
+	$('#menu-btn-check').prop('checked', false);
+}
 
 function hideEditArea() {
 	$(".input").hide();

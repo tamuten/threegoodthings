@@ -36,10 +36,11 @@
 				<form method="post" th:action="@{/signup}" class="form-signup"
 					th:object="${signupForm}">
 					<div class="login-form">
-						<div class="signupComplete">
+						<div class="text-left signupComplete">
 							<h4>登録完了</h4>
+							<p>ご登録ありがとうございました。</p>
 						</div>
-						<p>ご登録ありがとうございました。</p>
+
 						<div class="to-login text-right">
 							<p>
 								<a th:href="@{/login}">ログイン画面に戻る</a>
