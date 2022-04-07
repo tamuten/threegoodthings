@@ -287,11 +287,12 @@ textarea:focus {
 }
 
 .calendar thead td {
-	padding: 0.25rem 0;
+	padding: 0.1rem 0;
+	font-size: 0.75rem;
 }
 
 .calendar tbody td {
-	padding: 0.25rem 0 1.75rem 0;
+	padding: 0.75rem 0 0.75rem 0;
 }
 
 .calendar .holiday {
