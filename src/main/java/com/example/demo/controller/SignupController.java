@@ -54,7 +54,7 @@ public class SignupController {
 		log.info("[GenaratedUUID]" + uuid);
 
 		tmpUserService.create(new TmpUser(form.getMailAddress(), password, uuid));
-		mailService.sendRegistrationConfirmationMail(password, uuid);
+		mailService.sendConfirmationMail(password, uuid);
 
 		return "signupComplete";
 	}
