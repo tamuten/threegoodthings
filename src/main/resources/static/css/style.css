@@ -299,6 +299,14 @@ textarea:focus {
 	background-color: #f8f8f8;
 }
 
+.calendar .sunday {
+	color: #E45653;
+}
+
+.calendar .saturday {
+	color: #5374E4;
+}
+
 .calendar table a {
 	text-decoration: none;
 	color: black;
