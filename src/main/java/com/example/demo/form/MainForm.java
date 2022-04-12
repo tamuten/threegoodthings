@@ -16,4 +16,8 @@ public class MainForm {
 	// hidden項目
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date date;
+
+	public MainForm() {
+		this.date = new Date();
+	}
 }

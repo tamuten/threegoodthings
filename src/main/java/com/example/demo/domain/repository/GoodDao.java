@@ -26,7 +26,7 @@ public class GoodDao {
 		return goodMapper.likeSearch(mailAddress, keyword);
 	}
 
-	public Good selectOne(final String mailAddress, final Date targetDate) {
+	public Good findByDate(final String mailAddress, final Date targetDate) {
 		return goodMapper.selectOne(mailAddress, targetDate);
 	}
 
