@@ -92,7 +92,7 @@ public class MainController {
 		final String mailAddress = user.getUsername();
 		if (StringUtils.isEmpty(good)) good = null;
 
-		if (goodDao.count(mailAddress, registerDate) <= 0) {
+		if (goodDao.countByDateAndUser(mailAddress, registerDate) <= 0) {
 			goodDao.insert(mailAddress, good, num, registerDate);
 		} else {
 			goodDao.updateOne(mailAddress, good, num, registerDate);

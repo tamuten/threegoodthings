@@ -30,7 +30,7 @@ public class GoodDao {
 		return goodMapper.selectOne(mailAddress, targetDate);
 	}
 
-	public int count(final String mailAddress, final Date targetDate) {
+	public int countByDateAndUser(final String mailAddress, final Date targetDate) {
 		return goodMapper.count(mailAddress, targetDate);
 	}
 
