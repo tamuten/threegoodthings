@@ -48,13 +48,13 @@ public class SignupController {
 		}
 
 		final String password = passwordEncoder.encode(form.getPassword());
-		log.info("[encodedpassword]" + password);
+		log.info("[encodedpassword] " + password);
 
 		String uuid = UUIDUtil.generateUUID();
-		log.info("[GenaratedUUID]" + uuid);
+		log.info("[GenaratedUUID] " + uuid);
 
 		tmpUserService.create(new TmpUser(form.getMailAddress(), password, uuid));
-		mailService.sendConfirmationMail(password, uuid);
+		mailService.sendCertificationMail(form.getMailAddress(), uuid);
 
 		return "signupComplete";
 	}

@@ -22,7 +22,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS tmp_user;
 CREATE TABLE tmp_user (
 	id serial PRIMARY KEY,
-	mail_address varchar(60) UNIQUE NOT NULL,
+	mail_address varchar(60) NOT NULL,
 	password varchar(60) NOT NULL,
 	uuid varchar(60) NOT NULL
 );
