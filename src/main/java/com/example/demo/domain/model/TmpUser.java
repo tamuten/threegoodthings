@@ -1,5 +1,7 @@
 package com.example.demo.domain.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,9 +36,7 @@ public class TmpUser {
 	@Column(name = "uuid")
 	private String uuid;
 
-	public TmpUser(String mailAddress, String password, String uuid) {
-		this.mailAddress = mailAddress;
-		this.password = password;
-		this.uuid = uuid;
-	}
+	@Column(name = "expiry_date")
+	private LocalDateTime expiryDate;
+
 }

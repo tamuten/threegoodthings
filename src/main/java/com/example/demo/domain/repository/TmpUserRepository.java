@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.domain.model.TmpUser;
 
-public interface TmpUserDao extends JpaRepository<TmpUser, Integer> {
+public interface TmpUserRepository extends JpaRepository<TmpUser, Integer> {
 }
