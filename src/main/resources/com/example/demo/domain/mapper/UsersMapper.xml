@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.domain.mapper.UsersMapper">
-	<insert id="insertOne" parameterType="com.example.demo.domain.model.User">
+<insert id="insertOne" parameterType="User">
 INSERT INTO users(
     mail_address,
     password,
@@ -14,15 +14,32 @@ VALUES(
     false,
     CURRENT_TIMESTAMP
 )
-	</insert>
-	<select id="selectOne" parameterType="string" resultType="com.example.demo.domain.model.User">
-		SELECT
-			*
-		FROM
-			users
-		WHERE
-			delete_flg IS NOT NULL
-			AND mail_address = #{mailAddress}
-	</select>
-
+</insert>
+<insert id="createUser">
+INSERT INTO users(
+    mail_address,
+    password,
+    delete_flg,
+    registered_datetime
+)
+SELECT
+    mail_address,
+    password,
+    false,
+    CURRENT_TIMESTAMP
+FROM
+    tmp_user
+WHERE
+    mail_address = #{mailAddress}
+AND token = #{token}
+</insert>
+<select id="selectOne" parameterType="string" resultType="User">
+SELECT
+    *
+FROM
+    users
+WHERE
+    delete_flg IS NOT NULL
+AND mail_address = #{mailAddress}
+</select>
 </mapper>

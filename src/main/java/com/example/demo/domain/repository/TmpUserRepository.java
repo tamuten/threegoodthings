@@ -1,8 +1,22 @@
 package com.example.demo.domain.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import com.example.demo.domain.mapper.TmpUserMapper;
 import com.example.demo.domain.model.TmpUser;
 
-public interface TmpUserRepository extends JpaRepository<TmpUser, Integer> {
+import lombok.RequiredArgsConstructor;
+
+@Repository
+@RequiredArgsConstructor
+public class TmpUserRepository {
+	private final TmpUserMapper mapper;
+
+	public int create(TmpUser tmpUser) {
+		return mapper.insertOne(tmpUser);
+	}
+
+	public TmpUser findByToken(String token) {
+		return mapper.findByToken(token);
+	}
 }

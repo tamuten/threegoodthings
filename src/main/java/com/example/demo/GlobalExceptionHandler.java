@@ -5,10 +5,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class TestExceptionHandler {
+public class GlobalExceptionHandler {
 	@ExceptionHandler(Exception.class)
-	public String testExceptionHandle(Exception e, Model model) {
+	public String handleException(Exception e, Model model) {
 		model.addAttribute("error", e);
-		return "testError";
+		e.printStackTrace();
+		return "systemError";
 	}
 }

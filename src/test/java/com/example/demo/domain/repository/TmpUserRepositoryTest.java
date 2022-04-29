@@ -1,4 +1,9 @@
-package com.example.demo.domain.service;
+package com.example.demo.domain.repository;
+
+import static org.assertj.core.api.Assertions.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -23,28 +28,29 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 		TransactionDbUnitTestExecutionListener.class // @DatabaseSetupや＠ExpectedDatabaseなどを使えるように指定
 })
 @Transactional
-public class SignupServiceTest {
+public class TmpUserRepositoryTest {
 	@Autowired
-	private SignupService tmpUserService;
+	private TmpUserRepository repository;
 
 	@Disabled
 	@Test
-	@DatabaseSetup("/testdata/TmpUserServiceTest/init-data")
-	@ExpectedDatabase(value = "/testdata/TmpUserServiceTest/after-create-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
-	void createはmailAddressとpassword指定した通りに登録する() {
+	@DatabaseSetup("/testdata/TmpUserRepositoryTest/init-data")
+	@ExpectedDatabase(value = "/testdata/TmpUserRepositoryTest/after-create-data", assertionMode = DatabaseAssertionMode.NON_STRICT_UNORDERED)
+	void createはTmpUserのデータを過不足なく登録する() {
 		// Setup
 		TmpUser tmpUser = TmpUser.builder()
 			.mailAddress("tanakakei@example.com")
 			.password("4c7572b1e8fa332051c05907cbfcf9ed3f50cc52")
 			.token("9c412fcb-9155-4611-b03e-8b1a1a54b54b")
+			.expiryDate(LocalDateTime.parse("2022-4-30T10:15:30", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
 			.build();
 
 		// Execute
-		//		TmpUser expected = tmpUserService.createAndSendMail(tmpUser);
-		//
-		//		// Verify
-		//		assertThat(expected.getMailAddress()).isEqualTo("tanakakei@example.com");
-		//		assertThat(expected.getPassword()).isEqualTo("4c7572b1e8fa332051c05907cbfcf9ed3f50cc52");
-		//		assertThat(expected.getUuid()).isEqualTo("9c412fcb-9155-4611-b03e-8b1a1a54b54b");
+		int createdCnt = repository.create(tmpUser);
+
+		// Verify
+		assertThat(createdCnt).isEqualTo(1);
+
 	}
+
 }

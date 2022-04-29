@@ -15,6 +15,10 @@ public class UsersDao {
 		mapper.insertOne(user);
 	}
 
+	public int createUser(String mailAddress, String token) {
+		return mapper.createUser(mailAddress, token);
+	}
+
 	public User selectOne(String mailAddress) {
 		return mapper.selectOne(mailAddress);
 	}

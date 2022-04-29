@@ -39,6 +39,9 @@
 						<div class="signup text-left">
 							<h1>Sign Up</h1>
 						</div>
+						<div th:if="${error}" class="alert alert-danger">
+							<p class="text-left" th:text="${error}"></p>
+						</div>
 						<div class="input-group signup-form-input">
 							<input
 								th:classappend="${#fields.hasErrors('mailAddress')} ? 'is-invalid'"
@@ -48,12 +51,16 @@
 								th:errors="*{mailAddress}">メールアドレスを入力してください</span>
 						</div>
 						<div class="input-group signup-form-input">
-							<input type="password" th:field="*{password}" placeholder="パスワード">
+							<input
+								th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"
+								type="password" th:field="*{password}" placeholder="パスワード">
 							<span class="text-danger text-left d-block"
 								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">パスワードを入力してください</span>
 						</div>
 						<div class="input-group signup-form-input">
-							<input type="password" th:field="*{passwordConfirm}"
+							<input
+								th:classappend="${#fields.hasErrors('passwordConfirm')} ? 'is-invalid'"
+								type="password" th:field="*{passwordConfirm}"
 								placeholder="パスワード（確認）"> <span
 								class="text-danger text-left d-block"
 								th:if="${#fields.hasErrors('passwordConfirm')}"

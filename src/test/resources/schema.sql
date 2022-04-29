@@ -24,6 +24,6 @@ CREATE TABLE tmp_user (
 	id serial PRIMARY KEY,
 	mail_address varchar(60) NOT NULL,
 	password varchar(60) NOT NULL,
-	uuid varchar(60) NOT NULL,
+	token varchar(60) NOT NULL,
 	expiry_date timestamp NOT NULL
 );
