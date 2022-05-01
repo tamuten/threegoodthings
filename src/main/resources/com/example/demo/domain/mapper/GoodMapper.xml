@@ -17,21 +17,18 @@
 					good3
 				</when>
 			</choose>
-			,
-			registered_datetime
 		)
 		SELECT
 			id,
 			#{date},
-			#{good},
-			CURRENT_TIMESTAMP
+			#{good}
 		FROM
 			users
 		WHERE
 			mail_address = #{mailAddress}
 		;
 	</insert>
-	<select id="findAll" resultType="com.example.demo.domain.model.Good">
+	<select id="findAll" resultType="Good">
 SELECT
     date,
     good1,
@@ -57,7 +54,7 @@ ORDER BY
     date DESC
 ;
 	</select>
-	<select id="likeSearch" resultType="com.example.demo.domain.model.Good">
+	<select id="likeSearch" resultType="Good">
 SELECT
     date,
     good1,
@@ -89,7 +86,7 @@ ORDER BY
 ;
 	</select>
 	<select id="selectOne"
-		resultType="com.example.demo.domain.model.Good">
+		resultType="Good">
 SELECT
     date,
     good1,
@@ -128,7 +125,7 @@ AND date = #{targetDate,
     jdbcType = DATE}
 	</select>
 	<update id="updateOne"
-		parameterType="com.example.demo.domain.model.Good">
+		parameterType="Good">
 		UPDATE
 			good
 		SET
@@ -143,8 +140,7 @@ AND date = #{targetDate,
 					good3
 				</when>
 			</choose>
-			= #{good},
-			update_datetime = CURRENT_TIMESTAMP
+			= #{good}
 		WHERE
 		    user_id = (
         		SELECT

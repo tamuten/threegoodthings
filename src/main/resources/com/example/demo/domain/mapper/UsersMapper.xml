@@ -4,42 +4,42 @@
 <insert id="insertOne" parameterType="User">
 INSERT INTO users(
     mail_address,
-    password,
-    delete_flg,
-    registered_datetime
+    password
 )
 VALUES(
     #{mailAddress},
-    #{password},
-    false,
-    CURRENT_TIMESTAMP
+    #{password}
 )
 </insert>
-<insert id="createUser">
+<select id="createUser" resultType="User">
 INSERT INTO users(
     mail_address,
-    password,
-    delete_flg,
-    registered_datetime
+    password
 )
 SELECT
     mail_address,
-    password,
-    false,
-    CURRENT_TIMESTAMP
+    password
 FROM
     tmp_user
 WHERE
     mail_address = #{mailAddress}
 AND token = #{token}
-</insert>
+RETURNING *
+</select>
 <select id="selectOne" parameterType="string" resultType="User">
 SELECT
     *
 FROM
     users
 WHERE
-    delete_flg IS NOT NULL
-AND mail_address = #{mailAddress}
+	mail_address = #{mailAddress}
+</select>
+<select id="isAlreadyExist" resultType="boolean">
+SELECT
+	COUNT(*) > 0
+FROM
+	users
+WHERE
+	mail_address = #{mailAddress}
 </select>
 </mapper>

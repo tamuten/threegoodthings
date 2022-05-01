@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.model.TmpUser;
+import com.example.demo.domain.model.User;
 import com.example.demo.domain.repository.TmpUserRepository;
 import com.example.demo.domain.repository.UsersDao;
 import com.example.demo.exception.BusinessException;
@@ -33,7 +34,7 @@ public class SignupService {
 	public TmpUser findTmpUserByToken(String token) {
 		TmpUser tmpUser = tmpUserRepository.findByToken(token);
 		if (tmpUser == null) {
-			throw new SystemException("メールアドレス認証：トークンに一致するレコードが見つかりません。");
+			throw new SystemException("メールアドレス認証エラー：トークンに一致するレコードが見つかりません。");
 		}
 		if (LocalDateTime.now()
 			.isAfter(tmpUser.getExpiryDate())) {
@@ -59,7 +60,10 @@ public class SignupService {
 		mailService.sendCertificationMail(form.getMailAddress(), tmpUser.getToken(), tmpUser.getExpiryDate());
 	}
 
-	public int createUser(String mailAddress, String token) {
+	public User createUser(String mailAddress, String token) {
+		if (userRepository.isAlreadyExist(mailAddress)) {
+			throw new BusinessException("既に登録されています。");
+		}
 		return userRepository.createUser(mailAddress, token);
 	}
 }

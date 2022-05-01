@@ -1,5 +1,12 @@
 package com.example.demo.controller;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,16 +43,17 @@ public class SignupController {
 	}
 
 	@PostMapping("/signup")
-	public String postSignup(@Validated SignupForm form, BindingResult result, Model model) {
+	public String signupConfirm(@Validated SignupForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			return "signup";
 		}
-		signupService.createTmpUserAndSendMail(form);
-		return "signupConfirm";
+    signupService.createTmpUserAndSendMail(form);
+		return "signupComplete";
 	}
 
 	@GetMapping("/signup/certificate")
-	public String signupComplete(@RequestParam String token, RedirectAttributes redirectAttributes) {
+	public String signupComplete(@RequestParam String token, RedirectAttributes redirectAttributes,
+			HttpServletRequest request) throws ServletException {
 		TmpUser tmpUser = null;
 		try {
 			tmpUser = signupService.findTmpUserByToken(token);
@@ -56,7 +64,16 @@ public class SignupController {
 
 		signupService.createUser(tmpUser.getMailAddress(), token);
 
-		// TODO: リダイレクトしログイン後の画面に遷移する。
-		return "signupComplete";
+		// ログアウト処理
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication authentication = context.getAuthentication();
+
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			SecurityContextHolder.clearContext();
+		}
+
+		// リダイレクトしログイン画面に遷移する。
+		redirectAttributes.addFlashAttribute("msg", "登録が完了しました。");
+		return "redirect:/login";
 	}
 }

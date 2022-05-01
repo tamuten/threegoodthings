@@ -80,6 +80,14 @@
 	<footer class="text-center">
 		<p>©︎ Copyright 2021-2022 by Three good things.</p>
 	</footer>
+  <script type="text/javascript" th:inline="javascript">
+    $('.signup-btn').on('click', (e) => {
+      e.preventDefault();
+      if(confirm('登録します。よろしいですか？')){
+        $('form').submit();
+      }
+    })
+  </script>
 </body>
 <meta th:name="_csrf" th:content="${_csrf.token}" />
 <meta th:name="_csrf_header" th:content="${_csrf.headerName}" />

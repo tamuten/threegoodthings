@@ -46,6 +46,9 @@
 							<div th:if="${param.logout}" class="alert alert-primary">
 								<p class="text-left">ログアウトしました。</p>
 							</div>
+							<div th:if="${msg}" class="alert alert-success">
+								<p class="text-left" th:text="${msg}"></p>
+							</div>
 							<input type="text" name="mailaddress" id="mailAddress"
 								placeholder="メールアドレス"> <input type="password"
 								name="password" id="password" placeholder="パスワード">

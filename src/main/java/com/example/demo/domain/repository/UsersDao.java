@@ -15,11 +15,15 @@ public class UsersDao {
 		mapper.insertOne(user);
 	}
 
-	public int createUser(String mailAddress, String token) {
+	public User createUser(String mailAddress, String token) {
 		return mapper.createUser(mailAddress, token);
 	}
 
 	public User selectOne(String mailAddress) {
 		return mapper.selectOne(mailAddress);
+	}
+
+	public boolean isAlreadyExist(String mailAddress) {
+		return mapper.isAlreadyExist(mailAddress);
 	}
 }
