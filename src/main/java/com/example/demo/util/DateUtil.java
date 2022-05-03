@@ -5,6 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtil {
+	private DateUtil() {
+	}
+
 	/**
 	 * Stringをjava.util.Dateに変換する
 	 *
@@ -15,9 +18,8 @@ public class DateUtil {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		try {
 			return dateFormat.parse(sDate);
-		} catch (ParseException e) {
-			// TODO Exceptionクラス作る
-			throw new RuntimeException(e);
+		} catch (ParseException | NullPointerException e) {
+			return null;
 		}
 	}
 
@@ -29,10 +31,38 @@ public class DateUtil {
 	 */
 	public static String parseStr(final Date date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-		return dateFormat.format(date);
+		if (date != null) {
+			return dateFormat.format(date);
+		} else {
+			return null;
+		}
 	}
 
-	public static java.sql.Date parseSqlDate(final Date date) {
-		return new java.sql.Date(date.getTime());
+	/**
+	 * java.sql.Date型をjava.util.Date型に変換します。<br>
+	 * 引数にnullが指定された場合はnullを返却します。
+	 *
+	 * @param sqlDate
+	 * @return
+	 */
+	public static java.util.Date sqlToUtil(java.sql.Date sqlDate) {
+		if (sqlDate == null) {
+			return null;
+		}
+		return new java.util.Date(sqlDate.getTime());
+	}
+
+	/**
+	 * java.util.Date型をjava.sql.Date型に変換します<br>
+	 * 引数にnullが指定された場合はnullを返却します。
+	 *
+	 * @param utilDate
+	 * @return
+	 */
+	public static java.sql.Date utilToSql(java.util.Date utilDate) {
+		if (utilDate == null) {
+			return null;
+		}
+		return new java.sql.Date(utilDate.getTime());
 	}
 }

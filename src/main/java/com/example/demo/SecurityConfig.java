@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// jsとcss、新規登録画面はだけでも遷移可能
 		http.authorizeRequests()
-			.antMatchers("/webjars/**", "/css/**", "/js/**", "/signup")
+			.antMatchers("/webjars/**", "/css/**", "/js/**", "/signup", "/signup/**")
 			.permitAll()
 			.anyRequest()
 			.authenticated();

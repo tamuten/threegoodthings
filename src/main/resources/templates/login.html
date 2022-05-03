@@ -32,7 +32,40 @@
 
 	<div class="container">
 		<div class="wrapper login-wrapper">
-			<div th:replace="loginForm :: loginForm_contents"></div>
+			<div class="login">
+				<div th:if="${loginForm}">
+					<form method="post" th:action="@{/login}" id="loginForm"
+						class="form-signin" th:object="${loginForm}">
+						<div class="login-form">
+							<div class="signin text-left">
+								<h1>Sign In</h1>
+							</div>
+							<div th:if="${param.error}" class="alert alert-danger">
+								<p class="text-left">メールアドレスまたはパスワードが間違っています。</p>
+							</div>
+							<div th:if="${param.logout}" class="alert alert-primary">
+								<p class="text-left">ログアウトしました。</p>
+							</div>
+							<div th:if="${msg}" class="alert alert-success">
+								<p class="text-left" th:text="${msg}"></p>
+							</div>
+							<input type="text" name="mailaddress" id="mailAddress"
+								placeholder="メールアドレス"> <input type="password"
+								name="password" id="password" placeholder="パスワード">
+							<p>
+								<a href="#">パスワードを忘れた場合</a>
+							</p>
+							<input class="login-btn" type="submit" value="ログイン">
+							<div class="signup">
+								<p>
+									アカウントをお持ちでないですか？<a th:href="@{signup}">登録する</a>
+								</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
 		</div>
 	</div>
 	<footer class="text-center">

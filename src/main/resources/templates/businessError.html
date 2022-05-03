@@ -3,9 +3,12 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>test error page</title>
+<title>エラー</title>
 </head>
 <body>
-	<div th:text="'error: ' + ${error}"></div>
+	<div>
+		<p th:text="${error}"></p>
+		<p><a th:href="@{/login}">ログインページに戻る</a></p>
+	</div>
 </body>
 </html>

@@ -374,19 +374,18 @@ footer {
 		align-items: center;
 		height: 60px;
 	}
-		.ym-move {
+	.ym-move {
 		display: inline-block;
 		padding: 0;
 	}
 	.ym-move a {
 		width: auto;
 		font-size: 0.8rem;
-		padding:0.125rem 0.5rem;
+		padding: 0.125rem 0.5rem;
 	}
 }
 
 @media screen and (min-width:992px) {
-
 	.outer {
 		max-width: 970px;
 	}

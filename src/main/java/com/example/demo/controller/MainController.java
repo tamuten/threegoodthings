@@ -20,6 +20,7 @@ import com.example.demo.domain.model.Week;
 import com.example.demo.domain.repository.GoodDao;
 import com.example.demo.form.MainForm;
 import com.example.demo.util.CalendarUtil;
+import com.example.demo.util.DateUtil;
 import com.example.demo.util.StrUtil;
 
 @Controller
@@ -30,19 +31,17 @@ public class MainController {
 	@GetMapping({ "/", "/index" })
 	public String today(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
 		// 本日の日付で表示する
-		final Date TODAY = new Date();
+		final Date today = new Date();
 
-		List<Week> calendarDay = CalendarUtil.generateCalendar(TODAY);
-		model.addAttribute("calDate", TODAY);
-		model.addAttribute("calendarDay", calendarDay);
+		Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(today));
 
-		Good good = goodDao.selectOne(user.getUsername(), new java.sql.Date(TODAY
-			.getTime()));
 		MainForm form = new MainForm();
-		form.setDate(TODAY);
 		if (good != null) {
 			BeanUtils.copyProperties(good, form);
 		}
+
+		model.addAttribute("calDate", today);
+		model.addAttribute("calendarDay", CalendarUtil.generateCalendar(today));
 		model.addAttribute("mainForm", form);
 		model.addAttribute("timeline", null);
 
@@ -59,10 +58,8 @@ public class MainController {
 
 	@GetMapping("/loadDiary")
 	public String loadDiary(@RequestParam final Date date, Model model, @AuthenticationPrincipal UserDetailsImpl user) {
-		Good good = goodDao.selectOne(user.getUsername(), new java.sql.Date(date
-			.getTime()));
+		Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(date));
 		MainForm form = new MainForm();
-		form.setDate(date);
 		if (good != null) {
 			BeanUtils.copyProperties(good, form);
 		}
@@ -91,11 +88,11 @@ public class MainController {
 	@ResponseBody
 	public String register(@RequestParam String good, @RequestParam final Date date, @RequestParam final int num,
 			@AuthenticationPrincipal UserDetailsImpl user) {
-		final java.sql.Date registerDate = new java.sql.Date(date.getTime());
+		final java.sql.Date registerDate = DateUtil.utilToSql(date);
 		final String mailAddress = user.getUsername();
 		if (StringUtils.isEmpty(good)) good = null;
 
-		if (goodDao.count(mailAddress, registerDate) <= 0) {
+		if (goodDao.countByDateAndUser(mailAddress, registerDate) <= 0) {
 			goodDao.insert(mailAddress, good, num, registerDate);
 		} else {
 			goodDao.updateOne(mailAddress, good, num, registerDate);
