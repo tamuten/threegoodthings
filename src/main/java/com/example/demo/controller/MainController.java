@@ -35,7 +35,7 @@ public class MainController {
 
 		Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(today));
 
-		MainForm form = new MainForm();
+		MainForm form = new MainForm(today);
 		if (good != null) {
 			BeanUtils.copyProperties(good, form);
 		}
@@ -59,7 +59,7 @@ public class MainController {
 	@GetMapping("/loadDiary")
 	public String loadDiary(@RequestParam final Date date, Model model, @AuthenticationPrincipal UserDetailsImpl user) {
 		Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(date));
-		MainForm form = new MainForm();
+		MainForm form = new MainForm(date);
 		if (good != null) {
 			BeanUtils.copyProperties(good, form);
 		}

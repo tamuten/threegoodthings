@@ -18,8 +18,6 @@ public class MailService {
 	private final JavaMailSender mailSender;
 	@Value("${app.applicationBaseUrl}")
 	String baseUrl;
-	@Value("${singup.mail.subject}")
-	String subject;
 
 	public SimpleMailMessage sendCertificationMail(final String mailAddress, final String token,
 			final LocalDateTime expiryDate) {
@@ -30,6 +28,7 @@ public class MailService {
 		final String signupCompleteUrl = uriBuilder.build()
 			.encode()
 			.toUriString();
+		final String subject = "[Three good things] メール認証キーのお知らせ";
 		final String content = mailAddress + " 様\n"
 				+ "\n"
 				+ "Three good things（スリー・グッド・シングス）にご登録いただき、ありがとうございます。"

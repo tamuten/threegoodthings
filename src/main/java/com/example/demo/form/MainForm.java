@@ -17,7 +17,7 @@ public class MainForm {
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private Date date;
 
-	public MainForm() {
-		this.date = new Date();
+	public MainForm(Date date) {
+		this.date = date;
 	}
 }
