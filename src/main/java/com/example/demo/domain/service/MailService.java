@@ -8,7 +8,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.demo.util.DateUtil;
+import com.example.demo.util.LocalDateTimeParser;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ public class MailService {
 				+ signupCompleteUrl
 				+ "\n\n"
 				+ "このURLの有効期限は、 "
-				+ DateUtil.toStr(expiryDate, DATETIME_FORMAT_SLASH)
+				+ LocalDateTimeParser.toStr(expiryDate, DATETIME_FORMAT_SLASH)
 				+ " です。"
 				+ "メール認証は、上記のリンクにてログインするまで完了しません。"
 				+ "このメールに心当たりのない方は、お手数をおかけしますがこのメールは破棄してください。";
