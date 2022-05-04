@@ -2,6 +2,8 @@ package com.example.demo.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateUtil {
@@ -64,5 +66,21 @@ public class DateUtil {
 			return null;
 		}
 		return new java.sql.Date(utilDate.getTime());
+	}
+
+	public static String toStr(LocalDateTime localDateTime, String format) {
+		if (localDateTime == null) {
+			return null;
+		}
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+		return localDateTime.format(dateTimeFormatter);
+	}
+
+	public static LocalDateTime toLocalDateTime(String date, String format) {
+		if (date == null) {
+			return null;
+		}
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format);
+		return LocalDateTime.parse(date, dateTimeFormatter);
 	}
 }

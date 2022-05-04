@@ -272,8 +272,6 @@ $(document).on('click', '#searchBtn2', () => {
 	displaySearchMode();
 });
 $(document).on('keyup', '.input', () => {
-	//const num = this.id.slice(-1);
-	//const count = $(this).find("textarea").val().length;
 	$("#count1").text($('#good1').val().length);
 	$("#count2").text($('#good2').val().length);
 	$("#count3").text($('#good3').val().length);
@@ -298,7 +296,6 @@ const loadCalendarData = (date) => {
 	$.ajax({
 		url: "/loadCalendar",
 		type: "GET",
-		//dataType: "json",
 		dataType: "html",
 		data: {
 			targetDate: date,
@@ -309,7 +306,6 @@ const loadCalendarData = (date) => {
 		date = new Date(date);
 		$(".cal-title > p").text(formatMonthForDate(date));
 		$("#cal-date").val(formatDateSlash(date));
-		//displayCalendar(data);
 	}).fail(() => {
 		alert("loadCalendar error!");
 	});
@@ -321,10 +317,10 @@ const showTimeline = () => {
 }
 
 const loadTimeline = async () => {
-  const timeline = await getTimeline();
+  const timeline = await getTimelineAjax();
   displayTimeline(timeline);
 }
-const getTimeline = () => {
+const getTimelineAjax = () => {
   return new Promise((resolve, reject) => {
     $.ajax({
 		  url: "/loadTimeline",
@@ -342,13 +338,6 @@ const getTimeline = () => {
       }
     );
   });
-
-  
-  // done((data) => {
-	// 	return data;
-	// }).fail(() => {
-	// 	alert("loadTimeline error!");
-	// });
 }
 
 const displayTimeline = (data) => {

@@ -47,7 +47,7 @@ public class SignupController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
-    signupService.createTmpUserAndSendMail(form);
+		signupService.createTmpUserAndSendMail(form);
 		return "signupComplete";
 	}
 
