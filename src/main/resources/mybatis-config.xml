@@ -12,6 +12,7 @@
         <typeAlias type="com.example.demo.domain.model.TmpUser" alias="TmpUser"/>
         <typeAlias type="com.example.demo.domain.model.User" alias="User"/>
         <typeAlias type="com.example.demo.domain.model.Good" alias="Good"/>
+        <typeAlias type="com.example.demo.domain.model.PasswordReissueInfo" alias="PasswordReissueInfo"/>
     </typeAliases>
 
 </configuration>
