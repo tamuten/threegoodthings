@@ -10,14 +10,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 public class SignupForm {
-	@NotEmpty(message = "{require_check}")
-	@Size(max = 60, min = 1, message = "{max_check}")
-	@Email(message = "{email_check}")
-	private String mailAddress;
-	@NotEmpty(message = "{require_check}")
-	@Size(max = 60, min = 1, message = "{max_check}")
-	private String password;
-	@NotEmpty(message = "{require_check}")
-	@Size(max = 60, min = 1, message = "{max_check}")
-	private String passwordConfirm;
+    @NotEmpty
+    @Size(max = 60, min = 1)
+    @Email
+    private String mailAddress;
+    @NotEmpty
+    @Size(max = 60, min = 1)
+    private String password;
+    @NotEmpty
+    @Size(max = 60, min = 1)
+    private String passwordConfirm;
 }

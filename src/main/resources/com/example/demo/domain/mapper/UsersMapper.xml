@@ -42,4 +42,12 @@ FROM
 WHERE
 	mail_address = #{mailAddress}
 </select>
+<update id="updatePassword">
+UPDATE
+  users
+SET
+  password = #{newPassword}
+WHERE
+  mail_address = #{mailAddress}
+</update>
 </mapper>

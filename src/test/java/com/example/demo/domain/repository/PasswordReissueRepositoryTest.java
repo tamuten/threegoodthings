@@ -1,5 +1,6 @@
 package com.example.demo.domain.repository;
 
+import static com.example.demo.util.LocalDateTimeParser.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,14 +30,16 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 public class PasswordReissueRepositoryTest {
 	@Autowired
 	PasswordReissueRepository repository;
+	private static final String FORMAT_DATETIME_SLASH = "yyyy/MM/dd HH:mm:ss";
 
 	@Test
 	@DatabaseSetup("/testdata/PasswordReissueRepositoryTest/init-data")
 	@ExpectedDatabase(value = "/testdata/PasswordReissueRepositoryTest/after-create-data", assertionMode = DatabaseAssertionMode.NON_STRICT)
-	void createは60文字のメールアドレスと60文字のトークンで正しく登録される() {
+	void createは60文字のメールアドレスと60文字のトークンと日付で正しく登録される() {
 		PasswordReissueInfo newInfo = new PasswordReissueInfo();
 		newInfo.setMailAddress("DYjTZS7t9GJXAygRPT9LMx64cXQd8kagC@cH6iMFzb8Mft43hdrN.7HLULxT");
 		newInfo.setToken("ifYw5RefUVnsLcRyPfaYVX4upQQe9KpDGLYVwAFRwhf7QMyC4LTs47A9ZKaX");
+		newInfo.setExpiryDate(toLocalDateTime("2022/05/20 12:00:00", FORMAT_DATETIME_SLASH));
 
 		int createdCnt = repository.create(newInfo);
 
@@ -50,6 +53,19 @@ public class PasswordReissueRepositoryTest {
 		PasswordReissueInfo newInfo = new PasswordReissueInfo();
 		newInfo.setMailAddress("DYjTZS7t9GJXAygRPT9LMx64cXQd8kagC@cH6iMFzb8Mft43hdrN.7HLULxT+");
 		newInfo.setToken("ifYw5RefUVnsLcRyPfaYVX4upQQe9KpDGLYVwAFRwhf7QMyC4LTs47A9ZKaX");
+		newInfo.setExpiryDate(toLocalDateTime("2022/05/20 12:00:00", FORMAT_DATETIME_SLASH));
+
+		assertThrows(DataIntegrityViolationException.class, () -> repository.create(newInfo));
+	}
+
+	@Test
+	@DatabaseSetup("/testdata/PasswordReissueRepositoryTest/init-data")
+	@ExpectedDatabase(value = "/testdata/PasswordReissueRepositoryTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	void createはメールアドレスがnullでエラーを投げる() {
+		PasswordReissueInfo newInfo = new PasswordReissueInfo();
+		newInfo.setMailAddress(null);
+		newInfo.setToken("ifYw5RefUVnsLcRyPfaYVX4upQQe9KpDGLYVwAFRwhf7QMyC4LTs47A9ZKaX");
+		newInfo.setExpiryDate(toLocalDateTime("2022/05/20 12:00:00", FORMAT_DATETIME_SLASH));
 
 		assertThrows(DataIntegrityViolationException.class, () -> repository.create(newInfo));
 	}
@@ -61,6 +77,31 @@ public class PasswordReissueRepositoryTest {
 		PasswordReissueInfo newInfo = new PasswordReissueInfo();
 		newInfo.setMailAddress("DYjTZS7t9GJXAygRPT9LMx64cXQd8kagC@cH6iMFzb8Mft43hdrN.7HLULxT");
 		newInfo.setToken("ifYw5RefUVnsLcRyPfaYVX4upQQe9KpDGLYVwAFRwhf7QMyC4LTs47A9ZKaX+");
+		newInfo.setExpiryDate(toLocalDateTime("2022/05/20 12:00:00", FORMAT_DATETIME_SLASH));
+
+		assertThrows(DataIntegrityViolationException.class, () -> repository.create(newInfo));
+	}
+
+	@Test
+	@DatabaseSetup("/testdata/PasswordReissueRepositoryTest/init-data")
+	@ExpectedDatabase(value = "/testdata/PasswordReissueRepositoryTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	void createはトークンがnullでエラーを投げる() {
+		PasswordReissueInfo newInfo = new PasswordReissueInfo();
+		newInfo.setMailAddress("DYjTZS7t9GJXAygRPT9LMx64cXQd8kagC@cH6iMFzb8Mft43hdrN.7HLULxT");
+		newInfo.setToken(null);
+		newInfo.setExpiryDate(toLocalDateTime("2022/05/20 12:00:00", FORMAT_DATETIME_SLASH));
+
+		assertThrows(DataIntegrityViolationException.class, () -> repository.create(newInfo));
+	}
+
+	@Test
+	@DatabaseSetup("/testdata/PasswordReissueRepositoryTest/init-data")
+	@ExpectedDatabase(value = "/testdata/PasswordReissueRepositoryTest/init-data", assertionMode = DatabaseAssertionMode.NON_STRICT)
+	void createはexpiryDateがnullでエラーを投げる() {
+		PasswordReissueInfo newInfo = new PasswordReissueInfo();
+		newInfo.setMailAddress("DYjTZS7t9GJXAygRPT9LMx64cXQd8kagC@cH6iMFzb8Mft43hdrN.7HLULxT");
+		newInfo.setToken("ifYw5RefUVnsLcRyPfaYVX4upQQe9KpDGLYVwAFRwhf7QMyC4LTs47A9ZKaX");
+		newInfo.setExpiryDate(null);
 
 		assertThrows(DataIntegrityViolationException.class, () -> repository.create(newInfo));
 	}
@@ -72,6 +113,7 @@ public class PasswordReissueRepositoryTest {
 		PasswordReissueInfo expected = new PasswordReissueInfo();
 		expected.setMailAddress("tamuten310@gmail.com");
 		expected.setToken("911d920b-4ff5-4aab-8fd1-003cd52c024b");
+		expected.setExpiryDate(toLocalDateTime("2019/03/01 10:00:00", FORMAT_DATETIME_SLASH));
 
 		PasswordReissueInfo actual = repository.findByToken("911d920b-4ff5-4aab-8fd1-003cd52c024b");
 		assertThat(actual).isEqualTo(expected);

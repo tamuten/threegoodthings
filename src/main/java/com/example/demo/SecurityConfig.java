@@ -15,48 +15,48 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring()
-			.antMatchers("/webjars/**", "/css/**", "/js/**", "/error");
-	}
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+            .antMatchers("/webjars/**", "/css/**", "/js/**", "/error");
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
 
-		// jsとcss、新規登録画面はだけでも遷移可能
-		http.authorizeRequests()
-			.antMatchers("/webjars/**", "/css/**", "/js/**", "/signup", "/signup/**")
-			.permitAll()
-			.anyRequest()
-			.authenticated();
+        // jsとcss、新規登録画面はだけでも遷移可能
+        http.authorizeRequests()
+            .antMatchers("/webjars/**", "/css/**", "/js/**", "/signup", "/signup/**", "/reissue/**")
+            .permitAll()
+            .anyRequest()
+            .authenticated();
 
-		// ログイン
-		http.formLogin()
-			.loginPage("/login")
-			.usernameParameter("mailaddress")
-			.passwordParameter("password")
-			.defaultSuccessUrl("/index")
-			.failureUrl("/login?error")
-			.permitAll()
-			.and()
-			.logout()
-			.permitAll();
-	}
+        // ログイン
+        http.formLogin()
+            .loginPage("/login")
+            .usernameParameter("mailaddress")
+            .passwordParameter("password")
+            .defaultSuccessUrl("/index")
+            .failureUrl("/login?error")
+            .permitAll()
+            .and()
+            .logout()
+            .permitAll();
+    }
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			//userDetailsServiceを使って、認証を行う
-			.userDetailsService(userDetailsService);
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            //userDetailsServiceを使って、認証を行う
+            .userDetailsService(userDetailsService);
+    }
 
 }

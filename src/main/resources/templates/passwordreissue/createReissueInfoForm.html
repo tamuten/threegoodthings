@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>パスワードの再設定｜Three good Things</title>
+<meta name="viewport" content="width=device-width">
+<link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
+  rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
+<link rel="stylesheet" th:href="@{/css/login.css}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap"
+  rel="stylesheet">
+</head>
+<body>
+  <header class="border-bottom">
+    <div class="title">
+      <div class="title-in h-100 d-flex align-items-center">
+        <div class="title-char">
+          <p>
+            <a href="#">Three good things</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="wrapper login-wrapper">
+    <div class="signupArea">
+      <form method="POST" th:action="@{/reissue/create}"
+        class="form-signup" th:object="${passwordReissueForm}">
+        <div th:if="${err}" class="alert alert-danger">
+          <p th:text="${err}"></p>
+        </div>
+        <div class="login-form">
+          <div class="text-left login">
+            <h2 class="content-title">パスワードの再設定</h2>
+            <p>
+              ご登録のメールアドレスを入力してください。<br> パスワードリセットページのURLを送付いたします。
+            </p>
+            <div class="form-group mt-4">
+              <label class="d-block text-left">ご登録のメールアドレス</label> <input
+                type="text" class="form-control"
+                placeholder="例）user@domain.com"
+                th:field="*{mailAddress}"
+                th:classappend="${#fields.hasErrors('mailAddress')} ? 'is-invalid'" />
+              <span class="text-danger text-left d-block"
+                th:if="${#fields.hasErrors('mailAddress')}"
+                th:errors="*{mailAddress}"></span>
+            </div>
+            <div class="form-group mt-2">
+              <input type="submit" value="再設定メール送付"
+                class="btn btn-primary btn-block" />
+            </div>
+          </div>
+          <div class="text-right">
+            <p>
+              <a th:href="@{/login}">ログイン画面へ</a>
+            </p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer class="text-center">
+    <p>©︎ Copyright 2021-2022 by Three good things.</p>
+  </footer>
+</body>
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}" />
+</html>

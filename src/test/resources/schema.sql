@@ -24,5 +24,6 @@ CREATE TABLE tmp_user (
 DROP TABLE IF EXISTS password_reissue_info;
 CREATE TABLE password_reissue_info (
 	mail_address VARCHAR(60) NOT NULL,
-	token VARCHAR(60) NOT NULL
+	token VARCHAR(60) NOT NULL,
+	expiry_date TIMESTAMP NOT NULL
 );
