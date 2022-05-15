@@ -9,7 +9,7 @@
   rel="stylesheet"></link>
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
-<link rel="stylesheet" th:href="@{css/login.css}">
+<link rel="stylesheet" th:href="@{/css/login.css}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -31,24 +31,22 @@
   <div class="container">
     <div class="wrapper login-wrapper">
       <div class="signupArea">
-        <form method="post" th:action="@{/signup}" class="form-signup"
-          th:object="${signupForm}">
-          <div class="login-form">
-            <div class="text-left signupComplete">
-              <h4>メールを送信しました</h4>
-              <p>
-                <strong>[[*{mailAddress}]]</strong> へ受信確認用のメールを送信しました。<br>
-                メールをご確認いただき、メールに記載されたURLをクリックして、Three good
-                thingsへの登録を完了してください。
-              </p>
-            </div>
-            <div class="to-login text-right">
-              <p>
-                <a th:href="@{/login}">ログイン画面に戻る</a>
-              </p>
-            </div>
+        <div class="login-form">
+          <div class="text-left">
+            <h2 class="content-title">登録確認メールを送信しました</h2>
+            <p>
+              <strong>[[${mailAddress}]]</strong> へ受信確認用のメールを送信しました。<br>
+              メールをご確認いただき、メールに記載されたURLをクリックして、Three good
+              thingsへの登録を完了してください。
+            </p>
           </div>
-        </form>
+          <br>
+          <div class="text-left">
+            <p>
+              <a th:href="@{/login}">ログイン画面に戻る</a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

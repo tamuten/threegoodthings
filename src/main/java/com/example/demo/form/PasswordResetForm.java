@@ -10,6 +10,6 @@ public class PasswordResetForm {
     private String mailAddress;
     private String token;
     @NotEmpty
-    @Size(min = 8, max = 60)
+    @Size(min = 8, max = 20)
     private String newPassword;
 }

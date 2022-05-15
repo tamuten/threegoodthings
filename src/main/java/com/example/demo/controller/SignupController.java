@@ -1,14 +1,10 @@
 package com.example.demo.controller;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
@@ -41,22 +37,29 @@ public class SignupController {
     }
 
     @GetMapping("/signup")
-    public String getSignup(SignupForm form, Model model) {
-        return "signup";
+    public String getSignup(SignupForm form) {
+        return "signup/signup";
     }
 
     @PostMapping("/signup")
-    public String signupConfirm(@Validated SignupForm form, BindingResult result, Model model) {
+    public String signupConfirm(@Validated SignupForm form, BindingResult result,
+            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            return "signup";
+            return getSignup(form);
         }
         signupService.createTmpUserAndSendMail(form);
-        return "signupComplete";
+
+        redirectAttributes.addFlashAttribute("mailAddress", form.getMailAddress());
+        return "redirect:/signup/confirm";
+    }
+
+    @GetMapping("/signup/confirm")
+    public String createTmpUserComplete() {
+        return "signup/createTmpUserComplete";
     }
 
     @GetMapping("/signup/certificate")
-    public String signupComplete(@RequestParam String token, RedirectAttributes redirectAttributes,
-            HttpServletRequest request) throws ServletException {
+    public String signupComplete(@RequestParam String token, RedirectAttributes redirectAttributes) {
         TmpUser tmpUser = null;
         try {
             tmpUser = signupService.findTmpUserByToken(token);
