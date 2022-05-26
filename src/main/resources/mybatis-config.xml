@@ -13,7 +13,7 @@
         <typeAlias type="com.example.demo.domain.model.User" alias="User"/>
         <typeAlias type="com.example.demo.domain.model.Good" alias="Good"/>
         <typeAlias type="com.example.demo.domain.model.PasswordReissueInfo" alias="PasswordReissueInfo"/>
-        <typeAlias type="com.example.demo.domain.model.PostingDate" alias="PostingDate"/>
+        <typeAlias type="com.example.demo.util.calendar.PostingDate" alias="PostingDate"/>
     </typeAliases>
 
 </configuration>
