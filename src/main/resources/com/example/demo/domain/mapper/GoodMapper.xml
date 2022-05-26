@@ -153,5 +153,7 @@ AND date = #{targetDate,
 			AND
 			date = #{date}
 	</update>
+<select id="findMonthlyPosts" resultType="PostingDate">
 
+</select>
 </mapper>
