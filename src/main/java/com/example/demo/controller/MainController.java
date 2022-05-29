@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -9,10 +10,10 @@ import com.example.demo.domain.repository.GoodRepository;
 import com.example.demo.form.MainForm;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.StrUtil;
+import com.example.demo.util.calendar.CalendarService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +22,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class MainController {
-  @Autowired
-  private GoodRepository goodDao;
+  private final GoodRepository goodRepository;
+  private final CalendarService calendarService;
 
   @GetMapping({ "/", "/index" })
   public String today(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
     // 本日の日付で表示する
-    final Date today = new Date();
+    final LocalDate today = LocalDate.now();
 
-    Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(today));
+    Good good = goodRepository.findByDate(user.getUsername(), today);
 
     MainForm form = new MainForm(today);
     if (good != null) {
@@ -39,7 +43,7 @@ public class MainController {
     }
 
     model.addAttribute("calDate", today);
-    // model.addAttribute("calendarDay", CalendarService.generate(today));
+    model.addAttribute("calendarDay", calendarService.generateCalendar(today, user.getUsername()));
     model.addAttribute("mainForm", form);
     model.addAttribute("timeline", null);
 
@@ -47,16 +51,17 @@ public class MainController {
   }
 
   @GetMapping("/loadCalendar")
-  public String loadCalendar(@RequestParam final Date targetDate, Model model) {
-    // List<Week> calendarDay = CalendarService.generate(targetDate);
+  public String loadCalendar(@RequestParam final LocalDate targetDate, Model model,
+      @AuthenticationPrincipal UserDetailsImpl user) {
     model.addAttribute("calDate", targetDate);
-    // model.addAttribute("calendarDay", calendarDay);
+    model.addAttribute("calendarDay", calendarService.generateCalendar(targetDate, user.getUsername()));
     return "calendar :: calendar_contents";
   }
 
   @GetMapping("/loadDiary")
-  public String loadDiary(@RequestParam final Date date, Model model, @AuthenticationPrincipal UserDetailsImpl user) {
-    Good good = goodDao.findByDate(user.getUsername(), DateUtil.utilToSql(date));
+  public String loadDiary(@RequestParam final LocalDate date, Model model,
+      @AuthenticationPrincipal UserDetailsImpl user) {
+    Good good = goodRepository.findByDate(user.getUsername(), date);
     MainForm form = new MainForm(date);
     if (good != null) {
       BeanUtils.copyProperties(good, form);
@@ -67,7 +72,7 @@ public class MainController {
 
   @GetMapping("/loadTimeline")
   public String loadTimeline(Model model, @AuthenticationPrincipal UserDetailsImpl user) {
-    List<Good> timeline = goodDao.findAll(user.getUsername());
+    List<Good> timeline = goodRepository.findAll(user.getUsername());
     model.addAttribute("timeline", timeline);
     model.addAttribute("diary", null);
     return "timeline :: timeline_contents";
@@ -76,7 +81,7 @@ public class MainController {
   @GetMapping("/searchDiary")
   public String searchDiary(@RequestParam final String keyword, Model model,
       @AuthenticationPrincipal UserDetailsImpl user) {
-    List<Good> timeline = goodDao.likeSearch(user.getUsername(), keyword);
+    List<Good> timeline = goodRepository.likeSearch(user.getUsername(), keyword);
     model.addAttribute("timeline", timeline);
     model.addAttribute("diary", null);
     return "timeline :: timeline_contents";
@@ -91,10 +96,10 @@ public class MainController {
     if (StringUtils.isEmpty(good))
       good = null;
 
-    if (goodDao.countByDateAndUser(mailAddress, registerDate) <= 0) {
-      goodDao.insert(mailAddress, good, num, registerDate);
+    if (goodRepository.countByDateAndUser(mailAddress, registerDate) <= 0) {
+      goodRepository.insert(mailAddress, good, num, registerDate);
     } else {
-      goodDao.updateOne(mailAddress, good, num, registerDate);
+      goodRepository.updateOne(mailAddress, good, num, registerDate);
     }
 
     return StrUtil.getJson(good);

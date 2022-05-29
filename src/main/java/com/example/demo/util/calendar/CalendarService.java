@@ -4,6 +4,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import com.example.demo.domain.repository.GoodRepository;
 
@@ -16,8 +18,18 @@ import lombok.RequiredArgsConstructor;
 public class CalendarService {
   private final GoodRepository goodRepository;
 
-  public List<PostingDate> generateCalendar(final LocalDate targetDate) {
-    return null;
+  public List<PostingDate> generateCalendar(final LocalDate targetDate, final String mailAddress) {
+    List<LocalDate> calendar = generate(targetDate);
+
+    List<LocalDate> monthlyPosts = goodRepository.findMonthlyPosts(mailAddress,
+        calendar.get(0),
+        calendar.get(calendar.size() - 1));
+
+    Function<LocalDate, PostingDate> func = (ld) -> {
+      return monthlyPosts.contains(ld) ? new PostingDate(ld, true) : new PostingDate(ld, false);
+    };
+
+    return calendar.stream().map(func).collect(Collectors.toList());
   }
 
   /**
@@ -51,8 +63,8 @@ public class CalendarService {
     }
 
     // 当月分の日付を格納する
-    for (int d = 1; d <= thisMonthLastDay; d++) {
-      lDate.add(LocalDate.of(year, month, d));
+    for (int ld = 1; ld <= thisMonthLastDay; ld++) {
+      lDate.add(LocalDate.of(year, month, ld));
     }
 
     // 土曜日終わりでなければ翌月分の日付を格納する。

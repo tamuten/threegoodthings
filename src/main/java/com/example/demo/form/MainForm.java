@@ -1,6 +1,6 @@
 package com.example.demo.form;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,14 +10,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode
 public class MainForm {
-	private String good1;
-	private String good2;
-	private String good3;
-	// hidden項目
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private Date date;
+  private String good1;
+  private String good2;
+  private String good3;
+  // hidden項目
+  @DateTimeFormat(pattern = "yyyy/MM/dd")
+  private LocalDate date;
 
-	public MainForm(Date date) {
-		this.date = date;
-	}
+  public MainForm(LocalDate date) {
+    this.date = date;
+  }
 }

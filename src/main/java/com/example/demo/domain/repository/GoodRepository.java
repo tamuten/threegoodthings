@@ -1,6 +1,7 @@
 package com.example.demo.domain.repository;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.example.demo.domain.mapper.GoodMapper;
@@ -26,7 +27,7 @@ public class GoodRepository {
     return goodMapper.likeSearch(mailAddress, keyword);
   }
 
-  public Good findByDate(final String mailAddress, final Date targetDate) {
+  public Good findByDate(final String mailAddress, final LocalDate targetDate) {
     return goodMapper.selectOne(mailAddress, targetDate);
   }
 
@@ -36,5 +37,10 @@ public class GoodRepository {
 
   public void updateOne(final String mailAddress, final String good, final int num, final Date date) {
     goodMapper.updateOne(mailAddress, good, num, date);
+  }
+
+  public List<LocalDate> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
+      final LocalDate lastDate) {
+    return goodMapper.findMonthlyPosts(mailAddress, firstDate, lastDate);
   }
 }

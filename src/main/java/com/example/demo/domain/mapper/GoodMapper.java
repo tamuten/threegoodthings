@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.demo.domain.model.Good;
-import com.example.demo.util.calendar.PostingDate;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,11 +16,12 @@ public interface GoodMapper {
 
   public List<Good> likeSearch(final String mailAddress, final String keyword);
 
-  public Good selectOne(final String mailAddress, final Date targetDate);
+  public Good selectOne(final String mailAddress, final LocalDate targetDate);
 
   public int count(final String mailAddress, final Date targetDate);
 
   public void updateOne(final String mailAddress, final String good, final int num, final Date date);
 
-  public List<PostingDate> findMonthlyPosts(List<LocalDate> calendar);
+  public List<LocalDate> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
+      final LocalDate lastDate);
 }

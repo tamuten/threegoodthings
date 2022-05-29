@@ -14,7 +14,7 @@
 	<div th:fragment="calendar_contents" class="calendar">
 		<div class="cal-head">
 			<div class="cal-title">
-				<p th:text="${#dates.format(calDate, 'yyyy年MM月')}">2021年12月</p>
+				<p th:text="${#temporals.format(calDate, 'yyyy年MM月')}">2021年12月</p>
 			</div>
 			<div class="ym-move">
 				<a id="last-year" class="btn btn-outline-secondary"
@@ -25,7 +25,7 @@
 					href="javascript:void(0)">&gt;</a> <a id="next-year"
 					class="btn btn-outline-secondary" href="javascript:void(0)">&gt;&gt;</a>
 				<input type="hidden" id="cal-date"
-					th:value="${#dates.format(calDate, 'yyyy/MM/dd')}">
+					th:value="${#temporals.format(calDate, 'yyyy/MM/dd')}">
 			</div>
 		</div>
 		<table class="table text-center">
@@ -41,6 +41,9 @@
 				</tr>
 			</thead>
 			<tbody id="calendarDays">
+        <th:block th:each="pd, stat : ${calendarDay}">
+          <tr th:if="${}"></tr>
+        </th:block>
 				<tr th:each="week : ${calendarDay}">
 					<td class="holiday"><a href="#" class="calendarDay sunday"
 						th:text="${#dates.format(week.weekday[0], 'd')}"

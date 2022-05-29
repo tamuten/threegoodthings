@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CalendarServiceTestHelper {
-  public static List<LocalDate> generateExpectedList() {
+  public static List<LocalDate> generate202203Calendar() {
     List<LocalDate> expectedList = new ArrayList<>();
     expectedList.add(LocalDate.parse("2022-02-27"));
     expectedList.add(LocalDate.parse("2022-02-28"));
