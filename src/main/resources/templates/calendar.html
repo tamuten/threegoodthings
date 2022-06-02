@@ -1,81 +1,67 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 <!--Bootstrapの設定-->
 <link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
-	rel="stylesheet"></link>
+  rel="stylesheet"></link>
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
 <title>Calendar</title>
 </head>
 <body>
-	<div th:fragment="calendar_contents" class="calendar">
-		<div class="cal-head">
-			<div class="cal-title">
-				<p th:text="${#temporals.format(calDate, 'yyyy年MM月')}">2021年12月</p>
-			</div>
-			<div class="ym-move">
-				<a id="last-year" class="btn btn-outline-secondary"
-					href="javascript:void(0)">&lt;&lt;</a> <a id="last-mon"
-					class="btn btn-outline-secondary" href="javascript:void(0)">&lt;</a>
-				<a id="today" class="btn btn-outline-secondary" href="#">今日</a> <a
-					id="next-mon" class="btn btn-outline-secondary"
-					href="javascript:void(0)">&gt;</a> <a id="next-year"
-					class="btn btn-outline-secondary" href="javascript:void(0)">&gt;&gt;</a>
-				<input type="hidden" id="cal-date"
-					th:value="${#temporals.format(calDate, 'yyyy/MM/dd')}">
-			</div>
-		</div>
-		<table class="table text-center">
-			<thead>
-				<tr>
-					<td class="holiday sunday">日</td>
-					<td>月</td>
-					<td>火</td>
-					<td>水</td>
-					<td>木</td>
-					<td>金</td>
-					<td class=" holiday saturday">土</td>
-				</tr>
-			</thead>
-			<tbody id="calendarDays">
-        <th:block th:each="pd, stat : ${calendarDay}">
-          <tr th:if="${}"></tr>
-        </th:block>
-				<tr th:each="week : ${calendarDay}">
-					<td class="holiday"><a href="#" class="calendarDay sunday"
-						th:text="${#dates.format(week.weekday[0], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[0], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td><a href="#" class="calendarDay"
-						th:text="${#dates.format(week.weekday[1], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[1], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td><a href="#" class="calendarDay"
-						th:text="${#dates.format(week.weekday[2], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[2], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td><a href="#" class="calendarDay"
-						th:text="${#dates.format(week.weekday[3], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[3], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td><a href="#" class="calendarDay"
-						th:text="${#dates.format(week.weekday[4], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[4], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td><a href="#" class="calendarDay"
-						th:text="${#dates.format(week.weekday[5], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[5], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-					<td class="holiday"><a href="#" class="calendarDay saturday"
-						th:text="${#dates.format(week.weekday[6], 'd')}"
-						th:onclick="|clickCalendarDay('__${#dates.format(week.weekday[6], 'yyyy/MM/dd')}__')|"></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+  <div th:fragment="calendar_contents" class="calendar">
+    <div class="cal-head">
+      <div class="cal-title">
+        <p th:text="${#temporals.format(calDate, 'yyyy年MM月')}"></p>
+      </div>
+      <div class="ym-move">
+        <a id="last-year" class="btn btn-outline-secondary"
+          href="javascript:void(0)">&lt;&lt;</a> <a id="last-mon"
+          class="btn btn-outline-secondary" href="javascript:void(0)">&lt;</a>
+        <a id="today" class="btn btn-outline-secondary" href="#">今日</a>
+        <a id="next-mon" class="btn btn-outline-secondary"
+          href="javascript:void(0)">&gt;</a> <a id="next-year"
+          class="btn btn-outline-secondary" href="javascript:void(0)">&gt;&gt;</a>
+        <input type="hidden" id="cal-date"
+          th:value="${#temporals.format(calDate, 'yyyy/MM/dd')}">
+      </div>
+    </div>
+    <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center w-100 calendar-row">
+        <div class="day text-center">日</div>
+        <div class="day text-center">月</div>
+        <div class="day text-center">火</div>
+        <div class="day text-center">水</div>
+        <div class="day text-center">木</div>
+        <div class="day text-center">金</div>
+        <div class="day text-center">土</div>
+      </div>
+      <div
+          th:with="lastRowNum=${#lists.size(calendarDay) == 35 ? 4 : 5}">
+          <th:block th:each="r : ${#numbers.sequence(0,lastRowNum)}">
+            <div class="d-flex align-items-center w-100 calendar-row">
+              <th:block th:each="c : ${#numbers.sequence(0,6)}">
+                <div th:with="idx=${r * 7 + c}" class="date" th:classappend="${calendarDay[__${idx}__].isToday} ? 'today'">
+                  <a href="#" class="calendarDay">
+                    <input type="hidden" th:value="${#temporals.format(calendarDay[__${idx}__].localDate, 'yyyy/MM/dd')}"/>
+                    <span th:text="${#temporals.format(calendarDay[__${idx}__].localDate, 'd')}"></span>
+                  </a>
+                  <div th:if="${calendarDay[__${idx}__].isPosted}" class="mark"></div>
+                </div>
+              </th:block>
+            </div>
+          </th:block>
+        </div>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+    $(function () {
+      $('.calendarDay').on('click', () => {
+        console.log($(this).find('input'));
+      });
+    });
+    </script>
+  </div>
 </body>
 </html>

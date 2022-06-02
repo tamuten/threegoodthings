@@ -11,6 +11,7 @@ import com.example.demo.form.MainForm;
 import com.example.demo.util.DateUtil;
 import com.example.demo.util.StrUtil;
 import com.example.demo.util.calendar.CalendarService;
+import com.example.demo.util.calendar.PostingDate;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -42,8 +43,9 @@ public class MainController {
       BeanUtils.copyProperties(good, form);
     }
 
-    model.addAttribute("calDate", today);
-    model.addAttribute("calendarDay", calendarService.generateCalendar(today, user.getUsername()));
+    model.addAttribute("calDate", LocalDate.of(today.getYear(), today.getMonthValue(), 1));
+    model.addAttribute("calendarDay", calendarService.generateCalendar(today,
+        user.getUsername()));
     model.addAttribute("mainForm", form);
     model.addAttribute("timeline", null);
 
@@ -56,6 +58,13 @@ public class MainController {
     model.addAttribute("calDate", targetDate);
     model.addAttribute("calendarDay", calendarService.generateCalendar(targetDate, user.getUsername()));
     return "calendar :: calendar_contents";
+  }
+
+  @GetMapping("/loadPostingDate")
+  @ResponseBody
+  public List<PostingDate> loadPostingDate(@RequestParam final LocalDate targetDate, Model model,
+      @AuthenticationPrincipal UserDetailsImpl user) {
+    return calendarService.generateCalendar(targetDate, user.getUsername());
   }
 
   @GetMapping("/loadDiary")

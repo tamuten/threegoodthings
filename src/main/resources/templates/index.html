@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 
 <link th:href="@{/webjars/bootstrap/4.1.1/css/bootstrap.min.css}"
-	rel="stylesheet"></link>
+  rel="stylesheet"></link>
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/1.14.1/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/4.1.1/js/bootstrap.min.js}"></script>
@@ -15,89 +15,90 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
-	href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap"
-	rel="stylesheet">
+  href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap"
+  rel="stylesheet">
 </head>
 <body>
-	<header class="border-bottom">
-		<div class="outer flex-items header-in">
-			<div class="title">
-				<p>
-					<a href="#">Three good things</a>
-				</p>
-			</div>
-			<div class="hamburger-menu">
-				<input type="checkbox" id="menu-btn-check"> <label
-					for="menu-btn-check" class="menu-btn"><span></span></label>
-				<!-- ここからメニュー -->
-				<div class="menu-content">
-					<ul>
-						<li><a href="#" class="diaryBtn">日記</a></li>
-						<li><a href="#" class="showTimeline">タイムライン</a></li>
-						<li><a href="#" class="searchBtn">検索</a></li>
-						<li><a href="#" id="aLogout" >ログアウト</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="header-list">
-				<ul>
-					<li><a href="#" class="diaryBtn">日記</a></li>
-					<li><a href="#" class="showTimeline">タイムライン</a></li>
-					<li><a href="#" class="searchBtn">検索</a></li>
-					<li><div class="dropdown">
-							<a class="dropdown-toggle" id="user-dropdown"
-								data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false"
-								th:object="${#authentication.principal.user}"
-								th:text="*{mailAddress}" href="javascript:void(0)">ユーザー</a>
-							<div class="dropdown-menu" aria-labelledby="user-dropdown">
-								<form th:action="@{/logout}" id="logoutForm" method="post">
-									<button type="submit" class="dropdown-item">ログアウト</button>
-								</form>
-							</div>
-						</div></li>
-				</ul>
-			</div>
-		</div>
-	</header>
-	<div class="outer row bkwhite">
-		<div class="main col-xs-12 col-md-7">
-			<div class="diary-out">
-				<div th:replace="diary :: diary_contents"></div>
-			</div>
-			<div class="searchMode" style="display: none;">
-				<div class="input-group input-group-sm">
-					<input type="text" id="search2" class="form-control"
-						placeholder="キーワードを入力してください">
-					<div class="input-group-append">
-						<button type="button" id="searchBtn2"
-							class="btn btn-outline-secondary">検索</button>
-					</div>
-				</div>
-			</div>
-			<div class="timeline-out">
-				<div th:replace="timeline :: timeline_contents"></div>
-			</div>
-		</div>
-		<div class="right-widget col-xs-12 col-md-5">
-			<div class="out-cal">
-				<div th:replace="calendar :: calendar_contents"></div>
-			</div>
-			<div class="search input-group input-group-sm">
-				<input type="text" id="search1" class="form-control">
-				<div class="input-group-append">
-					<button type="button" id="searchBtn1"
-						class="btn btn-outline-secondary">検索</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<footer>
-		<p>
-			©︎ Copyright 2021-2022 by Three good things. <a href="#">問い合わせ</a>
-		</p>
-	</footer>
-	<script type="text/javascript" th:src="@{/js/dateUtil.js}"></script>
+  <header class="border-bottom">
+    <div class="outer flex-items header-in">
+      <div class="title">
+        <p>
+          <a href="#">Three good things</a>
+        </p>
+      </div>
+      <div class="hamburger-menu">
+        <input type="checkbox" id="menu-btn-check"> <label
+          for="menu-btn-check" class="menu-btn"><span></span></label>
+        <!-- ここからメニュー -->
+        <div class="menu-content">
+          <ul>
+            <li><a href="#" class="diaryBtn">日記</a></li>
+            <li><a href="#" class="showTimeline">タイムライン</a></li>
+            <li><a href="#" class="searchBtn">検索</a></li>
+            <li><a href="#" id="aLogout">ログアウト</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="header-list">
+        <ul>
+          <li><a href="#" class="diaryBtn">日記</a></li>
+          <li><a href="#" class="showTimeline">タイムライン</a></li>
+          <li><a href="#" class="searchBtn">検索</a></li>
+          <li><div class="dropdown">
+              <a class="dropdown-toggle" id="user-dropdown"
+                data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"
+                th:object="${#authentication.principal.user}"
+                th:text="*{mailAddress}" href="javascript:void(0)">ユーザー</a>
+              <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                <form th:action="@{/logout}" id="logoutForm"
+                  method="post">
+                  <button type="submit" class="dropdown-item">ログアウト</button>
+                </form>
+              </div>
+            </div></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+  <div class="outer row bkwhite">
+    <div class="main col-xs-12 col-md-7">
+      <div class="diary-out">
+        <div th:replace="diary :: diary_contents"></div>
+      </div>
+      <div class="searchMode" style="display: none;">
+        <div class="input-group input-group-sm">
+          <input type="text" id="search2" class="form-control"
+            placeholder="キーワードを入力してください">
+          <div class="input-group-append">
+            <button type="button" id="searchBtn2"
+              class="btn btn-outline-secondary">検索</button>
+          </div>
+        </div>
+      </div>
+      <div class="timeline-out">
+        <div th:replace="timeline :: timeline_contents"></div>
+      </div>
+    </div>
+    <div class="right-widget col-xs-12 col-md-5">
+      <div class="out-cal">
+        <div th:replace="calendar :: calendar_contents"></div>
+      </div>
+      <div class="search input-group input-group-sm">
+        <input type="text" id="search1" class="form-control">
+        <div class="input-group-append">
+          <button type="button" id="searchBtn1"
+            class="btn btn-outline-secondary">検索</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <p>
+      ©︎ Copyright 2021-2022 by Three good things. <a href="#">問い合わせ</a>
+    </p>
+  </footer>
+  <script type="text/javascript" th:src="@{/js/dateUtil.js}"></script>
   <script type="text/javascript" th:inline="javascript">
 let inum = 0;
 $(".diaryBtn").on("click", function() {
@@ -332,7 +333,7 @@ const getTimelineAjax = () => {
 	  }).then(
       function(result){
         resolve(result);
-      }, 
+      },
       function(){
         reject();
       }

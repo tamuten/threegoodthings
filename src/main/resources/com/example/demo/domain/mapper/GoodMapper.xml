@@ -153,25 +153,25 @@ AND date = #{targetDate,
 			AND
 			date = #{date}
 	</update>
-<select id="findMonthlyPosts">
+<select id="findMonthlyPosts" resultType="java.time.LocalDate">
 SELECT
     date
 FROM
     good
 WHERE
-    user_id = (
+    (user_id = (
         SELECT
             id
         FROM
             users
         WHERE
             mail_address = #{mailAddress}
-    )
-AND date BETWEEN #{firstDate} AND #{lastDate}
-AND NOT(
+    ))
+AND (date BETWEEN #{firstDate} AND #{lastDate})
+AND (NOT(
         good1 IS NULL
     AND good2 IS NULL
     AND good3 IS NULL
-    )
+    ))
 </select>
 </mapper>

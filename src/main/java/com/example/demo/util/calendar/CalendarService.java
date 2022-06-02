@@ -25,11 +25,20 @@ public class CalendarService {
         calendar.get(0),
         calendar.get(calendar.size() - 1));
 
-    Function<LocalDate, PostingDate> func = (ld) -> {
-      return monthlyPosts.contains(ld) ? new PostingDate(ld, true) : new PostingDate(ld, false);
+    Function<LocalDate, PostingDate> toPostingDate = (ld) -> {
+      boolean isToday = false;
+      boolean isPosted = false;
+
+      if (ld.isEqual(LocalDate.now())) {
+        isToday = true;
+      }
+      if (monthlyPosts.contains(ld)) {
+        isPosted = true;
+      }
+      return new PostingDate(ld, isPosted, isToday);
     };
 
-    return calendar.stream().map(func).collect(Collectors.toList());
+    return calendar.stream().map(toPostingDate).collect(Collectors.toList());
   }
 
   /**

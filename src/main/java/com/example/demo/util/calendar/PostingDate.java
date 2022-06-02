@@ -10,4 +10,5 @@ import lombok.Data;
 public class PostingDate {
   LocalDate localDate;
   boolean isPosted;
+  boolean isToday;
 }
