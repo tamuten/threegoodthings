@@ -4,11 +4,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.example.demo.domain.mapper.GoodMapper;
-import com.example.demo.domain.model.Good;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.example.demo.domain.mapper.GoodMapper;
+import com.example.demo.domain.model.Good;
+import com.example.demo.domain.model.MonthlyPost;
 
 @Repository
 public class GoodRepository {
@@ -39,7 +40,7 @@ public class GoodRepository {
     goodMapper.updateOne(mailAddress, good, num, date);
   }
 
-  public List<LocalDate> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
+  public List<MonthlyPost> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
       final LocalDate lastDate) {
     return goodMapper.findMonthlyPosts(mailAddress, firstDate, lastDate);
   }

@@ -4,9 +4,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.example.demo.domain.model.Good;
-
 import org.apache.ibatis.annotations.Mapper;
+
+import com.example.demo.domain.model.Good;
+import com.example.demo.domain.model.MonthlyPost;
 
 @Mapper
 public interface GoodMapper {
@@ -22,6 +23,6 @@ public interface GoodMapper {
 
   public void updateOne(final String mailAddress, final String good, final int num, final Date date);
 
-  public List<LocalDate> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
+  public List<MonthlyPost> findMonthlyPosts(final String mailAddress, final LocalDate firstDate,
       final LocalDate lastDate);
 }

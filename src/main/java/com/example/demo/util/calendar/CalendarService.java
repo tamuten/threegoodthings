@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.example.demo.domain.repository.GoodRepository;
-
 import org.springframework.stereotype.Service;
+
+import com.example.demo.domain.model.MonthlyPost;
+import com.example.demo.domain.repository.GoodRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,24 +22,36 @@ public class CalendarService {
   public List<PostingDate> generateCalendar(final LocalDate targetDate, final String mailAddress) {
     List<LocalDate> calendar = generate(targetDate);
 
-    List<LocalDate> monthlyPosts = goodRepository.findMonthlyPosts(mailAddress,
-        calendar.get(0),
-        calendar.get(calendar.size() - 1));
+    List<MonthlyPost> monthlyPosts = goodRepository.findMonthlyPosts(mailAddress,
+        targetDate.withDayOfMonth(1),
+        targetDate.withDayOfMonth(targetDate.lengthOfMonth()));
 
     Function<LocalDate, PostingDate> toPostingDate = (ld) -> {
+      if (ld == null) {
+        return new PostingDate(null, false, false, false);
+      }
       boolean isToday = false;
-      boolean isPosted = false;
+      boolean isFullyPosted = false;
+      boolean isPartlyPosted = false;
 
       if (ld.isEqual(LocalDate.now())) {
         isToday = true;
       }
-      if (monthlyPosts.contains(ld)) {
-        isPosted = true;
+      for (MonthlyPost mp : monthlyPosts) {
+        if (mp.getLocalDate().isEqual(ld)) {
+          if (mp.isFullyPosted()) {
+            isFullyPosted = true;
+          } else {
+            isPartlyPosted = true;
+          }
+        }
       }
-      return new PostingDate(ld, isPosted, isToday);
+
+      return new PostingDate(ld, isFullyPosted, isPartlyPosted, isToday);
     };
 
     return calendar.stream().map(toPostingDate).collect(Collectors.toList());
+
   }
 
   /**
@@ -47,16 +60,17 @@ public class CalendarService {
    * @param targetLocalDate
    * @return
    */
-  public static List<LocalDate> generate(final LocalDate targetLocalDate) {
+  public static List<LocalDate> generate(LocalDate targetLocalDate) {
 
     final int year = targetLocalDate.getYear();
     final int month = targetLocalDate.getMonthValue();
+    targetLocalDate = LocalDate.of(year, month, 1);
 
     // 今月の始まり
-    DayOfWeek startDay = LocalDate.of(year, month, 1).getDayOfWeek();
+    DayOfWeek startDay = targetLocalDate.getDayOfWeek();
     // 今月末日
-    int thisMonthLastDay = LocalDate.of(year, month + 1, 1).minusDays(1L).getDayOfMonth();
-    DayOfWeek lastDay = LocalDate.of(year, month + 1, 1).minusDays(1L).getDayOfWeek();
+    int thisMonthLastDay = targetLocalDate.plusMonths(1L).minusDays(1L).getDayOfMonth();
+    DayOfWeek lastDay = targetLocalDate.plusMonths(1L).minusDays(1L).getDayOfWeek();
 
     List<LocalDate> lDate = new ArrayList<LocalDate>();
 
@@ -64,9 +78,11 @@ public class CalendarService {
     if (startDay != DayOfWeek.SUNDAY) {
       final int beforeMonthLastDay = LocalDate.of(year, month, 1).minusDays(1L).getDayOfMonth();
       final int beforeMonthDayCount = startDay.getValue();
+      final int beforeMonthValue = targetLocalDate.minusMonths(1L).getMonthValue();
       int beforeMonthDate = beforeMonthLastDay - startDay.getValue() + 1;
       for (int i = 1; i <= beforeMonthDayCount; i++) {
-        lDate.add(LocalDate.of(year, month - 1, beforeMonthDate));
+        // lDate.add(LocalDate.of(year, beforeMonthValue, beforeMonthDate));
+        lDate.add(null);
         beforeMonthDate++;
       }
     }
@@ -78,14 +94,24 @@ public class CalendarService {
 
     // 土曜日終わりでなければ翌月分の日付を格納する。
     if (lastDay != DayOfWeek.SATURDAY) {
-      final int nextMonthDayCount = 7 - (lastDay.getValue() + 1);
+      final int nextMonthDayCount = calcNextMonthDayCount(lastDay);
+      final int nextMonthValue = targetLocalDate.plusMonths(1L).getMonthValue();
       int nextMonthDate = 1;
       for (int i = 1; i <= nextMonthDayCount; i++) {
-        lDate.add(LocalDate.of(year, month + 1, nextMonthDate));
+        // lDate.add(LocalDate.of(year, nextMonthValue, nextMonthDate));
+        lDate.add(null);
         nextMonthDate++;
       }
     }
 
     return lDate;
+  }
+
+  private static int calcNextMonthDayCount(DayOfWeek lastDay) {
+    if (lastDay != DayOfWeek.SUNDAY) {
+      return 7 - (lastDay.getValue() + 1);
+    } else {
+      return 14 - (lastDay.getValue() + 1);
+    }
   }
 }

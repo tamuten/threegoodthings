@@ -9,6 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class PostingDate {
   LocalDate localDate;
-  boolean isPosted;
+  boolean isFullyPosted;
+  boolean isPartlyPosted;
   boolean isToday;
 }

@@ -30,26 +30,28 @@
     </div>
     <div class="w-100">
       <div class="d-flex justify-content-between align-items-center w-100 calendar-row">
-        <div class="day text-center">日</div>
-        <div class="day text-center">月</div>
-        <div class="day text-center">火</div>
-        <div class="day text-center">水</div>
-        <div class="day text-center">木</div>
-        <div class="day text-center">金</div>
-        <div class="day text-center">土</div>
+        <div class="day text-center">S</div>
+        <div class="day text-center">M</div>
+        <div class="day text-center">T</div>
+        <div class="day text-center">W</div>
+        <div class="day text-center">T</div>
+        <div class="day text-center">F</div>
+        <div class="day text-center">S</div>
       </div>
       <div
           th:with="lastRowNum=${#lists.size(calendarDay) == 35 ? 4 : 5}">
           <th:block th:each="r : ${#numbers.sequence(0,lastRowNum)}">
             <div class="d-flex align-items-center w-100 calendar-row">
               <th:block th:each="c : ${#numbers.sequence(0,6)}">
-                <div th:with="idx=${r * 7 + c}" class="date" th:classappend="${calendarDay[__${idx}__].isToday} ? 'today'">
-                  <a href="#" class="calendarDay">
-                    <input type="hidden" th:value="${#temporals.format(calendarDay[__${idx}__].localDate, 'yyyy/MM/dd')}"/>
-                    <span th:text="${#temporals.format(calendarDay[__${idx}__].localDate, 'd')}"></span>
-                  </a>
-                  <div th:if="${calendarDay[__${idx}__].isPosted}" class="mark"></div>
-                </div>
+                  <div th:if="${calendarDay[__${r * 7 + c}__].localDate != null}" class="date" th:classappend="${calendarDay[__${r * 7 + c}__].isToday} ? 'today'">
+                    <a href="#" class="calendarDay">
+                      <input type="hidden" th:value="${#temporals.format(calendarDay[__${r * 7 + c}__].localDate, 'yyyy/MM/dd')}"/>
+                      [[${#temporals.format(calendarDay[__${r * 7 + c}__].localDate, 'd')}]]
+                    </a>
+                    <div th:if="${calendarDay[__${r * 7 + c}__].isFullyPosted}" class="mark"></div>
+                    <div th:if="${calendarDay[__${r * 7 + c}__].isPartlyPosted}" class="part-mark"></div>
+                  </div>  
+                  <div th:if="${calendarDay[__${r * 7 + c}__].localDate == null}" class="date"></div>
               </th:block>
             </div>
           </th:block>
@@ -57,8 +59,10 @@
     </div>
     <script type="text/javascript" th:inline="javascript">
     $(function () {
-      $('.calendarDay').on('click', () => {
-        console.log($(this).find('input'));
+      $('.calendarDay').on('click', (e) => {
+        let atag = e.target;
+        let date = $(atag).find('input').val();
+        clickCalendarDay(date);
       });
     });
     </script>

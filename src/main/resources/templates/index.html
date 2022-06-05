@@ -104,7 +104,7 @@ let inum = 0;
 $(".diaryBtn").on("click", function() {
 	hideSlideInMenu();
 	hideSearchArea();
-	loadDiary(new Date());
+	loadDiary(formatDateSlash(new Date()));
 	hideTimeline();
 });
 
@@ -258,7 +258,7 @@ $(document).on('click', '#today', () => {
 	displayCalendarData(today);
 	hideSearchArea();
 	hideTimeline();
-	loadDiary(today);
+	loadDiary(formatDateSlash(today));
 });
 $(document).on('click', '#searchBtn1', () => {
 	const keyword = $('#search1').val();

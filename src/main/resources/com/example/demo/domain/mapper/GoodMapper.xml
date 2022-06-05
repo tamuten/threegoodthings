@@ -153,9 +153,14 @@ AND date = #{targetDate,
 			AND
 			date = #{date}
 	</update>
-<select id="findMonthlyPosts" resultType="java.time.LocalDate">
+<select id="findMonthlyPosts" resultType="MonthlyPost">
 SELECT
-    date
+    date AS local_date,
+    CASE WHEN (good1 IS NOT NULL
+      AND good2 IS NOT NULL
+      AND good3 IS NOT NULL) THEN true 
+    ELSE false 
+    END AS is_fully_posted
 FROM
     good
 WHERE

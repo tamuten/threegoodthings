@@ -4,15 +4,6 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-import com.example.demo.domain.model.Good;
-import com.example.demo.domain.model.UserDetailsImpl;
-import com.example.demo.domain.repository.GoodRepository;
-import com.example.demo.form.MainForm;
-import com.example.demo.util.DateUtil;
-import com.example.demo.util.StrUtil;
-import com.example.demo.util.calendar.CalendarService;
-import com.example.demo.util.calendar.PostingDate;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.demo.domain.model.Good;
+import com.example.demo.domain.model.UserDetailsImpl;
+import com.example.demo.domain.repository.GoodRepository;
+import com.example.demo.form.MainForm;
+import com.example.demo.util.DateUtil;
+import com.example.demo.util.StrUtil;
+import com.example.demo.util.calendar.CalendarService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,7 +42,7 @@ public class MainController {
       BeanUtils.copyProperties(good, form);
     }
 
-    model.addAttribute("calDate", LocalDate.of(today.getYear(), today.getMonthValue(), 1));
+    model.addAttribute("calDate", today.withDayOfMonth(1));
     model.addAttribute("calendarDay", calendarService.generateCalendar(today,
         user.getUsername()));
     model.addAttribute("mainForm", form);
@@ -58,13 +57,6 @@ public class MainController {
     model.addAttribute("calDate", targetDate);
     model.addAttribute("calendarDay", calendarService.generateCalendar(targetDate, user.getUsername()));
     return "calendar :: calendar_contents";
-  }
-
-  @GetMapping("/loadPostingDate")
-  @ResponseBody
-  public List<PostingDate> loadPostingDate(@RequestParam final LocalDate targetDate, Model model,
-      @AuthenticationPrincipal UserDetailsImpl user) {
-    return calendarService.generateCalendar(targetDate, user.getUsername());
   }
 
   @GetMapping("/loadDiary")
