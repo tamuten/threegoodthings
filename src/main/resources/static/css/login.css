@@ -1,138 +1,152 @@
 body {
-	font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans",
-		"Hiragino Kaku Gothic ProN", "Arial", "Meiryo","Yu Gothic",
-		sans-serif;
-	background-color: #f5f5f5;
-	font-size: 14px;
+  font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Arial", "Meiryo", "Yu Gothic", sans-serif;
+  background-color: #f5f5f5;
+  font-size: 14px;
 }
 
-body, p, h1, h2, h3 {
-	margin: 0;
-	padding: 0;
+body,
+p,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
 }
 
 header {
-	height: 70px;
+  height: 70px;
 }
 
 .title {
-	font-family: 'Sacramento', cursive;
-	font-size: 30px;
-	white-space: nowrap;
-	height: 100%;
-	display: block;
-	margin: 0 auto;
-	max-width: 330px;
+  font-family: "Sacramento", cursive;
+  font-size: 30px;
+  white-space: nowrap;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  max-width: 330px;
 }
 
 .title-char {
-	margin-left: 15px;
+  margin-left: 15px;
 }
 
 .title a {
-	text-decoration: none;
-	color: #000;
+  text-decoration: none;
+  color: #000;
 }
 
 .signupComplete {
-	margin-bottom: 250px;
+  margin-bottom: 250px;
 }
 
 .login-form {
-	width: 100%;
-	text-align: center;
-	padding: 15px 15px;
+  width: 100%;
+  text-align: center;
+  padding: 15px 15px;
 }
 
 .login-wrapper {
-	margin: 30px auto;
-	background-color: #fff;
-	max-width:800px;
+  margin: 30px auto;
+  background-color: #fff;
+  max-width: 800px;
 }
 
-.login .content-title, .signupArea .content-title {
-	color: black;
-	margin: 30px 0;
+.login .content-title,
+.signupArea .content-title {
+  color: black;
+  margin: 30px 0;
 }
 
 .login-input {
-	margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .login input[type="text"] {
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 1px solid lightgrey;
-	padding: 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  padding: 10px 10px;
 }
 
 .login input[type="password"] {
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 1px solid lightgrey;
-	padding: 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  padding: 10px 10px;
 }
 
 .signupArea input[type="text"] {
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 1px solid lightgrey;
-	padding: 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  padding: 10px 10px;
 }
 
 .signupArea input[type="password"] {
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 1px solid lightgrey;
-	padding: 10px 10px;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid lightgrey;
+  padding: 10px 10px;
 }
 
 .signupArea .login-form .is-invalid {
-	border: 1px solid #dc3545;
+  border: 1px solid #dc3545;
 }
 
-.login input:focus, .signupArea input:focus {
-	outline: none;
+.login input:focus,
+.signupArea input:focus {
+  outline: none;
 }
 
 .login-btn {
-	margin: 10px 0;
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 0px;
-	padding: 10px 5px;
-	background-color: #007bff;
-	cursor: pointer;
-	color: #ffffff;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 0px;
+  padding: 10px 5px;
+  background-color: #007bff;
+  cursor: pointer;
+  color: #ffffff;
 }
 
 .signup-btn {
-	margin: 10px 0;
-	width: 100%;
-	font-size: 16px;
-	box-sizing: border-box;
-	border: 0px;
-	padding: 10px 5px;
-	background-color: #25b57d;
-	cursor: pointer;
-	color: #ffffff;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 0px;
+  padding: 10px 5px;
+  background-color: #25b57d;
+  cursor: pointer;
+  color: #ffffff;
 }
 
 .signup-form-input {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
-.login a, .signup a {
-	color: #007bff;
+.password-forget {
+  margin: 15px 0;
+}
+
+.signup {
+  padding: 20px 0 5px;
+  border-top: 1px solid #c3c3c3;
+}
+
+.login a,
+.signup a {
+  color: #007bff;
 }
 
 footer {
-	background-color: #000;
-	color: #fff;
-	padding: 20px 0;
+  background-color: #000;
+  color: #fff;
+  padding: 20px 0;
 }
