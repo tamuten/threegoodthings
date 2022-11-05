@@ -8,17 +8,30 @@ import com.example.demo.exception.BusinessException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler(BusinessException.class)
-	public String handleBusinessException(BusinessException e, Model model) {
-		model.addAttribute("error", e);
-		e.printStackTrace();
-		return "businessError";
-	}
+    /**
+     * ビジネス例外をハンドリングする。
+     * @param e
+     * @param model
+     * @return
+     */
+    @ExceptionHandler(BusinessException.class)
+    public String handleBusinessException(BusinessException e, Model model) {
+        model.addAttribute("error", e);
+        e.printStackTrace();
+        return "businessError";
+    }
 
-	@ExceptionHandler(Exception.class)
-	public String handleException(Exception e, Model model) {
-		model.addAttribute("error", e);
-		e.printStackTrace();
-		return "systemError";
-	}
+    /**
+     * システム例外をハンドリングする。
+     * @param e
+     * @param model
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception e, Model model) {
+        e.printStackTrace();
+
+        model.addAttribute("msg", e);
+        return "systemError";
+    }
 }

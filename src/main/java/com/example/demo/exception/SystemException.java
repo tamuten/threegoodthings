@@ -7,11 +7,19 @@ package com.example.demo.exception;
  *
  */
 public class SystemException extends RuntimeException {
-	public SystemException() {
-		super();
-	}
+    public SystemException() {
+        super();
+    }
 
-	public SystemException(String msg) {
-		super(msg);
-	}
+    public SystemException(String msg) {
+        super(msg);
+    }
+
+    public SystemException(Throwable cause) {
+        super(cause);
+    }
+
+    public SystemException(Throwable cause, String msg) {
+        super(msg, cause);
+    }
 }
